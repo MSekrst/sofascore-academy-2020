@@ -15,6 +15,18 @@ Slides and code for each lesson will be available in separate branches and will 
 git clone https://github.com/MSekrst/sofascore-academy-2020.git sofascore-academy
 ```
 
+### Running slides
+
+3. Install [Node.js](https://nodejs.org/en/)
+
+ NPM (Node Package Manager) is installed automatically with node.js, NPM is CLI used to install 3rd party dependencies (such as `React`) and as script runner.
+
+*OPTIONAL:* You can install [Yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable)
+
+```zsh
+npm run start:01
+```
+
 ### HTML & CSS examples
 
 Now you can explore code and view some examples.
