@@ -21,3 +21,6 @@ yarn-error.log*
 
 # share VS Code project configuration
 !.vscode/settings.json
+
+# deployment
+.now
