@@ -23,6 +23,8 @@ git clone https://github.com/MSekrst/sofascore-academy-2020.git sofascore-academ
 
 *OPTIONAL:* You can install [Yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable)
 
+Notes can be accessed with shortcuts found [here](https://github.com/jxnblk/mdx-deck#presenter-mode)
+
 ```zsh
 npm run start:01
 ```
