@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "mdx-deck lessons/01.mdx"
+    "start:01": "mdx-deck lessons/01.mdx",
+    "build:01": "mdx-deck build lessons/01.mdx"
   },
   "keywords": [],
   "author": "",

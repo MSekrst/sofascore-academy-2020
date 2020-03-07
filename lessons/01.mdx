@@ -1,0 +1,381 @@
+import { themes, Head, Footer, Header, Steps, Notes, Invert } from 'mdx-deck'
+import './styles.css'
+
+export const theme =  { ...themes.highlight }
+
+<!-- general markup for all slides -->
+
+<Head>
+  <title>SofaScore Academy 1</title>
+</Head>
+
+<Header><div className="tC m8">SofaScore Academy 2020.</div></Header>
+
+<Footer> <div className="tR m8">Lesson 1 - Frontend, Browser, HTML, CSS</div></Footer>
+
+<!-- Slide 0 -->
+
+# Lesson 1
+
+## Frontend, Browser, HTML, CSS
+
+---
+
+# Frontend
+
+- "Visible" part of web application 
+- Part that end user sees and interacts with
+- Runs in Web browser
+
+---
+
+# Server - Client Architecture
+
+import serverClient from './images/serverClient.png'
+
+<img className="big-image" src={serverClient} />
+
+<Notes>
+
+  - Server programming is also called backend
+  - Client programming (for Web Clients) is called frontend
+
+</Notes>
+
+---
+
+# Browser
+
+- used to navigate web and *display* web applications
+- (e.g. 😀 Chrome, 🙂 Firefox, 🙂 Edge, 😐 Safari, 😥 Explorer, 😭 Opera Mini)
+
+<Notes>
+
+  - [Market share (February 2020)](https://gs.statcounter.com/browser-market-share): Chrome - 64.5%, Safari - 17.6%, Firefox - 4.6%
+  - Display is generic term to encapsulate more complex browser phases (next slide)
+
+</Notes>
+
+---
+
+# Browser - Flow
+
+import browserFlow from './images/browserFlow.png'
+
+<img className="big-image" src={browserFlow} />
+
+<Notes>
+
+Render engine steps:
+
+- Parsing HTML and CSS -> generating DOM (DOM is object presentation of the HTML document and interface to external entities, such as JavaScript)
+- Render tree -> contains rectangles with visual attributes in the right order to be displayed
+- Layout render tree -> giving each rectangle exact position on screen
+- Paint render tree -> Painting rectangles on screen
+- Gradual process -> many smaller iterations (e.g. parse HTML chunk and layout render tree)
+
+</Notes>
+
+--- 
+
+# HTML
+
+- **H**yper**T**ext **M**arkup **L**anguage 
+- Created by Tim Berners-Lee to enable document sharing (text based -> links, headings, paragraphs)
+- **Structure of a Web page**
+- Set of HTML elements, telling browser how to display content
+- HTML 5 is latest specification (each version brings new tags and depricates others) -> W3C
+- `<img src="path_to_image" alt="Text if image fails to load" />`
+- `<b>This is bold text</b>`
+
+<Notes>
+
+- HyperText -> text with referecnes to other pages (links)
+- Markup -> standardized set of notations (tags and attributes)
+- Language -> not programming language (it's more of a representation or format)
+- **tag** is `img`, **attribute** is `src` and `<img src="URL" />` is **element**
+- [W3C reference](https://www.w3schools.com/html/default.asp)
+- [HTML validator](https://validator.w3.org/nu/#textarea)
+- Each HTML document has `html`, `body`, `head` tags.
+
+</Notes>
+
+---
+
+# HTML Code sample
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SofaScore Frontend Academy</title>
+  </head>
+  <body>
+    <p>Hello!</p>
+  </body>
+</html>
+```
+
+---
+
+<Invert>
+
+# HTML Examples
+
+We will go through some examples -> You can follow along
+
+### https://github.com/MSekrst/sofascore-academy-2020
+
+</Invert>
+
+---
+
+# HTML Recap
+
+- Element - Tag - Attribute
+- Attributes are specific for each tag (`id`, `class`, `style`, `title` are some of the global attributes)
+- HTML mindset -> parent-child, siblings
+
+<Notes>
+
+- HTML mindset -> composing elements to create hierarchies. 
+Most used wanted hierarchies are **parent-child** and **multiple-sibilings**. 
+If some tag contains other then they are in parent-child relation. 
+If two (or more) tags are next to each other in hierarchy (on same level) they are sibilings.
+- [HTML global attributes](https://www.w3schools.com/tags/ref_standardattributes.asp)
+
+</Notes>
+
+--- 
+
+<Invert>
+
+# TASK 1.1.
+
+## Write parent element(`main`) with 5 children elements (`span`)
+
+</Invert>
+
+---
+
+<Invert>
+
+# TASK 1.2.
+
+## Substitute all `span` tags from TASK 1.1. with `div` tag
+
+</Invert>
+
+<Notes>
+
+- notice how each element is in separate row now
+
+</Notes>
+
+---
+
+# CSS
+
+- **C**ascading **S**tyle **S**heets
+- How HTML elements are displayed on device
+- CSS3 specification
+- `color: blue;`
+
+<Notes>
+
+- Cascading -> styles cascade (apply to lower levels) if not overridden
+- Style Sheets -> suggests separate CSS file(s), but CSS could also be inline, or embedded in `style` tag
+- `color` is property, `blue` is value, don't forget semicolon (if ommitted it would merge with next line and then both lines would be invalid and not applied)
+
+</Notes>
+
+---
+
+# CSS Selectors
+
+- Select all elements with the same tag
+  - `h2 { text-transform: "uppercase"; }`
+- select all elements with the same `class` attribute
+   - `.className { background-color: "tomato"; }`
+- Select all elements with the same `id` attribute
+   - `#uniqueId { text-align: "center"; }`
+- Selectors can be mixed
+   - `h2.specialHeading { transform: rotate(180deg); }`
+   - `h2 .specialHeading { transform: rotate(180deg); }`
+- Universal selector (`*`), Grouping selector (`div, p { ... }`)
+
+<Notes>
+
+- Selecting tags could be useful for resetting default browser styling (i.e. `ul` elements)
+- Classes are most common CSS selectors
+- Id selectors are used sparingly. to style unique elements
+- Id attributes should be unique for each element and should appear only once on each page. 
+Plural form is used because it would work on multiple elements with the same `id`, but this is an anti-pattern and should be avoided.
+- Mixing selctors is useful when certain styles need to be applyed only in specific context (e.g. styling inputs in forms differently)
+
+</Notes>
+
+---
+
+# Adding CSS
+
+- `<link rel="stylesheet" type="text/css" href="myStyleSheet.css">`
+- Inline style > Id Styling > Class styling > Tag styling
+
+
+<Notes>
+
+- When adding multiple stylesheets, they are applied in order they are linked. 
+Common mistake is thinking that styles are applyed based on their order on element. 
+It's actually their link order and order in file where they are defined. This all applies for the same level of selector (e.g. classes)
+- [CSS Specificity](https://www.w3schools.com/css/css_specificity.asp)
+
+</Notes>
+
+---
+
+<Invert>
+  
+<h1>Basic CSS Examples</h1>
+
+</Invert>
+
+---
+
+# CSS Box Model
+
+- Each element has `width` and `height`
+- `margin`, `border`, `padding` (content)
+- `box-sizing` property changes how browser calculates size of an element
+  - e.g. margin included in width calculation
+
+<Notes>
+
+- `width` and `height` can be explicit, and automatic (based on content)
+- (Box Model extra)[https://www.w3schools.com/css/css_boxmodel.asp]
+
+</Notes>
+
+--- 
+
+<Invert>
+  
+<h1>CSS Box Model Example</h1>
+
+</Invert>
+
+---
+
+# CSS Display properties
+
+- most used `block`, `inline`, `inline-block`, **`flex`**
+- `display: none;` -> removes element from screen (0x0), stays in the DOM
+
+<Notes>
+
+- HTML display properties are actually CSS display properties. 
+We separated them in HTML section to emphasize that different elements have different display value.
+- [More on flexbox](https://www.w3schools.com/css/css3_flexbox.asp)
+
+</Notes>
+
+---
+
+# CSS Display property
+
+- element default *display* property
+- **Block** elements **are by default separated** in new lines
+  - `div`, `h1`, `main`, `header`, `footer`, `p`, `ul`
+- **Inline** elements **are by default NOT separated** in new lines, they are inline (in the same line)
+  -  `span`, `b`, `a`, `em`, `img`
+- **Table** elements render elements in table 
+  -  previously used for layouts, now for tables only 
+  - `table`, `tbody`, `th`, `td`
+
+<Notes>
+
+-In examples, you probably noticed that some elements are displayed in separate rows while others where separated with `br` element.
+
+</Notes>
+
+---
+
+import task13 from './images/task-1-3.png'
+
+<Invert>
+
+# TASK 1.3.
+
+## Extend TASK 1.2. using flexbox (`display: flex;`) and other properties
+
+## to archive following structure
+
+<img style={{height: '50%'}} src={task13} />
+
+</Invert>
+
+---
+
+# CSS position
+
+- Type of positioning used for an element
+- `relative` -> relative to element position (`top`, `left`, ...)
+- `fixed` -> realtive to a screen (**not** content on the screen)
+- `absolute` -> relative to nearest positioned ancestor
+
+<Notes>
+
+- `position: static;` is default
+- `fixed` -> relative to a screen as hardware, when you scroll screen doesn't move, content moves  
+- positioned ancestor -> any element with position property different then `static` (default)
+- `absolute` -> commonly used with `relative` parent, `z-index` property changes if elements are before or after
+- `sticky` is new position property, it's positioning depends on scroll position (absolute or fixed)
+- [More on positioning](https://www.w3schools.com/css/css_positioning.asp)
+
+</Notes>
+
+---
+
+# CSS transitions
+
+- Allows smooth changing of property value over some time
+- `transition: opacity 0.5s ease-in-out;`
+
+<Notes>
+
+- property, period, time curve -> transition syntax
+- works on exact values only, start and end values must be known before transition.
+Common bug is transitioning height from 0px to 100%, which doesn't work because browser doesn't know value for 100%.
+
+</Notes>
+
+--- 
+
+# CSS Media
+
+- CSS2 - different style rules for different media (screens, printers)
+- CSS3 - different style rules for different device capatibilities (resolution, orientation)
+- responsive design -> different CSS for different resolutions 
+- `@media screen and (min-width: 400px) { ...will apply only on screens wider than 400px }`
+
+<Notes>
+
+- today developers take mobile first approach -> first they write CSS for smaller screens, 
+then they add media queries to modify styles for wider devices
+
+</Notes>
+
+---
+
+<Invert>
+
+# HOMEWORK 1.
+
+## Write login page using HTML and CSS
+
+### ELEMENTS: 
+- Form with 2 input fields and button
+- Top header (fixed or sticky)
+- CSS logo (compose two or more elements using absolute positioning)
+
+</Invert>

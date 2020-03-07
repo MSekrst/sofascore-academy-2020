@@ -1,5 +1,9 @@
 # dependencies
-/node_modules
+node_modules/
+
+# build
+.cache
+public/
 
 # misc
 .DS_Store
@@ -12,8 +16,11 @@ yarn-debug.log*
 yarn-error.log*
 
 # editors
-/.idea
-/.vscode/*
+.idea/
+.vscode/*
 
 # share VS Code project configuration
-!/.vscode/settings.json
+!.vscode/settings.json
+
+# deployment
+.now
