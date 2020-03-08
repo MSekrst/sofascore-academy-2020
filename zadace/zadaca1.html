@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+div.fixed {
+  position: fixed;
+  background: #FFFFFF;
+  width: 100%;
+  color: #555;
+  font-size: 80px;
+
+ }
+
+div.circle{
+    position: absolute;
+    text-align: center;
+    right: 80px;
+    top: 40px;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border: 1px solid #006400;
+    box-shadow: 0px 10px 5px #006400;
+
+}
+#text{
+    font: Arial;
+    font-size: 80px;
+    color: #006400;    
+}
+
+input[type=text], input[type=password] {
+  position: relative;
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+
+}
+
+button {
+  position:relative;
+  background-color: #006400;
+  color: white;
+  left:20%;
+  border-radius: 8px;
+  padding: 14px 20px;
+  margin: 8px 0;
+  width: 20%;
+  text-align: center;
+  font-size: 20px;
+
+}
+
+.container {
+  position: relative;
+  padding: 20px;
+  top:20%;
+  left:20%;
+}
+
+.gap {
+      width:100%;
+      height:500px;
+    }
+
+#label_{
+    font: Arial;
+    font-size: 30px;
+    color: black; 
+}
+</style>
+</head>
+<body>
+    
+<main>
+  <div class="fixed">
+    <h1  align="center">Tesla Free Stocks</h1>
+  </div>
+  <div class="gap"></div>
+
+  <div class="container">
+    <label for="uname"><div id="label_">Username </div></label>
+    <input type="text" placeholder="Enter Username">
+    <br>
+    <label for="psw"><div id="label_">Password </div></label>
+    <input type="password" placeholder="Enter Password">
+    <br>
+    <button>Get Rich!</button>
+  </div>
+
+  <div class="circle">
+        <div id="text">$</div>
+  </div>
+
+</main>
+</body>
+</html>
