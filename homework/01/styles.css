@@ -21,7 +21,8 @@ html {
   position: fixed;
   top: 0;
   padding: 0 16px;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(0, 0, 0, 0.65);
+  color: tomato;
   display: flex;
   align-items: center;
 }
@@ -56,6 +57,7 @@ html {
   padding: 24px;
   background-color: white;
   border-radius: 4px;
+  margin-bottom: 75px;
 }
 
 @media (min-width: 400px) {
@@ -67,6 +69,7 @@ html {
 @media (min-width: 900px) {
   .card {
     width: 350px;
+    margin-bottom: 200px;
   }
 }
 
@@ -78,7 +81,7 @@ html {
 }
 
 .card-header .card-title {
-  margin: 0 0 0 8px;
+  margin: 0 0 0 12px;
 }
 
 .card .card-content {
@@ -141,10 +144,11 @@ html {
 .button {
   position: relative;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 18px;
   border: 1px solid;
   background-color: white;
+  color: tomato;
   outline: none;
   border-radius: 4px;
   padding: 8px 16px;
@@ -167,8 +171,8 @@ html {
 }
 
 .logo.small {
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
 }
 
 .logo .background {
