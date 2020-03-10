@@ -1,0 +1,498 @@
+import { themes, Head, Footer, Header, Steps, Notes, Invert } from 'mdx-deck'
+import './styles.css'
+
+export const theme = { ...themes.highlight }
+
+<!-- general markup for all slides -->
+
+<Head>
+  <title>SofaScore Academy 2</title>
+</Head>
+<Header>
+  <div className="tC m8">SofaScore Academy 2020.</div>
+</Header>
+<Footer>
+  <div className="tR m8">Lesson 2 - JavaScript</div>
+</Footer>
+
+<!-- Slides -->
+
+# Lesson 2
+
+## ~~JavaScript~~ ECMAScript
+
+
+<Notes>
+
+- **E**uroperan **C**omputer **M**anufacturers **A**ssociation
+
+</Notes>
+
+---
+
+# Literature
+
+- [Kyle Simpson: You don't know JS](https://github.com/getify/You-Dont-Know-JS)
+- [Douglas Crockford: JavaScript: The Good Parts](http://shop.oreilly.com/product/9780596517748.do)
+
+> “Java is to JavaScript as ham is to hamster” - Jeremy Keith, 2009
+
+---
+
+import jsMeme from './images/jsGoodAll.jpg'
+
+<img className="big-image" alt="Good parts vs All" src={jsMeme} />
+
+<Notes>
+
+  - Today good parts are **maybe** even in majority (after ES2015 (ES6))
+
+</Notes>
+
+---
+
+# Introduction
+
+- Multi-paradigm language (Procedural, Object-Oriented, Functional)
+- Backward compatible (not forward compatible)
+- Implementation of the ECMAScript standard, TC39 Committee
+- Core technology of the Web
+
+<Notes>
+
+- Multi-paradigm -> choice is on programmer, mix of concepts
+- Backward compatible -> old code can run on newer versions
+- Forward compatible -> new code can run on older versions (We need tools to [**transpile**](https://babeljs.io/) new code to old platforms)
+- TC39 -> committee responsible for ECMA standards -> Major companies (Google, Apple), device manufacturers (Samsung), etc.
+
+</Notes>
+
+--- 
+
+# History - 1994.
+
+- Web pages are booming
+- Netscape Navigator is most popular web browser
+- Pages are static -> people want dynamic pages
+ 
+---
+
+# History - 1995.
+
+- Embedding Java into browsers -> <span style={{ color: "red" }}>FAIL</span>
+- [Brendan Eich](https://en.wikipedia.org/wiki/Brendan_Eich) created LiveScript
+- LiveScript shipped as JavaSript in Netscape Navigator -> <span style={{ color: "green" }}>SUCCESS</span>
+- Microsoft IE -> JScript -> reverse engineered JavaScript
+
+<Notes>
+
+  - JavaScript was marketing trick designed to attract Java programmers, Java is hot at the time
+  - Today Oracle owns "JavaScript" trademark, but doesn't enforce it. That is the reason why official name of the language is ECMAScript
+  - JScript -> reverse engineering discovered JS bugs and quirks which were also present in JScript
+
+</Notes>
+
+--- 
+
+# History - Rest
+
+- ECMA standardization (1996.)
+- Microsoft IE has 95% market cap -> standardized bugs from JScript
+- Mozilla Firefox (2004.)
+- Ajax (2005.)
+- Google Chrome (2008.)
+- ECMA2009 (ES5)
+- ECMA2015 (ES6)
+
+<Notes>
+
+- standardized bugs are in language to this date (e.g. type of `null` is object)
+- AJAX -> set of tecnologies to load and display web data in background (Asynchronous)
+- Chrome -> JIT Compilation (significant speedup)
+- [ES5](https://www.w3schools.com/js/js_es5.asp) -> strict mode, array methods, JSON methods, ...
+- [ES6](https://www.w3schools.com/js/js_es6.asp) -> arrow functions, classes, `let`, `const`, ...
+- Latest JS specification today is ES2019 (ES10) -> yearly relase plan
+
+</Notes>
+
+--- 
+
+# JavaScript engines
+
+- Key part of a browser
+- Runs JavaScript code 
+  - compile
+  - optimize
+- V8 (Chrome & Node), SpiderMonkey (Firefox), Nitro (Safari)
+
+<Notes>
+
+Two key functions of an engine:
+- compile -> JIT compilation was game changer in 2008. -> now all browsers implement JIT compiler
+- optimize -> Code optimization -> [More on V8 optimizations](https://blog.logrocket.com/how-javascript-works-optimizing-the-v8-compiler-for-efficiency/)
+
+</Notes>
+
+---
+
+# JavaScript Basics
+
+- C like syntax (`if`, `switch`, `while`)
+- Dynamically typed
+- Types (`typeof` operator):
+  - primitive: `number`, `boolean`, `string`, `undefined`
+  - complex: `object`, `null`, `function`
+- Variables:
+  - `var` -> function scope, reassignable
+  - `let` -> block scope, reassignable
+  - `const` -> block scope, cannot be reassigned
+
+<Notes>
+
+-  Falsy values (false, 0, `''`, `null`, `undefined`)
+- `var` is global when used outside the function
+- `let` and `const` came with ES2015 and are commonly used
+
+</Notes>
+
+---
+
+<Invert>
+
+# Example - Hello World
+
+```js
+  console.log('Hello', 'World')
+```
+
+</Invert>
+
+<Notes>
+
+- `console.log()` function is not specified in ECMA specification -> developers use utility functions of a desired platform (e.g. all browsers have console.log implementation, event Node has one). 
+Browsers expose `window` top level object which contains console.log function. Node has `global` top level object with utility functions. General rule is that platform top level object can be omitted (use `console.log()` instad of `window.console.log()`).
+Please note that each top level object has its' own utilities, so calling non existant utility function will result in an error.
+- Where are ; -> JS has automatic semicolon injection (ASI), so if you miss one it will be inserted and program would run. 
+ASI will try to add semicolon after: line terminator (`\n`), block ending bracket (`}`), end of the file, specific grammar places (after `return`, `break`).
+Semicolon will be inserted only if line is incorrect without semicolon. If line has no errors and next line also follows JS grammar then semicolon will not be inserted (**EDGE CASE**)
+
+</Notes>
+
+--- 
+
+<Invert>
+
+# Example - ASI
+
+```js
+function bar() {
+  1 + 1 // no semi
+  -1 + 1 === 0 ? console.log(0) : console.log(2)
+}
+
+```
+
+</Invert>
+
+<Notes>
+
+- Semicolon here changes evaluation (without semicolon -> lines are merged into one)
+- Note ternary operator -> very useful later with React
+
+</Notes>
+
+--- 
+
+<Invert>
+
+# Example - Types
+
+```js
+console.log(typeof 2) // number
+console.log(typeof 'SFA') // string
+console.log(typeof { foo: 'bar' }) // object
+console.log(typeof [1, 2, 3]) // object -> not array!
+console.log(typeof (() => {})) // function -> this is arrow function
+console.log(typeof null) // object -> JScript bug!
+console.log(typeof NaN) // number -> Not a number is a number :)
+```
+
+</Invert>
+
+
+---
+
+# Type Coercion
+
+- Process of converting value from one type to another
+- Happens implicitly (e.g. `==` instead of `===`)
+
+<Notes>
+
+- Double equal checks variables by value -> if types arent the same then it will coerce values to a common type. [Detailed coercion rules](https://www.freecodecamp.org/news/js-type-coercion-explained-27ba3d9a2839/)
+- Triple equal won't allow coercion and will return false if types are different, and true only if types and values are the same
+- Always use triple equal (enforce it if you can)
+
+</Notes>
+
+--- 
+
+import coercion from './images/coercion.png'
+
+<Invert>
+
+## Example - Coercion
+
+<img className="big-image" alt="Coercion examples" src={coercion} />
+
+</Invert>
+
+<Notes>
+
+[Detailed explanation with more memes](https://www.freecodecamp.org/news/explaining-the-best-javascript-meme-i-have-ever-seen/)
+
+1. **number** and **string** coerce to **number** (call ToNumber('0'))
+2. **number** and **array**(object) coerce to **number** (call ToPrimitve([]) -> number representation of an array is length of course)
+3. **string** and **array**(object) coerce to **string** (call ToPrimitve([]) -> string representation of an array are its elements divided with comma)
+
+- Fun examples:
+  - `0 == {}` => `false` 
+  - `false == new Boolean(false)` => `true`, but `false === new Boolean(false)` => `false` 
+
+</Notes>
+
+---
+
+<Invert>
+
+# Example - Plus Sign
+
+- Concatenating strings, adding numbers
+- If number and string -> coerce number to string
+
+```js
+console.log(2 + 4) // 6
+console.log('Sofa' + 'Score') // SofaScore
+console.log(2 + 4 + 'Score') // 6SofaScore
+console.log('Sofa' + 2 + 4) // Sofa24
+```
+
+</Invert>
+
+---
+ 
+
+# Objects
+
+- Most important structure in JavaScript
+- Collection of named values
+  - values can be of any type (even function)
+- **MUTABLE**
+- Creation:
+  - `new Object`
+  - `Object.create`
+  - `{ foo: 'bar' }` -> most used
+
+<Notes>
+
+- Functions can be used as value, and stored in variables. This allows some cool patterns such as object methods, encapsulation, ...
+- Mutable -> adding or changing property of an object doesn't change object (it's reference stays the same) -> **IMPORTANT for React**
+- `Object.create` -> creates new object from existing object if provided as argument -> used for inheritance
+- Curly braces (Object literal) are most used for object creation because it results in cleanest code. 
+
+</Notes>
+
+---
+
+# This 
+
+- Reference to object it belongs to
+- Used in functions, to access properties of an owner (similar to Java)
+
+```js
+const person = {
+  firstName: "Sofa",
+  lastName : "Score",
+  fullName : function() {
+    return this.firstName + this.lastName; // SofaScore
+  }
+};
+```
+
+<Notes>
+
+- Java methods have `this` and `this` is reference to an instance on which method is called. 
+In JavaScript funtions have this. If global function is called (without owner), `this` referrs to global object (`window`, `global`)
+
+</Notes>
+
+---
+
+<Invert>
+
+# Example - This or That
+
+</Invert>
+
+---
+
+# Functions
+
+- Can be pictured as `Object`
+- Function Declaration
+  - `function doSomething() { ... }`
+- Function Expression
+  - `const doSomething = function() { ... }`
+- Arrow functions
+  - `const return2020 = () => 2020`
+  - `function` and `return` can be avoided
+  - no `this`
+- IIFE -> Immediately Invoking Function Expression
+
+<Notes>
+
+- Function as objects -> has properties, methods, even have object prototype (e.g. `console.log insanceof Object` is `true`)
+- Two most common ways of function creation, slight difference is in hoisting (explained later)
+- Arrow functions are commonly used, return is often omitted to improve readability. They don't change `this`, so there is no need for `that`.
+- IIFE (Immediately Invoked Function Expression) -> historically used to provide encapsulation for variables (`var`). 
+Code was wrapped in function that was called after definition, and variables from that code were scoped to function and not visible from outside.
+
+</Notes>
+
+--- 
+
+<Invert>
+
+# Example - Function Arguments
+
+</Invert>
+
+<Notes>
+
+- `call by value` or `call by reference` mode depends on operations performed on arguments inside the function
+
+</Notes>
+
+---
+
+# Prototype inheritance
+
+- Mechanism by which JS objects inherit features
+- Propotype chain -> chain of prototypes for an object (all accessible)
+- Most OO languages -> class inheritance
+
+<Notes>
+
+- Prototype chain -> list of inherited prototypes starting from more specific to more general. If object doesn't have property or function then look in its prototype.
+If more specific prototype doesn't contain searched property or function, go into next, more generic prototype, ...
+- All prototypes end with object prototype -> "Object is the king in JavaScript"
+- `instanceof` operator tests if object has some prototype in its chain (e.g. function is instance of object)
+
+</Notes>
+
+---
+
+import arrayProto from './images/arrayProto.png'
+
+<img className="big-image" alt="Array prototype chain" src={arrayProto} />
+
+<Notes>
+
+- List of all array methods -> useful for later
+- Note how array has its own prototype, and then its prototype has object prototype
+- `constructor` method is called with `new` keyword
+
+</Notes>
+
+---
+
+<Invert>
+
+# Example - Prototypes
+
+</Invert>
+
+<Notes>
+
+- Note how prototypes and functions make classic inheritance possible, they even extend possiblities (dynamic prototype change)
+
+</Notes>
+
+
+---
+
+# Classes
+
+- Classes are type of functions
+- Cleaner and more familiar syntax 
+  - `constructor` function
+  - `static` methods 
+  - `extends` and `super`
+
+<Notes>
+
+- Classes are actually functions -> functions are objects -> all classes can be written as objects
+- Class syntax is similar to other OO languages (Java)
+- Classes can have getters and setters too (`get` and `set` keywords)
+
+</Notes>
+
+--- 
+
+<Invert>
+
+# Example - Classes
+
+</Invert>
+
+---
+
+# Hoisting
+
+- Process of moving all **DECLARATIONS** to the top of a file
+- Hoisted:
+  - Function declarations (`function() {...}`)
+  - `var` variables
+- Not Hoisted:
+  - Function expresions (`const a = () => {}`)
+  - `const` and `let` variables
+  - classes
+
+---
+
+<Invert>
+
+# Example - Hoisting
+
+```js
+x = 'X'
+
+console.log({ x, y }) // { x: 'X', y: undefined }
+
+var x
+var y = 'Y'
+```
+
+</Invert>
+
+<Notes>
+
+- Declarations are hoisted (`var x`), not definitions (`x = 'X'`)
+
+</Notes>
+
+---
+
+# Closure
+
+- Functions are bundled with references to surrounding state (Lexical Environment)
+- Inner function can access outer function scope **even after** outer function has finished its execution
+- Makes encapsulation possible
+
+---
+
+<Invert>
+
+# Example - Closure
+
+</Invert>
