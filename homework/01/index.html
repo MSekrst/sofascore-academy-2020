@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>HW 1 - SFA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="base.css" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <!-- we use absolute container to allow height: 100% to work properly, also this container will be useful later :) -->
+    <div class="page-wrapper">
+      <header class="header">
+        <div class="logo" title="SofaScore Frontend Academy">
+          <div class="background"></div>
+          <div class="circle">
+            <div class="letters">SFA</div>
+          </div>
+        </div>
+        <h1 class="title">SofaScore Frontend Academy</h1>
+      </header>
+
+      <main class="page-content centered">
+        <div class="card shadow">
+          <div class="card-header">
+            <div class="logo small" title="SofaScore Frontend Academy">
+              <div class="background"></div>
+              <div class="circle">
+                <div class="letters">SFA</div>
+              </div>
+            </div>
+            <h2 class="card-title">Login</h2>
+          </div>
+          <div class="card-content">
+            <form class="form">
+              <div class="form-field">
+                <input class="input" name="username" id="username" type="text" placeholder=" " />
+                <label class="label" for="username">Username</label>
+              </div>
+              <div class="form-field">
+                <input class="input" name="password" id="password" type="password" placeholder=" " />
+                <label class="label" for="password">Password</label>
+              </div>
+              <div class="form-actions">
+                <!-- for now type=button prevents form submit -->
+                <button type="button" class="button">
+                  Login
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
