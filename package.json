@@ -1,11 +1,12 @@
 {
   "name": "sofascore-education",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "SofaScore Frontend Academy materials",
   "scripts": {
     "start:01": "mdx-deck lessons/01.mdx",
-    "build:01": "mdx-deck build lessons/01.mdx"
+    "build:01": "mdx-deck build lessons/01.mdx",
+    "start:02": "mdx-deck lessons/02.mdx",
+    "build:02": "mdx-deck build lessons/02.mdx"
   },
   "keywords": [],
   "author": "",
