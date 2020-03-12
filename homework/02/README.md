@@ -28,7 +28,9 @@ There is also `test` command available. This command will run tests and finish, 
 
 Similarly to Homework 1, solutions should be submitted via your GitHub repository.
 
-Open new branch with Homework 2 in it.
+Open new branch with Homework 2 in it. 
+
+Create `.gitIgnore` file and add files that should not be pushed to GitHub, such as `node-modules` (directory with downloaded dependencies), `.DS_Store` (only on MacOS), debug logs (created when `npm` or `yarn` fails)... [More on `.gitIgnore` file](https://git-scm.com/docs/gitignore).
 
 When homework is finished open Pull Request and request my review.
 
