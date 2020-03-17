@@ -14,6 +14,19 @@
 
 /* SPECIFIC */
 
+a {
+  color: #0eaceb !important;
+}
+
+strong {
+  font-size: larger;
+  font-weight: 800;
+}
+
+a:hover {
+  color: #0dbaff !important;
+}
+
 .big-image {
   height: 80vh !important;
 }
