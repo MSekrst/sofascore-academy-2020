@@ -47,7 +47,7 @@ export const theme = { ...themes.highlight }
 
 - Single-threaded -> no threading and standard paralelization for developers! Has only one call stack. This thread is often called *Main thread*
 - Concurrent -> one computation can progress without waiting other computations to finish.
-- Event loop -> collects, processes, exucates sub-tasks (asynchrounous code) and makes concurrency possible.
+- Event loop -> collects, processes, exucates sub-tasks (asynchronous code) and makes concurrency possible.
 
 </Notes>
 
@@ -203,7 +203,7 @@ Turn on render queue
 
 <Notes>
 
-- Notice how paint can happen between work when that work is made asynchrounous
+- Notice how paint can happen between work when that work is made asynchronous
 
 </Notes>
 
@@ -211,7 +211,7 @@ Turn on render queue
 
 # Promises
 
-- Object that represents the eventual completion of an asynchrounous operation
+- Object that represents the eventual completion of an asynchronous operation
 - Has 3 states
   - Pending -> Executing, not completed yet
   - Fullfiled -> Completed successfully
@@ -259,17 +259,15 @@ doAsyncWork(() => {
 
 # Async & Await
 
-- Uses promises and function generators under hood
-- Asynchrounous functions can be declared with `async` keyword
-  - `async` meanst that some function **can** be run asynchrounously
+- Uses promises and generator functions under the hood
+- asynchronous functions can be declared with `async` keyword
+  - `async` meanst that some function **can** be run asynchronously
 - `await` keyword pauses execution of `async` function untile promise is resolved
   - Can be only used inside `async` declared function
   - Doesn't block JS execution
   - should be wraped in `try-catch` block
 
 <Notes>
-
--
 
 </Notes>
 
