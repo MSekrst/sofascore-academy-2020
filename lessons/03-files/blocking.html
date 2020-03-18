@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Blocking</title>
+
+    <script>
+      // console.log is synchronous but it's fast so that is not a problem
+      function logToConsole() {
+        console.log('Hello from the console SofaScore Academy')
+      }
+
+      // notice how alert blocks page when prompt is visible
+      // it is different even to long for loop, because for loop example at least remembers actions performed
+      function showAlert() {
+        alert('Hello SofaScore Academy')
+      }
+
+      let counter = 0
+
+      // DOM manipulation is also synchronous, but also fast
+      function incrementCounter() {
+        // note `getElementById` method. This DOM method is used to query DOM and return matching elements.
+        // there are different query methods available (`getElementsByName`, `getElementsByTag`, ...)
+        // methods are called on DOM element, that element is top most when querying, query won't go over that element (its parent won't be found if matches)
+        // document is global variable that refers to the whole DOM
+        const element = document.getElementById('counterValue')
+        const newValue = Number(element.innerText) + 1
+        element.innerText = newValue
+      }
+
+      // this is example why long work should be made non-blocking (asynchronous)
+      // notice how everything is blocked when this function is running and runs only after function ends
+      function blockCallStack() {
+        console.log('Starting blocking work')
+
+        for (let i = 0; i < 3e9; i += 1) {} // cca. 5s on my machine
+
+        console.log('Blocking work finished')
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="blockCallStack()">Run blocking code</button><br />
+    <hr />
+    <button onclick="logToConsole()">Log to console</button><br /><br />
+    <button onclick="showAlert()">Show alert</button><br /><br />
+    <button onclick="incrementCounter()">Increment counter</button>
+    <p>Counter: <span id="counterValue">0</span></p>
+  </body>
+</html>

@@ -1,0 +1,364 @@
+import { themes, Head, Footer, Header, Steps, Notes, Invert } from 'mdx-deck'
+import './styles.css'
+
+export const theme = { ...themes.highlight }
+
+<!-- general markup for all slides -->
+
+<Head>
+  <title>SofaScore Academy 3</title>
+</Head>
+<Header>
+  <div className="tC m8">SofaScore Academy 2020.</div>
+</Header>
+<Footer>
+  <div className="tR m8">Lesson 3 - JavaScript</div>
+</Footer>
+
+<!-- Slides -->
+
+# Lesson 3
+
+## Advanced JavaScript 
+
+
+<Notes>
+
+- Previous lesson was more on *programming language JavaScript* side
+- Todays lesson in more on *JavaScript as Web technology* side
+
+**Must watch:**
+- [Philip Roberts: What the heck is event loop anyway?](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+
+**Extra info:**
+- [Jake Archibald: In The Loop](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
+
+</Notes>
+
+---
+
+# JavaScript Design
+
+- Single-threaded
+- Concurrent
+  - Based on **event loop**
+
+<Notes>
+
+- Single-threaded -> no threading and standard paralelization for developers! Has only one call stack. This thread is often called *Main thread*
+- Concurrent -> one computation can progress without waiting other computations to finish.
+- Event loop -> collects, processes, exucates sub-tasks (asynchronous code) and makes concurrency possible.
+
+</Notes>
+
+---
+
+# JavaScript Runtime
+
+- Semantics that JavaScript engines implement and optimize
+- Defines how JavaScript should run
+- Contains **heap** and **call stack**
+
+<Notes>
+
+- Semantics -> it can be pictured as parts that should be implemented by JavaScript engines (e.g. V8)
+- Heap -> as in other languages, heap is used for memory allocation
+- Call Stack -> stack stores information about active functions (it keeps track of the program flow).
+Call stack answers following questions: 
+  - where is program currently (which function)
+  - where should program return after current function
+  - what variables are currently in scope
+  - ...
+
+</Notes>
+
+--- 
+
+# Blocking
+
+- Happens when some function on call stack(main thread) is taking long(> 200ms) to execute so others can't execute
+- Direct consequence of single-threaded runtime design 
+  - Only one thing can run on a call stack
+  - Others are blocked
+- JavaScript handles blocking and non-blocking functions
+
+<Notes>
+
+ Non-blocking code usually executes in "background" and calls some function once it has finished. This functions are called **callbacks**.
+
+</Notes>
+
+---
+
+<Invert>
+
+# Example - Blocking
+
+</Invert>
+
+<Notes>
+
+- Writing 100% non-blocking code is impossible. Developers should balance between performant blocking code and slow and complex non-blocking code.
+- Any blocking code can me made non-blocking
+- This example shows why `alert` is not commonly used
+
+</Notes>
+
+---
+
+<Invert>
+
+# Example - Non-Blocking
+
+</Invert>
+
+<Notes>
+
+- Even with 0s timeout, `Callback` is logged after `End`. Next slides explains why and how.
+
+</Notes>
+
+--- 
+
+# Browser overview
+
+import browserArchitecture from './images/browserArchitecture.png'
+
+<img className="big-image" alt="Browser Architecture" src={browserArchitecture} />
+
+<Notes>
+
+- Runtime -> Runs code, single-threaded
+- WebAPIs -> Functions called by our JS scripts, implemented in browsers or platforms (Node.js)
+- Callback queue -> Queues function that should be executed when possible. Those function come from WebAPIs.
+- Event loop -> Moves functions from the callback queue to the call stack. Executes functions from the callback queue when possible (because runtime is single threaded)
+
+- Runtime is where our code is running. Functions can be placed on call stack (and immediately ran) or delegated to WebAPIs. 
+WebAPI functions are designed to receive callback argument, which will be called once work is finished (timer finished, event internally handled, etc.). Once callback is called by WebAPIs, it is placed on the callback queue.
+Multiple callbacks are queued (FIFO structure). Event loop is responsible for moving functions from callback queue onto the call stack (effectively executing callbacks). 
+Event loop has to follow only one rule. **Callback can be placed on call stack only when call stack is empty** (no other functions are being ran).
+Note how this rule forbidds two callbacks from call queue to be moved in the same time, because first callback fills call stack, so it isn't empty for second function (it will be empty once first callback finishes). 
+
+- Node has very similay diagram, difference is in APIs. Browser has WebAPIs while node has different C++ APIs (i.e. `readFile()`).
+
+</Notes>
+
+--- 
+
+<Invert>
+
+# Example - Async
+
+[Basic Async](http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIlN0YXJ0Iik7CgpzZXRUaW1lb3V0KGZ1bmN0aW9uIG91clRpbWVvdXRDYWxsYmFjaygpIHsKICBjb25zb2xlLmxvZygiQ2FsbGJhY2siKTsKfSwgNTAwMCk7Cgpjb25zb2xlLmxvZygiRW5kIik7Cg%3D%3D!!!)
+
+```js
+console.log("Start");
+
+setTimeout(function ourTimeoutCallback() {
+  console.log("Callback");
+}, 5000);
+
+console.log("End");
+```
+
+</Invert>
+
+<Notes>
+
+- Loupe is showcased in talk mentioned earlier
+- Notice how calling `setTimeout` sets timer in WebAPIs (part of the browser) and after time has passed, creates callback `ourTimeoutCallback` on callback queue.
+
+</Notes>
+
+---
+
+# Render queue
+
+- Similar to callback queue
+- Event loop is responsible for scheduling work from render queue
+  - repaint layout
+  - animations
+- Has higher priority then callback queue
+
+<Notes>
+
+- If callback queue and render queue both contain work, event loop will pickup work from render queue and put it onto call stack
+- Web developers should not block event loop without reason -> no slow functions on call stack to allow browser to schedule renders. 
+
+</Notes>
+
+---
+
+<Invert>
+
+# Example - Non-Blocking
+
+Turn on render queue
+
+[Blocking](http://latentflip.com/loupe/?code=Ly8gdGhpcyBpcyBldmVudCBoYW5kbGVyIGNhbGxlZCBvbiBidXR0b24gY2xpY2sgCi8vIHN5bnRheCBpcyBsb3VwZSBzcGVjaWZpYywgYnV0IHNpbWlsYXQgdG8galF1ZXJ5CiQub24oJ2J1dHRvbicsICdjbGljaycsIGZ1bmN0aW9uIG9uQ2xpY2soKSB7CiAgIGNvbnNvbGUubG9nKCdDbGljayBoYW5kbGVkIScpOwp9KTsKCi8vIHNsb3cgc3luY2hyb25vdXMgY29kZQpbMSwyLDMsNF0uZm9yRWFjaChmdW5jdGlvbiBsb2dOdW1iZXIobnVtKSB7CiAgICBkZWxheSgpOyAvLyBsb3VwZSBzcGVjaWZpYyAtPiBibG9ja3MgZXhlY3V0aW9uCiAgICBjb25zb2xlLmxvZyhudW0pOwp9KTsK!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D)
+
+[Non-Blocking](http://latentflip.com/loupe/?code=Ly8gdGhpcyBpcyBldmVudCBoYW5kbGVyIGNhbGxlZCBvbiBidXR0b24gY2xpY2sgCi8vIHN5bnRheCBpcyBsb3VwZSBzcGVjaWZpYywgYnV0IHNpbWlsYXQgdG8galF1ZXJ5CiQub24oJ2J1dHRvbicsICdjbGljaycsIGZ1bmN0aW9uIG9uQ2xpY2soKSB7CiAgIGNvbnNvbGUubG9nKCdDbGljayBoYW5kbGVkIScpOwp9KTsKCi8vIG1ha2UgY2FsbGJhY2tzIGFzeW5jCmZ1bmN0aW9uIGFzeW5jRm9yRWFjaChhcnJheSwgY2FsbGJhY2spIHsKICAgIGFycmF5LmZvckVhY2goZnVuY3Rpb24gKGVsZW1lbnQpIHsKICAgICAgICBzZXRUaW1lb3V0KGZ1bmN0aW9uKCkgewogICAgICAgICAgICBjYWxsYmFjayhlbGVtZW50KTsKICAgICAgICB9LCAwKTsKICAgIH0pOwp9CgovLyBzcGxpdCB3b3JrIGludG8gYXN5bmMgY2FsbGJhY2tzCmFzeW5jRm9yRWFjaChbMSwyLDMsNF0sIGZ1bmN0aW9uIGFzeW5jQ2FsbGJhY2soZWxlbWVudCl7CiAgICBkZWxheSgpOwogICBjb25zb2xlLmxvZyhlbGVtZW50KTsKfSk7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D)
+
+</Invert>
+
+<Notes>
+
+- Notice how paint can happen between work when that work is made asynchronous
+
+</Notes>
+
+---
+
+# Promises
+
+- Object that represents the eventual completion of an asynchronous operation
+- Has 3 states
+  - Pending -> Executing, not completed yet
+  - Fullfiled -> Completed successfully
+  - Rejected -> Completed, but not successfully (error happened)
+
+<Notes>
+
+- [Detailed info](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+- Sending callbacks can result in a callback hell. Callback hell makes understanding code more difficult than it should be.
+- EXTRA: Watch before mentioned Jake Archibald talk and learn about Micro-processes (such as Promises)
+
+```js
+doAsyncWork(() => {
+    // work done, do another work
+    doAsyncWork(() => {
+        // work done, do another work
+        doAsyncWork(() => {
+            // work done, do another work
+            doAsyncWork(() => {
+                // WELCOME TO CALLBACK HELL
+            });
+        });
+    });
+});
+```
+
+</Notes>
+
+--- 
+
+<Invert>
+
+# Example - Promises
+
+</Invert>
+
+<Notes>
+
+- Basic promise syntax
+- everything can be wrapped in promise
+
+</Notes>
+
+---
+
+# Async & Await
+
+- Uses promises and generator functions under the hood
+- Asynchronous functions can be declared with `async` keyword
+  - `async` means that some functions **can** be run asynchronously
+- `await` keyword pauses execution of `async` function until promise is resolved
+  - Can be only used inside `async` declared function
+  - Doesn't block JS execution
+  - Should be wraped in `try-catch` block
+
+<Notes>
+
+- [Generator functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*)
+
+ </Notes>
+
+---
+
+# Event Handlers
+
+- HTML DOM allows JavaScript to register Event handlers on elements
+- Part of WebAPIs
+- Handler executions are put onto the callback queue
+- `click`, `change`, `focus`, `blur`, `load`, `scroll`, ...
+
+<Notes>
+
+- Node has its events too (different from brower ones)
+- [Full list of events](https://www.w3schools.com/jsref/dom_obj_event.asp)
+- use `scroll` sparingly -> triggers on every scroll frame -> can flood callback queue
+
+</Notes>
+
+---
+
+# Event propagation
+
+- What happens when event occurs in DOM
+- Which event handlers should be called
+- Two modes:
+  - Event Bubbling
+  - Event Capturing
+
+```html
+<div onclick="divClick()">
+  <button onclick="buttonClick()">
+    <span>Fancy Text</span>
+  </button>
+</div>
+```
+
+<Notes>
+
+- Propagation mode determines which handler will be called if event happens somewhere in the DOM, while multiple elements have registered event listeners for that event.
+- Bubbling mode (**BOTTOM -> TOP**) -> Event is handled from the nearest listener (on element where event occured or parent). Propagation continues to the next parent and so on.
+- Capture mode (**TOP -> BOTTOM**, also called trickle mode) -> Event is handled from the first listener in the DOM (from the top), then propagation continues to the bottom of a DOM.
+- Two modes are for legacy reasons. Some browsers implemented bubbling mode (Netscape Navigator), others capture mode (Internet Explorer), both modes are specified in DOM specification. 
+Modern browsers implement both propagation modes, developers can choose mode when registering event listeners. Bbubbling mode is more common and default, capture mode should be implicitly set.
+
+</Notes>
+
+---
+
+<Invert>
+
+# Example - Event Propagation
+
+Show event listeners
+
+</Invert>
+
+<Notes>
+
+- Example shows difference between propagation modes.
+- Also introduces `stopPropagation`, `target`, `currentTarget` and ``preventDefault properties of an event object
+
+</Notes>
+
+---
+
+# Fetching data
+
+- Historically XMLHttpRequest (XHR) 
+- Today `Fetch WebAPI`
+- `fetch` function (from `window` top level object)
+- Fetch return promise
+ 
+<Notes>
+
+- XHR -> defined by Microsoft in 90s, developer has to manually handle fetching state
+- Modern `fetch` is instroduced to make life easier for developers
+- `fetch` is not supported in Node.js
+- [Fetch docs](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+
+</Notes>
+
+---
+ 
+<Invert>
+
+# Example - Fetch
+
+Show debugger & Network tab
+
+</Invert>
