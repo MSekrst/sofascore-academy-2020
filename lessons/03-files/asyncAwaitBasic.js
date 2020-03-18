@@ -13,3 +13,5 @@ async function runAsync() {
 }
 
 runAsync()
+
+console.log('After async')
