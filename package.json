@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "SofaScore Frontend Academy materials",
   "scripts": {
-    "start": "mdx-deck lessons/03.mdx",
-    "build": "mdx-deck build lessons/03.mdx"
+    "start:01": "mdx-deck lessons/01.mdx",
+    "build:01": "mdx-deck build lessons/01.mdx",
+    "start:02": "mdx-deck lessons/02.mdx",
+    "build:02": "mdx-deck build lessons/02.mdx",
+    "start:03": "mdx-deck lessons/03.mdx",
+    "build:03": "mdx-deck build lessons/03.mdx"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["JavaScript", "mdx", "React.js", "Node.js"],
+  "author": "MSekrst",
   "license": "MIT",
   "devDependencies": {
     "gatsby-source-filesystem": "^2.1.48",
