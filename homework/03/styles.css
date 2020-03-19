@@ -1,0 +1,36 @@
+* {
+  font-family: 'Lato', sans-serif;
+}
+
+/* ERROR */
+
+#error {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: tomato;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+
+.errorMessage {
+  padding: 0 42px;
+}
+
+.error-close {
+  position: absolute;
+  padding: 8px;
+  right: 2px;
+  top: 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.error-close:hover {
+  background-color: rgba(0, 0, 0, 0.07);
+}
+
+/*  */
