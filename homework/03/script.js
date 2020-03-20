@@ -91,8 +91,8 @@ async function renderPokemonList(pokemonList) {
 }
 
 /**
- * This is async wrapper, because global await is not supported yet (we can't outside function).
- * So we wrap async code to be able to call await.
+ * Gets pokemon from next URL and sets global flags. 
+ * Renders all pokemon from the list.
  */
 async function getPokemon() {
   if (!nextPokemonPage) {
