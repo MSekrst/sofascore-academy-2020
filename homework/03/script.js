@@ -1,64 +1,53 @@
-const BASE_URL = 'https://pokeapi.co/api/va2/pokemon'
+const BASE_URL = 'https://pokeapi.co/api/v2/pokemon'
 
+function getPokemonImageURL(pokemonId) {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`
+}
+
+// HTML selectors
 const SELECTORS = {
   error: '#error',
+  list: '#pokemon',
 }
 
-/**
- * Display error message for user and print actual error into the console.
- *
- * @param {Error} error
- */
-function showError(error) {
-  console.error(error)
+async function renderPokemonList(pokemonList) {
+  const deleteIcons = []
 
-  const ICON_ID = 'icon-close'
-
-  render(SELECTORS.error, `<p class="error-message">Something went wrong</p><i id="${ICON_ID}" class="material-icons error-close">close</i>`)
-
-  const closeIcon = document.getElementById(ICON_ID)
-  closeIcon.addEventListener('click', close)
-
-  function close() {
-    closeIcon.removeEventListener('click', close)
-    render(SELECTORS.error, '')
+  /**
+   * Removes clicked pokemon from the list
+   *
+   * @param {MouseEvent} event
+   */
+  function removeFromList(event) {
+    const deletedName = event.currentTarget.name
+    const removedElement = document.getElementById(`card-${deletedName}`)
+    removedElement.setAttribute('style', 'display: none;')
   }
 
-  // setTimeout(close, 5000)
-}
+  let pokemonMarkupArray = pokemonList.results.map(({ name, url }) => {
+    const id = url.match(/\/pokemon\/(\d+)\//)[1]
 
-/**
- * Fetches and returns Pokemon from given URL. If fetch fails handles error and returns `null`.
- *
- * @param {string} url URL for fetching Pokemon
- */
-async function getPokemon(url) {
-  try {
-    const response = await fetch(url)
-    const pokemon = await response.json()
+    // TODO: get pokemon info to render behind card
+    // const pokemonInfo = getPokemonInfo(url)
 
-    return pokemon
-  } catch (error) {
-    showError(error)
-    return null
-  }
-}
+    const deleteId = `delete-${name}`
+    deleteIcons.push(deleteId)
 
-/**
- * Inserts provided `markup` into DOM element with provided `selector`. If selector doesn't match any DOM node, error is handled.
- *
- * @param {string} selector selector for any DOM element
- * @param {string} markup markup to be inserted into DOM element with provided selector
- */
-function render(selector, markup) {
-  const element = document.querySelector(selector)
+    return `<div id="card-${name}" class="card">
+      <img class="card-image" alt="${name}" src="${getPokemonImageURL(id)}" />
+      <h3 class="card-title">
+        ${name}
+        <button class="card-delete primary-background primary-color" name="${name}" id="${deleteId}"><i class="material-icons">delete</i></button>
+      </h3>
+    </div>`
+  })
 
-  if (!element) {
-    showError(Error('No element for provided selector found'))
-    return
-  }
+  render(SELECTORS.list, pokemonMarkupArray.join('<br />'))
 
-  element.innerHTML = markup
+  deleteIcons.forEach(iconId => {
+    const element = document.getElementById(iconId)
+    element.addEventListener('click', removeFromList)
+  })
 }
 
 /**
@@ -66,9 +55,8 @@ function render(selector, markup) {
  * So we wrap async code to be able to call await.
  */
 async function start() {
-  console.log(await getPokemon(BASE_URL))
-
-  render('#insert', `<h1>POKEMON</h1>`)
+  let pokemonList = await getPokemonList(BASE_URL)
+  renderPokemonList(pokemonList)
 }
 
 start()
