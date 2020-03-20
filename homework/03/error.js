@@ -10,24 +10,26 @@ function showError(error) {
 
   render(
     SELECTORS.error,
-    `<div class="error-message">Something went wrong</div><i id="${ICON_ID}" class="material-icons error-close">close</i>`
+    `<div class="error-message">Something went wrong</div>
+    <i id="${ICON_ID}" class="material-icons error-close">close</i>`
   )
 
   const closeIcon = document.getElementById(ICON_ID)
   closeIcon.addEventListener('click', close)
 
+  // there is no need to remove event listener because it will be removed when element is removed.
+  // If we used display:none then event listener could be duplicated.
+
   /**
    * Function that hides error message. Also removes listeners and clears interval (to avoid double call when closed manually)
    */
   function close() {
-    // if (timer) {
-    //   clearTimeout(timer)
-    // }
+    if (timer) {
+      clearTimeout(timer)
+    }
 
-    closeIcon.removeEventListener('click', close)
     render(SELECTORS.error, '')
-    isErrorVisible = false
   }
 
-  // const timer = setTimeout(close, 5000)
+  const timer = setTimeout(close, 5000)
 }

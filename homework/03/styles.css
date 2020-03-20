@@ -16,6 +16,10 @@ body {
   background-color: #da4533;
 }
 
+.mL8 {
+  margin-left: 8px;
+}
+
 /* ERROR */
 
 #error {
@@ -120,6 +124,10 @@ body {
   font-weight: 400;
   text-align: center;
   position: relative;
+}
+
+.card-show-more {
+  margin-top: 100px;
 }
 
 .card-delete {
