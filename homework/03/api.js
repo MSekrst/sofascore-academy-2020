@@ -1,9 +1,8 @@
-// TODO: add cache layer for all API calls
 
 /**
  * Used to cache pokemon list for each call to avoid unnecessary API calls.
  *
- * IMPORTANT: this is global variable visible from other files!s
+ * IMPORTANT: this is global variable visible from other files!
  */
 const pokemonListCache = {}
 
