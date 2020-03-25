@@ -16,7 +16,7 @@ export class List extends React.Component {
       <div>
         <h3>
           {words.map((word, index) => (
-            <span key={index} style={{ marginLeft: 8 }}>
+            <span key={`${word}-${index}`} style={{ marginLeft: 8 }}>
               {word}
             </span>
           ))}

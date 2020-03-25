@@ -2,7 +2,7 @@ import React from 'react'
 
 export class Greeting extends React.Component {
   render() {
-    //Object deconstruction is very common in React. It will create variables with values from object with the same name
+    // Object deconstruction is very common in React. It will create variables with values from object with the same name
     // in our case:
     // `const isUppercase = this.props.isUppercase`
     // `const color = this.props.color` and so on

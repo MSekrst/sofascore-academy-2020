@@ -23,7 +23,7 @@ export class Clock extends React.Component {
 
   // clean interval
   componentWillUnmount() {
-    clearInterval(this.timerId) // what wil happen if we forget to clear interval?
+    clearInterval(this.timerId) // what will happen if we forget to clear interval?
   }
 
   render() {

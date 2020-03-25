@@ -5,6 +5,18 @@ const specialButtonStyle = {
   backgroundColor: 'tomato',
 }
 
+class Button extends React.Component {
+  render() {
+    const { isActive, value, name, onClick, children } = this.props
+
+    return (
+      <button style={isActive ? specialButtonStyle : {}} value={value} name={name} onClick={onClick}>
+        {children}
+      </button>
+    )
+  }
+}
+
 export class Counter extends React.Component {
   // constructor is always called with props
   constructor(props) {
@@ -37,23 +49,16 @@ export class Counter extends React.Component {
 
     return (
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <button
-          style={lastClicked === 'decrement' ? specialButtonStyle : {}}
-          value={-1}
-          name="decrement"
-          onClick={this.updateCounter}
-        >
+        <Button isActive={lastClicked === 'decrement'} value={-1} name="decrement" onClick={this.updateCounter}>
           -
-        </button>
-        <div>&nbsp;{counter}&nbsp;</div>
-        <button
-          style={lastClicked === 'increment' ? specialButtonStyle : {}}
-          value={1}
-          name="increment"
-          onClick={this.updateCounter}
-        >
+        </Button>
+
+        <div> {counter}&nbsp;</div>
+
+        <Button isActive={lastClicked === 'increment'} value={1} name="increment" onClick={this.updateCounter}>
           +
-        </button>
+        </Button>
+
         {/* Can we write those buttons better 🤔 */}
       </div>
     )
