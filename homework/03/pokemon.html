@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pokemon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- favicon is icon displayed in browser tab with title -->
+    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+
+    <!-- custom modules -->
+    <script src="error.js"></script>
+    <script src="api.js"></script>
+    <script src="render.js"></script>
+  </head>
+
+  <body>
+    <div id="error" class="primary-color"></div>
+
+    <header class="header primary-background primary-color">
+      <h1 class="header-title">
+        Pokemon
+      </h1>
+    </header>
+
+    <main class="main"><div class="card-container" id="pokemon"></div></main>
+
+    <!-- main script is body to ensure that DOM nodes exist -->
+    <script src="script.js"></script>
+  </body>
+</html>
