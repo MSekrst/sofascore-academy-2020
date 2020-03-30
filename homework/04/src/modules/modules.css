@@ -1,0 +1,19 @@
+.joke-punchline {
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 8px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.joke-no-setup {
+  opacity: 0.8;
+}
+
+.joke-punchline-hidden {
+  opacity: 0.15;
+}
+
+.button-wrapper {
+  padding: 8px;
+  text-align: center;
+}

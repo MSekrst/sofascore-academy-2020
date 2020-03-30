@@ -1,0 +1,44 @@
+html {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  background-color: #000;
+  color: #dedede;
+}
+
+.color-primary {
+  color: #bb86fc;
+}
+
+.color-background {
+  background-color: #1e1e1e;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+main {
+  margin-top: 70px;
+  padding-top: 6px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3e3e3e;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #5e5e5e;
+}
