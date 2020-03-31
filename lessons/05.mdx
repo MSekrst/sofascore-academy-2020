@@ -1,0 +1,364 @@
+import { themes, Head, Footer, Header, Steps, Notes, Invert } from 'mdx-deck'
+import './styles.css'
+
+export const theme = { ...themes.highlight }
+
+<!-- general markup for all slides -->
+
+<Head>
+  <title>SofaScore Academy 5</title>
+</Head>
+<Header>
+  <div className="tC m8">SofaScore Academy 2020.</div>
+</Header>
+<Footer>
+  <div className="tR m8">Lesson 5 - React.js - Hooks</div>
+</Footer>
+
+<!-- Slides -->
+
+# Lesson 5
+
+## React.js - Hooks
+
+---
+
+# React Performance
+
+- Browser DOM is slow and inconsistent
+- Reuse DOM
+- SyntheticEvent
+  - Browser universal event wrapper
+  - Pooled
+  - Reused
+
+<Notes>
+
+- DOM is slow because it is large date structure(tree) that has to be modified and traversed. 
+Removing elements and inserting new ones is costly because all children have to be removed and inserted again.
+DOM implementation can be different between multiple browser vendors (inconsistent returns, method names, ...)
+- React will try to reuse as much DOM as possible (remove and add only necessary elements, minimize DOM navigation).
+- SyntheticEvent - All DOM events in React are wrapped in SyntheticEvent wrapper. SyntheticEvent has all properties of native browser event (`target`, `currentTarget`, `stopPropagation`, `preventDefault`, ...).
+SyntheticEvent guarantees same event structure in all browsers and takes care of inconsistencies. 
+SyntheticEvent is event agnositc (works with any event) and it can be pooled and reused for any event. 
+React has pools of SyntheticEvents to avoid event creation, which makes runtime performant, 
+but developers have to be careful not to reference SyntheticEvent properties directly, or perform async work on event instance, 
+because after event lifetime, event will return to pool and its properties will be reset to null.
+
+</Notes>
+
+---
+
+import { EventPooling } from './05-files/EventPooling'
+
+<Invert>
+
+# Event Pooling - Example
+
+<EventPooling />
+
+</Invert>
+
+---
+
+# Virtual DOM
+
+- Virtual representation of UI in memory
+- Abstracts DOM manipulations, event handling
+- Synced with real DOM -> **reconciliation**
+
+<Notes>
+
+- React will make all changes and calculations on efficient Virtual DOM. Once Virtual DOM is finished, React will calculate diff with real DOM to find needed changes (minimal set).
+Those minimal changes will be made.
+- Virtual DOM is responsible for all DOM manipulations. It will also comunicate DOM changes to browser. All Virtual DOM tasks are performed by `reactDOM` library.
+`reactDOM` is connection between `react` and browser (`react` is platform agnostic, it will work in browser, on mobile phones, on servers, antwhere where JS would work). 
+Target platform is determined by wrapper library (`reactDOM` -> browser, server; `react-native` -> Mobile Apps)
+- Reconciliation - process of syncing virtual and real DOM.
+
+</Notes>
+
+---
+
+# Reconciliation algorithm
+
+- Assumptions:
+  - Two elements of different type will produce different trees.
+  - Developer can hint which child elements are stable across renders (`key` prop)
+- Determines component lifecycle (update, mount, unmount)
+
+<Notes>
+
+- Assumptions: If we change element type (div -> span) tree will be different and it should be replaced (remove old, insert new tree). 
+Don't change element type if not necessary.
+Use `key` prop to mark stable elements. Stable elements can be reused if `key` stays the same. 
+Don't change keys if not necessary and don't switch keys between two elements (especially of the same type, e.g. `div` ).
+- If element rerenders -> update lifecycle will be called (`getDerivedStateFromProps`, `render`, `componentDidUpdate`), state is preserved.
+- If element is removed and inserted -> unmount and mount lifecycles will be called (`componentWillUnmount`, `constructor`, `getDerivedStateFromProps`, `render`, `componentDidMount`), state is not preserved.
+- [Reconciliation in details](https://reactjs.org/docs/reconciliation.html)
+
+</Notes>
+
+---
+
+# Performance - Developers
+
+- Minimize expensive DOM operations -> follow reconciliation rules
+- **Minimize number of unnecessary rerenders**
+- When will rerender happen:
+  - Prop change - (prop value or reference)
+  - State change
+  - `this.forceUpdate()`
+  - When parent rerenders
+
+<Notes>
+
+- Avoid unnecessary expensive DOM operations (replacing elements).
+- Rerenders can be slow (big lists, lot of elements, ...) and cause UX problems (flickering, mistimed animations, ...).
+React will try its best to preserve DOM structure, so rerenders could be cheap (if there are no DOM changes).
+Developers should know when components should rerender and how to avoid unnecessary rerenders.
+Component will rerender if:
+  1. Props change -> Props with new value should rerender, props with new reference could avoid rerender (if object reference changes, object can still have same properties -> no need to rerender).
+  Just be cautius when diffing, as diff process can take longer then rerender.
+  2. State change -> Few valid use-cases when state change doesn't need rerender. If state change doesn't need rerender it's often sign of bad state architecture (part of state should be ordinary variable, or prop)
+  3. When `this.forceUpdate()` called -> Used for complex multistep animations (could be replaced with carfully crafted state).
+  4. When parent rerenders -> Common performance problem. When parent rerenders, all its children will also rerender, and those rerenders could possibly be avoided. This problem is solved with component arhitecture: keep changes as deep in tree as possible. Rerenders deeper in the tree will trigger fewer rerenders than those up the tree.
+
+</Notes>
+
+---
+
+# Functional Programming
+
+- Computation is evaluation of functions
+- Immutable data
+- Pure functions
+- No side effects
+- High order functions - take other functions as arguments
+- Benefits:
+  - Reduced complexity
+  - Testability
+
+<Notes>
+
+- In FP everything should be expressed as function.
+- Immutable data -> Program data cannot be mutated in any way and there are no state changes. JavaScrpt has `Object.freeze` method and various libraries (e.g. `immutable.js`)
+- **Pure Function** - function that always returns same output for the same input. 
+Function is pure if it depends only on function arguments, which are not mutated in any way (read only).
+Pure function has no side effects and can be replaced with its output.
+- Side Effects - changes in system caused by some function (memory, network, I/O). Side effects are fetch requests, file system interactions, variable mutations, ...
+- Reduced complexity - functions are easier to understand as they are more predictable
+- Testability - pure functions are easiliy unit tested, just test input - output pairs (as they should always be same)
+
+</Notes>
+
+---
+
+# Pure Function - Example
+
+```js
+function circleCircumference(radius) {
+  return radius * Math.PI
+}
+
+function circleCircumferencePure(radius, PI) {
+  return radius * PI
+}
+
+circleCircumferencePure(5, Math.PI)
+```
+
+<Notes>
+
+- Common mistake is usage of language constants, they influence input, so they must be passed as argument.
+
+</Notes>
+
+---
+
+# Functional Components
+
+- Simple React components
+- Function: `(props) => Markup`
+- Can be imagined as class component with only render method
+
+<Notes>
+
+- Used in simple use cases where state or life cycle methods aren't needed
+- Functional components can be imagines as only `render` method of class components
+
+</Notes>
+
+---
+
+<Invert>
+
+# Functional Component - Example
+
+```react
+function Button({ children, value, onClick }) {
+  return (
+    <button value={value} onClick={onClick}>
+      {children}
+    </button>
+  )
+}
+```
+
+</Invert>
+
+---
+
+# React Hooks
+
+- Extend capabilities of functional components
+  - Add class component features
+- Can add state, side effects, memoization
+- Rules: 
+  - Always same number of hooks
+  - Only in top level of functional component
+  - Dependency array
+- Prefixed with `use*`
+- Component can have multiple hooks of same type
+
+<Notes>
+
+- Allow functional components to replace class components, as class components could be deprecated in later versions of React.
+- Hooks enforce some rules:
+  - Component should always have same number of hooks across (re)renders. Developers shouldn't add hooks conditionaly or return before all hooks were called.
+  - Hooks can only be specified in top level of functional component. Developers should add hooks only in main component block. Hooks cannot be added in `if` or any other block (`for`, `switch`) 
+  - All hooks have dependency array (except `useState` hook which runs on every state change). Dependency array determines when should hook rerun. 
+  If variable in dependency array changes, hook will rerun, if empty dependency array is provided, hook will never rerun.
+- Multiple hooks of same type can be used to enable developers to write SRP compatible functions and provide differrent dependency arrays for different hooks of same type.
+
+</Notes>
+
+---
+
+# `useState`
+
+- Adds state to functional component
+- Whole state must be always set
+  - Provide whole next state not only changes
+- No dependency array 
+  - Has explicit setter for state change
+- **`const [state, setState] = React.useState(initialState)`**
+
+<Notes>
+
+- Encapuslate state in functional components
+- Difference with `setState`: `setState` will merge new state with existing state, so developers can provide only changes.
+ Hook setter won't merge provided new state with existing state, new state will be anything developer provides to setter.
+
+</Notes>
+
+---
+
+import { UseState } from './05-files/UseState'
+
+<Invert>
+
+# `useState` - Example
+
+`const [count, setCount] = React.useState(0)`
+
+<UseState />
+
+</Invert>
+
+---
+
+# `useEffect`
+
+- Perform side effects in functional components 
+- Run some code on component update
+- Can return function (Cleanup function)
+  - Cleanup will be called when component is unmounted
+  - Cleanup will be called before next rerun
+- `componentDidMount`, `componentDidUpdate`, `componentWillUnmount` in one
+- `useEffect(() => { /* do something */ }, [/* dependency array */])`
+
+<Notes>
+
+- Side effects are effects observed from outside of a function (fetch request, event listeners, timers).
+- `useEffect` is used to make side effects on each update (or when variables in dependency array change).
+- Effect function can return cleanup function, which is called on unmount or before next rerun. 
+Cleanup function is useful when developers have to remove event listeners, clear timers, etc. 
+If cleanup wouldn't be called before rerun, listeners or timers would be duplicated, so before next rerun, cleanup is called to remove previous listeners or timers.
+
+</Notes>
+
+---
+
+import { UseEffect } from './05-files/UseEffect'
+
+<Invert>
+
+# `useEffect` - Example
+
+<UseEffect />
+
+</Invert>
+
+---
+
+# `useMemo`
+
+- Used to memoize **value** of some operation
+- Memoize expensive operations
+- No side effects -> use `useEffect`
+- No guarantees that function will not rerun with same input
+- `const memoizedValue = useMemo(() => computeSomething(a, b), [a, b]);`
+
+<Notes>
+
+- Memoize return value for input argument, useful for expensive operations and calculations.
+- Shouldn't perform side effects
+- Can't guarantee that memoized value won't be removed from memory and recaluclated.
+
+</Notes>
+
+---
+
+import { UseMemo } from './05-files/UseMemo'
+
+<Invert>
+
+# `useMemo` - Example
+
+<UseMemo />
+
+</Invert>
+
+---
+
+# `useCallback`
+
+- Used to memoize function (Not function result)
+- Memoize handlers passed as props to avoid reference changes to handlers
+- `const callback = useCallback(() => { /* do something */ }, [ /* dependencies */ ])`
+- `useCallback(fn, deps)` is equivalent to `useMemo(() => fn, deps)`
+
+<Notes>
+
+- Memoizes function without excuting it, while `useMemo` executes function and memoizes value.
+- Used to memoize handlers to avoid new handler reference on each render -> causes unnecessary rerenders where handler is passed as prop
+- `useCallback` can be written as `useMemo` where function returns memoized handler.
+
+</Notes>
+
+---
+
+import { UseCallback } from './05-files/UseCallback'
+
+<Invert>
+
+# `useCallback` - Example
+
+<UseCallback />
+
+</Invert>
+
+---
+
+# HOMEWORK & PROJECT
