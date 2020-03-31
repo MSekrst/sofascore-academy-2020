@@ -9,14 +9,14 @@ import React from 'react'
 //   }
 // }
 
-function Text(props) {
-  console.log('rendering text')
+function BadText(props) {
+  console.log('Rendering text')
 
   return <p onClick={props.onClick}>Clickable text</p>
 }
 
 // React.Memo is used to memoize function results outside functional components. Inside components use `useMemo` hook.
-// const Text = React.memo(BadText)
+const Text = React.memo(BadText)
 
 export function UseCallback() {
   const [number, setNumber] = React.useState(0)

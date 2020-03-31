@@ -5,14 +5,14 @@ export function UseState() {
   const [count, setCount] = React.useState(0)
 
   return (
-<div>
-  <p>Count: {count}</p>
-  <button onClick={() => setCount(count + 1)}>ADD ONE</button>
-</div>
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>ADD ONE</button>
+    </div>
   )
 }
 
- class UseStateClass extends React.Component {
+class UseStateClass extends React.Component {
   constructor(props) {
     super(props)
 

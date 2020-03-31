@@ -18,9 +18,7 @@ export function UseMemo() {
   const [searchDetailLevel, setSearchDetailLevel] = React.useState(1e3)
 
   // memoize function result, return same value until variable in dependency arrays changes
-  const result = React.useMemo(() => {
-    return takeLongToReturnRandomNumber(searchDetailLevel)
-  }, [searchDetailLevel])
+  const result = React.useMemo(() => takeLongToReturnRandomNumber(searchDetailLevel), [searchDetailLevel])
 
   console.log('Result =', result)
 
