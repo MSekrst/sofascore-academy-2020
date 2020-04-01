@@ -1,0 +1,120 @@
+/* 
+  HEADER
+*/
+
+.header {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+}
+
+/* 
+  BUTTON
+*/
+
+.button {
+  padding: 12px 24px;
+  background-color: transparent;
+  border: none;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 700;
+  outline: none;
+  transition: opacity 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+/* 
+  CARD
+*/
+
+.card {
+  max-width: 640px;
+  flex: 1 0 296px;
+  margin: 12px auto;
+}
+
+@media (min-width: 638px) {
+  .card {
+    max-width: 800px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card {
+    max-width: 850px;
+    flex: 1 0 600px;
+  }
+}
+
+.card-content {
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* 
+  LOADER
+*/
+
+.loader {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+}
+
+.loader:after {
+  content: ' ';
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 6px solid;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  animation: spinner-loader 1s linear infinite;
+}
+
+@keyframes spinner-loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(40deg);
+  }
+  50% {
+    transform: rotate(120deg);
+  }
+  75% {
+    transform: rotate(200deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.checkbox-label {
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+  padding-left: 40px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox {
+}
+
+.checkbox-checkmark {
+}
