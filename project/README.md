@@ -39,12 +39,13 @@ Following is the list of user stories. Stories in bold are required, stories in 
 
 #### Stories:
 
-BASIC
+UI
 
 - **User should be able to use app on mobile device**
 - **User should be able to use app on computer screen**
+- _User can change application theme (dark / light)_
 
-LOGIN & REGISTRATION
+LOGIN
 
 - **User can login in application with `username` and `password`**
 - _User can choose to remember his login information for instant login next time`_
@@ -76,10 +77,6 @@ USER
 - _User can change password and username_
 - _User can see other users profiles_
 
-UI
-
-- _User can change application theme (dark / light)_
-
 ## Design
 
 UI design is totally left to developers. Only constraints are in UI library and frameworks department. This project is great opportunity to learn foundational CSS and HTML skills that will be useful throughout your whole career, so usage of Bootstrap, Foundation or any other 3rd party framework, library is forbidden.
@@ -88,7 +85,8 @@ UI design is totally left to developers. Only constraints are in UI library and 
 
 If you are not 100% how should something look like, feel free to borrow some ideas from other web pages. If you want more cutting edge designs try to find inspiration on [Dribble](https://dribbble.com/).
 
-Keep in mind that simple design is easier to implement and often looks clean and fresh.
+Keep in mind that simple design is easier to implement and often looks clean.
+
 Simple design tips:
 
 - Don't incorporate many different colors (e.g. use black, white and simple color highlight)
@@ -128,7 +126,7 @@ Definitions:
 
 ## Testing
 
-Write testes where it makes sense. Reducers are core logic and should be fully tested. Basic components can also be easily tested. Testing more complex components will uncover most bugs but is more complex, so try writing few complex tests to get grasp of testing problems (test integration of more components, proper event handling, etc.). Test are good indicator of code architecture quality. If component or function can be easily tested that indicates that architecture is good and vice versa.
+Write tests where it makes sense. Reducers are core logic and should be fully tested. Basic components can also be easily tested. Testing more complex components will uncover most bugs but is more complex, so try writing few complex tests to get grasp of testing problems (test integration of more components, proper event handling, etc.). Test are good indicator of code architecture quality. If component or function can be easily tested that indicates that architecture is good and vice versa.
 
 ## API
 
