@@ -130,14 +130,16 @@ Write tests where it makes sense. Reducers are core logic and should be fully te
 
 ## API
 
-Backend API will be available with basic documentation. API will try to cover most user stores, but if developers feel the API is missing some feature, feature can be added to an API, just contact me.
+Backend API will be available with basic documentation. API will try to cover most user stores, but if developers feel the API is missing some features, features can be added to an API, just contact me.
 
-_FURTHER API INFO WILL BE MADE AVAILABLE_
+API is separate repository so detailed API info will be there.
+
+[API Repository](https://github.com/MSekrst/private-leagues-api)
 
 ## Deployment
 
 When application gets to final stages, it would be great to think of a deployment possibilities. Deployment will allow users to access application via Internet connection.
 
-There are many free deployment providers to choose from ([Zeit Now](https://zeit.co), [Netlify](https://www.netlify.com/)).
+There are many free deployment providers to choose from ([Zeit Now](https://zeit.co), [Netlify](https://www.netlify.com/)), [Heroku](https://heroku.com).
 
 If you need further help with deployment I can assist you as I have some limited experience with Zeit Now.
