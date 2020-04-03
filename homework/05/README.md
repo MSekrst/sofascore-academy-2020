@@ -16,7 +16,7 @@ Try to use hooks we've covered so far, also handle edge cases (empty fields, inc
 To complete login process you have to provide `username` and `password` that user inserted. Credentials are then sent to
 `https://private-leagues-api.herokuapp.com/api/login`. Note that route only receives POST requests with correct `Content-Type`.
 
-Dummy user is already created in the database (`username` is `test-user` and `password` is `test-user-password`) so use this credentials to archive successful login.
+Dummy user is already created in the database (`username` is `testUser` and `password` is `testUser-password`) so use this credentials to archive successful login.
 
 ## Help
 
