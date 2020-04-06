@@ -74,7 +74,7 @@ EVENT
 USER
 
 - **User can see own profile**
-- _User can change password and username_
+- _User can change profile data_
 - _User can see other users profiles_
 
 ## Design
