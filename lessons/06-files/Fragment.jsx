@@ -5,7 +5,7 @@ const data = [
   { name: 'Frontend', surname: 'Academy' },
 ]
 
-// this example is forced to showcase React Fragment use case. Architecture is bad fot the purpose of this example 😄
+// this example is forced to showcase React Fragment use case. Architecture is bad for the purpose of this example 😄
 
 export function Table() {
   return (

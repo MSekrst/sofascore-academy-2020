@@ -17,7 +17,7 @@ export const theme = { ...themes.highlight }
 
 <!-- Slides -->
 
-# Lesson 5
+# Lesson 6
 
 ## React.js - Advanced Concepts
 
@@ -157,6 +157,147 @@ import { Form } from './06-files/ForwardingRefs'
 
 ---
 
+# React Reusability & Separation
+
+- Often some logic can be reused or separated to new file
+- Separate logic and presentation in different places
+- Insert logic into component from other component (or function)
+- React patterns (Decorator Design pattern)
+  - High Order Component
+  - Render Props
+  - Custom hooks
+
+<Notes>
+
+- Separation of concerns is important principe in software development
+- React allows us to insert logic into component via common React patterns (which are in fact Decorator design pattern):
+  - Hight Order Components(HOC)
+  - Render Props
+  - Custom hooks
+- Decorator pattern is called that because it decorates some code(component) with logic or behaviour
+
+</Notes>
+
+---
+
+# High Order Component
+
+- Function which receives component as argument
+- Returns new component which renders provided component
+- Provided component must not be mutated
+- Passes handler or value to component via props
+  - Problem when passed prop is already in use by component (in `this.props`)
+- Often starts with `with*`
+
+```react
+const ComponentWithBehaviour = withBehaviour(Component => {
+  // props for Component provided
+  return function(props) {
+    const behaviour /* value or function added to component */
+
+    return <Component behaviour={behaviour} {...props} />
+  }
+})
+```
+
+<Notes>
+
+- Function that wraps provided component into new component with desired logic.
+- Component should not be mutated, it can only be decorated with new props.
+- Note how `props` are spread on component provided. In props are own props for provided component.
+  This is place where problems can happen if decorated prop has same name as some prop on component, as decorated prop would be overridden.
+- HOC usualy have `with` prefix
+- HOC are used in some popular libraries (`withRouter` in `react-router`, or `connect` in `redux`)
+
+</Notes>
+
+---
+
+import { TextWithIsMobile } from './06-files/HOC'
+
+<Invert>
+
+# High Order Component - Example
+
+<TextWithIsMobile color="red" />
+
+</Invert>
+
+---
+
+# Render Prop
+
+- Component without conventional render method
+  - Receives render method as prop
+- Component with logic and without presentation
+  - Calls provided render with enhancements
+- Render is often passed as `children` or as `render` prop
+
+```react
+// decorated component
+function Component(props) => {
+  return <RenderPropComponent render={enhancements => /* do something with enhancements */} />
+})
+```
+
+<Notes>
+
+- Component with render method as prop (render method is provided via `children` or `render` prop)
+- More declerative usage then HOC, as it is used inside component that is decorated, so prop name colision is fixed.
+- Can substitute HOC and vice versa.
+- Render Prop is used in some popular libraries (`render prop` in `react-router`, or `Downshift` in `downshift`)
+
+</Notes>
+
+---
+
+import { Text } from './06-files/RenderProp'
+
+<Invert>
+
+# Render Prop - Example
+
+<TextWithIsMobile color="green" />
+
+</Invert>
+
+---
+
+# Custom Hook
+
+- Function that is called inside functional components
+  - Returns enhancements that will be used in functional components
+
+```react
+// decorated component
+function Component(props) => {
+  const enhancements = useCustomHook()
+
+  return /* do something with enhancements */} />
+})
+```
+
+<Notes>
+
+- Ordinary function that returns some enhancements and decorates component which called it
+- Cleanest syntax, easier to understand
+
+</Notes>
+
+---
+
+import { TextCustomHook } from './06-files/CustomHook'
+
+<Invert>
+
+# Custom hooks - Example
+
+<TextCustomHook color="blue" />
+
+</Invert>
+
+---
+
 # React Context
 
 - Share data bewtween components
@@ -203,67 +344,34 @@ import { ThemedApp } from './06-files/Context'
 
 # React Portal
 
-- add components outside hierarchy
-  - modals, dialogs, absolute elements
-- Singelton
+- Render children outside of DOM hierarchy
+  - Used with modals, dialogs, notifications
+- Commonly used with Singleton pattern
+- ReactDOM specific
+- `ReactDOM.createPortal(child, container)`
+- Event propagation and Context work as it is still in hierarchy
+
+<Notes>
+
+- Sometimes there is use-case to add some markup or component outside DOM hierarchy.
+  Those use-cases often include modals, dialogs, app level notifications and errors.
+- Singleton pattern is common as apps usualy have only one element over others.
+- Portal is in `reactDOM` package, so it can be used only for web applications.
+- `ReactDOM.createPortal(child, container)` will render child (any viable child) into provided **DOM container**.
+- Markup will be in container element but event propagation and context will behave based on hierarchy.
+  In example, event triggered in modal will propagate to the component that rendered Portal.
+  Same rule applies to context, modal could consume providers that it could consume if it wasn't portal.
+
+</Notes>
 
 ---
+
+import { TopLevelPortal } from './06-files/Portal'
 
 <Invert>
 
 # React Portal - Example
 
-- modal example
+<TopLevelPortal />
 
 </Invert>
-
----
-
-# High Order Component / Render Props / Custom Hooks
-
-- reuse logic, atomic components (SRP)
-- insert logic into existing components
-- HOC -> via props (can colide with existing props)
-- RP -> avoids colliding, more expressive
-- Custom hooks
-
----
-
-<Invert>
-
-# High Order Component / Render Props / Custom hook - Example
-
-- Toggle reuse (On / off) -> switch, accordion
-
-</Invert>
-
----
-
-# Reducers
-
-- definition
-- graph -> state - action - reducer - state
-- redux
-
----
-
-# `useReducer`
-
-- complex state manipulations
-  - when single change makes multiple state changes (set data, reset loader, reset error)
-- `useState` must set whole state
-- `useReducer` can set partial state
-
----
-
-<Invert>
-
-# `useReducer` - Example
-
-- fetch example with loader and error
-
-</Invert>
-
----
-
-# REDUX

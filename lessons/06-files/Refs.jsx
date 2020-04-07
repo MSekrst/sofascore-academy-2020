@@ -15,7 +15,7 @@ export function Refs() {
     }
   }, [formRef])
 
-  // can we recalculate width when it changes?
+  // can we recalculate heigh when it changes 🤔
 
   getHeight()
 
@@ -38,7 +38,7 @@ class Form extends React.Component {
     this.inputRef = React.createRef(null)
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault()
 
     console.log({ inputRef: this.inputRef })
@@ -51,8 +51,8 @@ class Form extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <input style={{ width: 500 }} ref={this.inputRef} type="text" placeholder="Text" />
-        <button style={{ width: 200 }}>Submit</button>
+        <input style={{ width: 500, border: '1px solid' }} ref={this.inputRef} type="text" placeholder="Text" />
+        <button style={{ width: 200, border: '1px solid' }}>Submit</button>
       </form>
     )
   }

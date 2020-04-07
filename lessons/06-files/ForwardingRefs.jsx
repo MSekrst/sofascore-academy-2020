@@ -29,12 +29,12 @@ const InputFunction = ({ type = 'text', placeholder = '', label = '' }) => {
 
 class InputClass extends React.Component {
   render() {
-    const { type = 'text', placeholder = '', label = '' } = this.props
+    const { type = 'text', placeholder = '', label = '', innerRef } = this.props
 
     return (
       <label>
         {label}
-        <input type={type} placeholder={placeholder} />
+        <input ref={innerRef} type={type} placeholder={placeholder} />
       </label>
     )
   }
