@@ -6,7 +6,7 @@ function getIsMobile(width) {
 
 function withIsMobile(Component) {
   // Props here would be props assigned to Component
-  return function (props) { // what happens if we name our functional component?
+  return function WithIsMobile(props) { // what happens if we name our functional component?
     // isMobile that will be passed to provided Component
     const [isMobile, setIsMobile] = React.useState(getIsMobile(window.innerWidth))
 

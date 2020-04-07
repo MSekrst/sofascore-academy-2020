@@ -18,16 +18,16 @@ export function Form() {
   )
 }
 
-const InputFunction = ({ type = 'text', placeholder = '', label = '' }) => {
+const InputFunction = React.forwardRef(({ type = 'text', placeholder = '', label = '' }, ref) => {
   return (
     <label>
       {label}
-      <input type={type} placeholder={placeholder} />
+      <input ref={ref} type={type} placeholder={placeholder} />
     </label>
   )
-}
+})
 
-class InputClass extends React.Component {
+class _InputClass extends React.Component {
   render() {
     const { type = 'text', placeholder = '', label = '', innerRef } = this.props
 
@@ -40,3 +40,4 @@ class InputClass extends React.Component {
   }
 }
 
+const InputClass = React.forwardRef((props, ref) => <_InputClass innerRef={ref} {...props} />)

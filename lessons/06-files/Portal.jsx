@@ -50,8 +50,6 @@ function App() {
 function Modal({ children }) {
   const markup = <div style={{ position: 'fixed', top: 200, background: 'whitesmoke' }}>{children}</div>
 
-  // return markup
-
   const portalRoot = document.getElementById('portal-root')
 
   return ReactDOM.createPortal(markup, portalRoot)

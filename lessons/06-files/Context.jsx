@@ -22,17 +22,16 @@ export function ThemedApp() {
   console.log('Theme selected =', theme)
 
   return (
-    // can this changeTheme prop drilling be avoided 🤔
-    <ThemeProvider value={{ themeSelected: theme }}>
-      <App changeTheme={setTheme} />
+    <ThemeProvider value={{ themeSelected: theme, setTheme }}>
+      <App />
     </ThemeProvider>
   )
 }
 
-function App({ changeTheme }) {
+function App() {
   return (
     <div className="app-container">
-      <Header changeTheme={changeTheme} />
+      <Header />
       <Main />
       <Footer />
     </div>
@@ -41,11 +40,11 @@ function App({ changeTheme }) {
 
 //#region Layout - no theme needed
 
-function Header({ changeTheme }) {
+function Header() {
   return (
     <header className="layout-element">
       <Text>Pick theme:</Text>
-      <Select value="light" options={themeOptions} changeTheme={changeTheme} />
+      <Select options={themeOptions} />
     </header>
   )
 }
@@ -94,17 +93,17 @@ class Title extends React.Component {
   }
 }
 
-function Select({ options, changeTheme }) {
+function Select({ options }) {
   // get current theme from context via useContext hook
-  const { themeSelected } = React.useContext(ThemeContext)
+  const { themeSelected, setTheme } = React.useContext(ThemeContext)
 
   const handleChange = React.useCallback(
     event => {
       const newValue = event.currentTarget.value
 
-      changeTheme(newValue)
+      setTheme(newValue)
     },
-    [changeTheme]
+    [setTheme]
   )
 
   return (

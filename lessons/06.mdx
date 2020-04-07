@@ -251,7 +251,7 @@ import { TextWithIsMobile } from './06-files/HOC'
 
 ```react
 // decorated component
-function Component(props) => {
+function Component(props) {
   return <RenderPropComponent
     render={enhancements => /* do something with enhancements */}
   />
@@ -289,10 +289,10 @@ import { Text } from './06-files/RenderProp'
 
 ```react
 // decorated component
-function Component(props) => {
+function Component(props) {
   const enhancements = useCustomHook()
 
-  return /* do something with enhancements */} />
+  return /* do something with enhancements */}
 })
 ```
 

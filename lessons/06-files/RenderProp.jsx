@@ -5,7 +5,7 @@ function getIsMobile(width) {
 }
 
 // render prop is function which has to be called with enhancements
-function IsMobile({ render }) {
+function IsMobile({ children }) {
   const [isMobile, setIsMobile] = React.useState(getIsMobile(window.innerWidth))
 
   const resizeHandler = React.useCallback(e => {
@@ -23,18 +23,20 @@ function IsMobile({ render }) {
   }, [resizeHandler])
 
   // return render method provided via props with decoration arguments
-  return render(isMobile)
+  return children(isMobile)
 }
 
 export function Text({ color }) {
   return (
     // with Render prop, decoration is explicit and developers can name decorated arguments as wanted
-    <IsMobile
-      render={isMobile => (
-        <div style={{ color }}>
-          <p>Is mobile: {isMobile ? 'yes' : 'no'}</p>
-        </div>
-      )}
-    />
+    <IsMobile>
+      {isMobile => {
+        return (
+          <div style={{ color }}>
+            <p>Is mobile: {isMobile ? 'yes' : 'no'}</p>
+          </div>
+        )
+      }}
+    </IsMobile>
   )
 }

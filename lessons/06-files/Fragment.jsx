@@ -30,10 +30,9 @@ export function Table() {
 
 function Data({ data }) {
   return (
-    // this <div> element brakes table hierarchy (ideal place to use React Fragment)
-    <div>
+    <>
       <td>{data.name}</td>
       <td>{data.surname}</td>
-    </div>
+    </>
   )
 }

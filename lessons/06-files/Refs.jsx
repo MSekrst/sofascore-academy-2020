@@ -11,13 +11,19 @@ export function Refs() {
     if (formRef.current) {
       const height = formRef.current.getBoundingClientRect().height
 
-      console.log('Element height =', height)
+      console.log('Form element height =', height)
     }
   }, [formRef])
 
-  // can we recalculate heigh when it changes 🤔
+  React.useEffect(() => {
+    window.addEventListener('resize', getHeight)
 
-  getHeight()
+    return () => {
+      window.removeEventListener('resize', getHeight)
+    }
+  }, [])
+
+  // can we recalculate heigh when it changes 🤔
 
   return (
     <div>
