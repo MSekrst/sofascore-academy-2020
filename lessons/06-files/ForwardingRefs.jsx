@@ -39,3 +39,4 @@ class InputClass extends React.Component {
     )
   }
 }
+

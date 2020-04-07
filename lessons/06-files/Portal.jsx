@@ -48,11 +48,11 @@ function App() {
  * Note how Modal will be rendered outside hierarchy in the DOM, but will be kept in hierarchy in Virtual DOM
  */
 function Modal({ children }) {
-  // const markup = <div style={{ position: 'fixed', top: 200, background: 'whitesmoke' }}>{children}</div>
+  const markup = <div style={{ position: 'fixed', top: 200, background: 'whitesmoke' }}>{children}</div>
 
-  return children
+  // return markup
 
-  // const portalRoot = document.getElementById('portal-root')
+  const portalRoot = document.getElementById('portal-root')
 
-  // return ReactDOM.createPortal(markup, portalRoot)
+  return ReactDOM.createPortal(markup, portalRoot)
 }

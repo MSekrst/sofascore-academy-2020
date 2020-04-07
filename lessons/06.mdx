@@ -25,15 +25,15 @@ export const theme = { ...themes.highlight }
 
 # React Concepts (Patterns)
 
-- React patterns for fixing common problems:
+- React patterns for solving common problems:
   - Wrapping elements
   - Prop drilling
-  - Logic resuablity
+  - Logic reusablity
 
 <Notes>
 
-- React has some features that are used to solve common problems when building web apps. Those problems are:
-  - Every component must have exactly one top level element (most common is `div`). In some cases that wrapping can brake styles.
+- React empowers developers to solve common problems when building web apps. Those problems are:
+  - Every component must have exactly one top level element (most common is `div`). In some cases that wrapping can break styles.
   - Prop drilling -> Anti-pattern where props are passed through component tree (e.g. parent sends handler deeper down tree, more then few levels).
   - Logic is bound to components with presentation and as such is hardly reusable.
 
@@ -44,7 +44,7 @@ export const theme = { ...themes.highlight }
 # React Fragment
 
 - Can be used to wrap elements in the single element
-- Won't add top level element (Fragment) to the DOM
+- Won't top level element (Fragment) to the DOM
 - Long (`<React.Fragment>`) and short (`<>`) syntax
   - Short syntax can't have props (even `key`)
 
@@ -52,7 +52,7 @@ export const theme = { ...themes.highlight }
 
 - Commonly used in React codebases.
 - Fragment has no DOM representation and will be omitted from the DOM -> won't effect styles and hierarchies.
-- Short syntax is more used, but it can't take props (event `key`) so it should be avoided as top element for list items,
+- Short syntax is more used, but it can't take props (even `key`) so it should be avoided as top element for list items,
   where `key` is necessary (use long syntax there).
 
 </Notes>
@@ -157,24 +157,25 @@ import { Form } from './06-files/ForwardingRefs'
 
 ---
 
-# React Reusability & Separation
+# Reusability & Separation
 
-- Often some logic can be reused or separated to new file
-- Separate logic and presentation in different places
-- Insert logic into component from other component (or function)
-- React patterns (Decorator Design pattern)
+- Often some logic can be reused or separated to single place
+- Share logic between components
+  - Separate logic and presentation in different places
+  - Insert logic into component from other component (or function)
+- React patterns (similar to Decorator Design pattern)
   - High Order Component
   - Render Props
   - Custom hooks
 
 <Notes>
 
-- Separation of concerns is important principe in software development
-- React allows us to insert logic into component via common React patterns (which are in fact Decorator design pattern):
+- Separation of concerns is important principle in software development
+- React allows us to insert logic into component via common React patterns (which are in fact similar to Decorator design pattern):
   - Hight Order Components(HOC)
   - Render Props
   - Custom hooks
-- Decorator pattern is called that because it decorates some code(component) with logic or behaviour
+- Decorator pattern is called that because it decorates some code (component) with logic or behaviour
 
 </Notes>
 
@@ -184,9 +185,10 @@ import { Form } from './06-files/ForwardingRefs'
 
 - Function which receives component as argument
 - Returns new component which renders provided component
+  - Function that wraps provided component into new component with desired logic
 - Provided component must not be mutated
 - Passes handler or value to component via props
-  - Problem when passed prop is already in use by component (in `this.props`)
+  - Problem when passed prop is already in use by component (in `props`)
 - Often starts with `with*`
 
 ```react
@@ -227,8 +229,8 @@ import { TextWithIsMobile } from './06-files/HOC'
 
 # Render Prop
 
-- Component without conventional render method
-  - Receives render method as prop
+- Component without conventional render
+  - Receives render function as prop
 - Component with logic and without presentation
   - Calls provided render with enhancements
 - Render is often passed as `children` or as `render` prop
@@ -236,14 +238,16 @@ import { TextWithIsMobile } from './06-files/HOC'
 ```react
 // decorated component
 function Component(props) => {
-  return <RenderPropComponent render={enhancements => /* do something with enhancements */} />
+  return <RenderPropComponent
+    render={enhancements => /* do something with enhancements */}
+  />
 })
 ```
 
 <Notes>
 
 - Component with render method as prop (render method is provided via `children` or `render` prop)
-- More declerative usage then HOC, as it is used inside component that is decorated, so prop name colision is fixed.
+- More declerative usage then HOC, as it is used inside component that is decorated, so prop name collision is fixed.
 - Can substitute HOC and vice versa.
 - Render Prop is used in some popular libraries (`render prop` in `react-router`, or `Downshift` in `downshift`)
 
@@ -267,6 +271,7 @@ import { Text } from './06-files/RenderProp'
 
 - Function that is called inside functional components
   - Returns enhancements that will be used in functional components
+- Uses other React Hooks (`useState`, `useEffect`, ...)
 
 ```react
 // decorated component
@@ -280,7 +285,7 @@ function Component(props) => {
 <Notes>
 
 - Ordinary function that returns some enhancements and decorates component which called it
-- Cleanest syntax, easier to understand
+- Cleaner syntax, easier to understand
 
 </Notes>
 
@@ -300,8 +305,8 @@ import { TextCustomHook } from './06-files/CustomHook'
 
 # React Context
 
-- Share data bewtween components
-  - Data is passed from parent (`Provder`) to children (`Consumer`)
+- Share data between components in sub tree
+  - Data is passed from `Provider` to multiple `Consumer`
 - Consumers receive providers value
   - When Provider value changes, its consumers will rerender
 - Avoids prop drilling
@@ -313,18 +318,18 @@ import { TextCustomHook } from './06-files/CustomHook'
 
 - Prop drilling - In React data is passed top-down via props.
   Prop drilling is anti-pattern when some components receive props they don't need and pass them to their children components and patterns repeats deeper into tree.
-- React Context allows developers to share date between parent and mutiple children. Parent is called `Provider` as it provides value for children.
+- React Context allows developers to share data between parent and multiple children. Parent is called `Provider` as it provides value for children.
   Child is called `Consumer` as it consumes provided data.
 - Rules:
   - Provider has to be rendered above children (it has to be parent to children)
   - Consumer will receive data form nearest Provider of the same type (if multiple rendered).
   - When Provider value changes, all its Consumers will rerender, to get new value.
 - Context works with both class and functional components. To be more specific context can be consumed in class and in functional components.
-- Context is crated with `createContext` function. Function receives optional defaultValue which will be used as initial context value.
+- Context is created with `createContext` function. Function receives optional defaultValue which will be used as initial context value.
   Context contains two components (that are used from the outside):
   - Provider (`MyContext.Provider`)
   - Consumer (`MyContext.Consumer`)
-- Contexts are usualy added to separate file and they export `Context` itself, `Provider` and `Consumer` components.
+- Contexts are usually added to separate file and they export `Context` itself, `Provider` and `Consumer` components.
 
 </Notes>
 
@@ -349,13 +354,14 @@ import { ThemedApp } from './06-files/Context'
 - Commonly used with Singleton pattern
 - ReactDOM specific
 - `ReactDOM.createPortal(child, container)`
-- Event propagation and Context work as it is still in hierarchy
+- Event propagation and Context work as if it is still in hierarchy
 
 <Notes>
 
-- Sometimes there is use-case to add some markup or component outside DOM hierarchy.
-  Those use-cases often include modals, dialogs, app level notifications and errors.
-- Singleton pattern is common as apps usualy have only one element over others.
+- Sometimes there is use case to add some markup or component outside DOM hierarchy.
+  Those use cases often include modals, dialogs, app level notifications and errors.
+  It is used for components that pop out of layout (to aviod complex z-indexes)
+- Singleton pattern is common as apps usually have only one element over others.
 - Portal is in `reactDOM` package, so it can be used only for web applications.
 - `ReactDOM.createPortal(child, container)` will render child (any viable child) into provided **DOM container**.
 - Markup will be in container element but event propagation and context will behave based on hierarchy.

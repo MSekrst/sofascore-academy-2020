@@ -4,14 +4,15 @@ function getIsMobile(width) {
   return width < 450
 }
 
+// custom hook
 function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState(getIsMobile(window.innerWidth))
 
-  function resizeHandler(e) {
+  const resizeHandler = React.useCallback(e => {
     const width = e.currentTarget.innerWidth
     const newIsMobile = getIsMobile(width)
     setIsMobile(newIsMobile)
-  }
+  }, [])
 
   React.useEffect(() => {
     window.addEventListener('resize', resizeHandler)
@@ -19,7 +20,7 @@ function useIsMobile() {
     return () => {
       window.removeEventListener('resize', resizeHandler)
     }
-  }, [])
+  }, [resizeHandler])
 
   // return enhancements that will be used in decorated components
   return isMobile

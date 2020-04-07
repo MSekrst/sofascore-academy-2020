@@ -37,4 +37,5 @@ function Text({ isMobile, color }) {
   )
 }
 
+// component is decorated with isMobile props
 export const TextWithIsMobile = withIsMobile(Text)

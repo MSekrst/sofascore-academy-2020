@@ -8,11 +8,11 @@ function getIsMobile(width) {
 function IsMobile({ render }) {
   const [isMobile, setIsMobile] = React.useState(getIsMobile(window.innerWidth))
 
-  function resizeHandler(e) {
+  const resizeHandler = React.useCallback(e => {
     const width = e.currentTarget.innerWidth
     const newIsMobile = getIsMobile(width)
     setIsMobile(newIsMobile)
-  }
+  }, [])
 
   React.useEffect(() => {
     window.addEventListener('resize', resizeHandler)
@@ -20,7 +20,7 @@ function IsMobile({ render }) {
     return () => {
       window.removeEventListener('resize', resizeHandler)
     }
-  }, [])
+  }, [resizeHandler])
 
   // return render method provided via props with decoration arguments
   return render(isMobile)
