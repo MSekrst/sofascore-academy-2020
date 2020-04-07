@@ -1,0 +1,397 @@
+import { themes, Head, Footer, Header, Steps, Notes, Invert } from 'mdx-deck'
+import './styles.css'
+
+export const theme = { ...themes.highlight }
+
+<!-- general markup for all slides -->
+
+<Head>
+  <title>SofaScore Academy 6</title>
+</Head>
+<Header>
+  <div className="tC m8">SofaScore Academy 2020.</div>
+</Header>
+<Footer>
+  <div className="tR m8">Lesson 6 - React.js - Advanced Concepts</div>
+</Footer>
+
+<!-- Slides -->
+
+# Lesson 6
+
+## React.js - Advanced Concepts
+
+---
+
+# React Concepts (Patterns)
+
+- React patterns for solving common problems:
+  - Wrapping elements
+  - Prop drilling
+  - Logic reusablity
+
+<Notes>
+
+- React empowers developers to solve common problems when building web apps. Those problems are:
+  - Every component must have exactly one top level element (most common is `div`). In some cases that wrapping can break styles.
+  - Prop drilling -> Anti-pattern where props are passed through component tree (e.g. parent sends handler deeper down tree, more then few levels).
+  - Logic is bound to components with presentation and as such is hardly reusable.
+
+</Notes>
+
+---
+
+# React Fragment
+
+- Can be used to wrap elements in the single element
+- Won't top level element (Fragment) to the DOM
+- Long (`<React.Fragment>`) and short (`<>`) syntax
+  - Short syntax can't have props (even `key`)
+
+<Notes>
+
+- Commonly used in React codebases.
+- Fragment has no DOM representation and will be omitted from the DOM -> won't effect styles and hierarchies.
+- Short syntax is more used, but it can't take props (even `key`) so it should be avoided as top element for list items,
+  where `key` is necessary (use long syntax there).
+
+</Notes>
+
+---
+
+# React Fragment Usage
+
+### Long syntax
+
+```react
+<React.Fragment>
+  <h1>HELLO</h1>
+</React.Fragment>
+```
+
+### Short syntax
+
+```react
+<>
+  <h1>HELLO</h1>
+</>
+```
+
+---
+
+import { Table } from './06-files/Fragment'
+
+<Invert>
+
+# React Fragment - Example
+
+<Table />
+
+</Invert>
+
+---
+
+# React Refs
+
+- React is declerative and abstracts DOM manipulations
+- Gets reference on underlying DOM element
+  - Access DOM element properties (e.g. height, position, ...)
+- Returns object with `current` key set to DOM object or `null`
+- `useRef` hook - `const ref = userRef(null)`
+- `createRef` method - `this.ref = createRef(null)`
+
+<Notes>
+
+- React is declerative, it abstracts DOM elements and manipulations. Sometime developers need access to underlying DOM elements.
+- React Refs allows access to underlying DOM elements. Access to those elements allows developers to get element height, position, to add DOM attributes, ...
+- Refs can be used in class components and functional components via `useRef` hook.
+- Ref will be returned in object as `current` property. `current` property is reference to DOM element or null if element is not set.
+- Refs can be used inside class components (`createRef`) or inside functional components (useRef`) hook.
+- Refs are commonly used with generic base components (input, button).
+
+</Notes>
+
+---
+
+import { Refs } from './06-files/Refs'
+
+<Invert>
+
+# React Refs - Example
+
+<Refs />
+
+</Invert>
+
+---
+
+# Refs Forwarding
+
+- Ref added on React component will return that React component or `undefined`
+- `ref` is not available via props (same as `key`)
+- Tehnique of returning underlying DOM elements form components to parent component via `ref`
+- `React.forwardRef((props, ref) => JSX Markup)`
+
+<Notes>
+
+- Common use case is adding Ref to existing React component (e.g. `<Form ref={formRef} />`). This ref wouldn't work out of the box, at least not as expected.
+  It would return React component instead of DOM element if used on class component, or `undefined` if used on functional component.
+  That behaviour can be "fixed" with Forwating refs.
+- `ref` cannot be accessed via props, as it is internal to React and will be stripped (i.e. same as `key` prop).
+- Forwarding refs allow developers to add refs on React components and receive DOM element instead of React components.
+- Components taht should return DOM elmenents as ref should be wrapped in React.forwardRef and set provided ref to desired DOM element.
+
+</Notes>
+
+---
+
+import { Form } from './06-files/ForwardingRefs'
+
+<Invert>
+
+# React Forwarding Refs - Example
+
+<Form />
+
+</Invert>
+
+---
+
+# Reusability & Separation
+
+- Often some logic can be reused or separated to single place
+- Share logic between components
+  - Separate logic and presentation in different places
+  - Insert logic into component from other component (or function)
+- React patterns (similar to Decorator Design pattern)
+  - High Order Component
+  - Render Props
+  - Custom hooks
+
+<Notes>
+
+- Separation of concerns is important principle in software development
+- React allows us to insert logic into component via common React patterns (which are in fact similar to Decorator design pattern):
+  - Hight Order Components(HOC)
+  - Render Props
+  - Custom hooks
+- Decorator pattern is called that because it decorates some code (component) with logic or behaviour
+
+</Notes>
+
+---
+
+import { BloatedText } from './06-files/SeparationMotivation'
+
+<Invert>
+
+# Motivation - Example
+
+- Separate mobile devices from desktops
+
+<BloatedText color="orange" />
+
+</Invert>
+
+---
+
+# High Order Component
+
+- Function which receives component as argument
+- Returns new component which renders provided component
+  - Function that wraps provided component into new component with desired logic
+- Provided component must not be mutated
+- Passes handler or value to component via props
+  - Problem when passed prop is already in use by component (in `props`)
+- Often starts with `with*`
+
+```react
+const ComponentWithBehaviour = withBehaviour(Component => {
+  // props for Component provided
+  return function(props) {
+    const behaviour /* value or function added to component */
+
+    return <Component behaviour={behaviour} {...props} />
+  }
+})
+```
+
+<Notes>
+
+- Function that wraps provided component into new component with desired logic.
+- Component should not be mutated, it can only be decorated with new props.
+- Note how `props` are spread on component provided. In props are own props for provided component.
+  This is place where problems can happen if decorated prop has same name as some prop on component, as decorated prop would be overridden.
+- HOC usualy have `with` prefix
+- HOC are used in some popular libraries (`withRouter` in `react-router`, or `connect` in `redux`)
+
+</Notes>
+
+---
+
+import { TextWithIsMobile } from './06-files/HOC'
+
+<Invert>
+
+# High Order Component - Example
+
+<TextWithIsMobile color="red" />
+
+</Invert>
+
+---
+
+# Render Prop
+
+- Component without conventional render
+  - Receives render function as prop
+- Component with logic and without presentation
+  - Calls provided render with enhancements
+- Render is often passed as `children` or as `render` prop
+
+```react
+// decorated component
+function Component(props) {
+  return <RenderPropComponent
+    render={enhancements => /* do something with enhancements */}
+  />
+})
+```
+
+<Notes>
+
+- Component with render method as prop (render method is provided via `children` or `render` prop)
+- More declerative usage then HOC, as it is used inside component that is decorated, so prop name collision is fixed.
+- Can substitute HOC and vice versa.
+- Render Prop is used in some popular libraries (`render prop` in `react-router`, or `Downshift` in `downshift`)
+
+</Notes>
+
+---
+
+import { Text } from './06-files/RenderProp'
+
+<Invert>
+
+# Render Prop - Example
+
+<TextWithIsMobile color="green" />
+
+</Invert>
+
+---
+
+# Custom Hook
+
+- Function that is called inside functional components
+  - Returns enhancements that will be used in functional components
+- Uses other React Hooks (`useState`, `useEffect`, ...)
+
+```react
+// decorated component
+function Component(props) {
+  const enhancements = useCustomHook()
+
+  return /* do something with enhancements */}
+})
+```
+
+<Notes>
+
+- Ordinary function that returns some enhancements and decorates component which called it
+- Cleaner syntax, easier to understand
+
+</Notes>
+
+---
+
+import { TextCustomHook } from './06-files/CustomHook'
+
+<Invert>
+
+# Custom hooks - Example
+
+<TextCustomHook color="blue" />
+
+</Invert>
+
+---
+
+# React Context
+
+- Share data between components in sub tree
+  - Data is passed from `Provider` to multiple `Consumer`
+- Consumers receive providers value
+  - When Provider value changes, its consumers will rerender
+- Avoids prop drilling
+- Works with class and functional components (via hook)
+- `const MyContext = React.createContext(defaultContextValue)`
+- `const value = useContext(MyContext)`
+
+<Notes>
+
+- Prop drilling - In React data is passed top-down via props.
+  Prop drilling is anti-pattern when some components receive props they don't need and pass them to their children components and patterns repeats deeper into tree.
+- React Context allows developers to share data between parent and multiple children. Parent is called `Provider` as it provides value for children.
+  Child is called `Consumer` as it consumes provided data.
+- Rules:
+  - Provider has to be rendered above children (it has to be parent to children)
+  - Consumer will receive data form nearest Provider of the same type (if multiple rendered).
+  - When Provider value changes, all its Consumers will rerender, to get new value.
+- Context works with both class and functional components. To be more specific context can be consumed in class and in functional components.
+- Context is created with `createContext` function. Function receives optional defaultValue which will be used as initial context value.
+  Context contains two components (that are used from the outside):
+  - Provider (`MyContext.Provider`)
+  - Consumer (`MyContext.Consumer`)
+- Contexts are usually added to separate file and they export `Context` itself, `Provider` and `Consumer` components.
+
+</Notes>
+
+---
+
+import { ThemedApp } from './06-files/Context'
+
+<Invert>
+
+# React Context - Example
+
+<ThemedApp />
+
+</Invert>
+
+---
+
+# React Portal
+
+- Render children outside of DOM hierarchy
+  - Used with modals, dialogs, notifications
+- Commonly used with Singleton pattern
+- ReactDOM specific
+- `ReactDOM.createPortal(child, container)`
+- Event propagation and Context work as if it is still in hierarchy
+
+<Notes>
+
+- Sometimes there is use case to add some markup or component outside DOM hierarchy.
+  Those use cases often include modals, dialogs, app level notifications and errors.
+  It is used for components that pop out of layout (to aviod complex z-indexes)
+- Singleton pattern is common as apps usually have only one element over others.
+- Portal is in `reactDOM` package, so it can be used only for web applications.
+- `ReactDOM.createPortal(child, container)` will render child (any viable child) into provided **DOM container**.
+- Markup will be in container element but event propagation and context will behave based on hierarchy.
+  In example, event triggered in modal will propagate to the component that rendered Portal.
+  Same rule applies to context, modal could consume providers that it could consume if it wasn't portal.
+
+</Notes>
+
+---
+
+import { TopLevelPortal } from './06-files/Portal'
+
+<Invert>
+
+# React Portal - Example
+
+<TopLevelPortal />
+
+</Invert>
