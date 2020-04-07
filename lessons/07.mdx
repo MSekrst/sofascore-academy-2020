@@ -1,0 +1,53 @@
+import { themes, Head, Footer, Header, Steps, Notes, Invert } from 'mdx-deck'
+import './styles.css'
+
+export const theme = { ...themes.highlight }
+
+<!-- general markup for all slides -->
+
+<Head>
+  <title>SofaScore Academy 7</title>
+</Head>
+<Header>
+  <div className="tC m8">SofaScore Academy 2020.</div>
+</Header>
+<Footer>
+  <div className="tR m8">Lesson 7 - Redux</div>
+</Footer>
+
+<!-- Slides -->
+
+# Lesson 7
+
+## Redux
+
+---
+
+# Reducers
+
+- definition
+- graph -> state - action - reducer - state
+- redux
+
+---
+
+# `useReducer`
+
+- complex state manipulations
+  - when single change makes multiple state changes (set data, reset loader, reset error)
+- `useState` must set whole state
+- `useReducer` can set partial state
+
+---
+
+<Invert>
+
+# `useReducer` - Example
+
+- fetch example with loader and error
+
+</Invert>
+
+---
+
+# REDUX
