@@ -159,18 +159,43 @@ import { Form } from './06-files/ForwardingRefs'
 
 # React Context
 
-- avoid prop drilling
-- used to make values accessible deeper from hierarchy
-- children can chage value and rerender provider
-- `useContext` hook
+- Share data bewtween components
+  - Data is passed from parent (`Provder`) to children (`Consumer`)
+- Consumers receive providers value
+  - When Provider value changes, its consumers will rerender
+- Avoids prop drilling
+- Works with class and functional components (via hook)
+- `const MyContext = React.createContext(defaultContextValue)`
+- `const value = useContext(MyContext)`
+
+<Notes>
+
+- Prop drilling - In React data is passed top-down via props.
+  Prop drilling is anti-pattern when some components receive props they don't need and pass them to their children components and patterns repeats deeper into tree.
+- React Context allows developers to share date between parent and mutiple children. Parent is called `Provider` as it provides value for children.
+  Child is called `Consumer` as it consumes provided data.
+- Rules:
+  - Provider has to be rendered above children (it has to be parent to children)
+  - Consumer will receive data form nearest Provider of the same type (if multiple rendered).
+  - When Provider value changes, all its Consumers will rerender, to get new value.
+- Context works with both class and functional components. To be more specific context can be consumed in class and in functional components.
+- Context is crated with `createContext` function. Function receives optional defaultValue which will be used as initial context value.
+  Context contains two components (that are used from the outside):
+  - Provider (`MyContext.Provider`)
+  - Consumer (`MyContext.Consumer`)
+- Contexts are usualy added to separate file and they export `Context` itself, `Provider` and `Consumer` components.
+
+</Notes>
 
 ---
+
+import { ThemedApp } from './06-files/Context'
 
 <Invert>
 
 # React Context - Example
 
-- provide theme to components, change theme deeper from tree
+<ThemedApp />
 
 </Invert>
 

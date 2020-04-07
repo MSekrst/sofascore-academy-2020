@@ -1,0 +1,56 @@
+.app-container {
+  border: 1px solid lime;
+}
+
+.layout-element {
+  padding: 8px 16px;
+  background-color: #e03b1e;
+  color: #f1f1f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.select {
+  padding: 8px;
+  text-transform: uppercase;
+}
+
+.light.select {
+  background-color: #fff;
+  color: #000;
+}
+
+.dark.select {
+  background-color: #000;
+  color: #fff;
+}
+
+.text {
+  margin: 8px 0;
+}
+
+.light.text {
+  color: #fff;
+}
+
+.dark.text {
+  color: #000;
+}
+
+.title {
+  text-transform: uppercase;
+  padding: 30px;
+  color: lime;
+  margin: 0;
+}
+
+.light.title {
+  background-color: #fff;
+  color: #e03b1e;
+}
+
+.dark.title {
+  color: lime;
+  background-color: #808080;
+}
