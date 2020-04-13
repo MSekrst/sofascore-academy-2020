@@ -5,7 +5,7 @@ import { Portal } from './Portal'
 import { useBoolean } from './useBoolean'
 
 export function Modal({ trigger, content }) {
-  const { value: isOpen, toggle: toggleModal, setFalse: closeModal } = useBoolean()
+  const { value: isOpen, toggle: toggleModal } = useBoolean()
 
   return (
     <div className="modal">
@@ -13,7 +13,9 @@ export function Modal({ trigger, content }) {
       <Portal>
         {isOpen && (
           <div className="modal-content-wrapper" onClick={toggleModal}>
-            <div onClick={e => e.stopPropagation()} className="modal-content">{content}</div>
+            <div onClick={e => e.stopPropagation()} className="modal-content">
+              {content}
+            </div>
           </div>
         )}
       </Portal>
