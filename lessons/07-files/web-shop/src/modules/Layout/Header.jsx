@@ -4,12 +4,12 @@ import { ShoppingCart } from '../ShoppingCart'
 
 import './layout.css'
 
-export function Header({ children, shoppingCart }) {
+export function Header({ children }) {
   return (
     <header className="header primary-bg text-color">
       <div>{children}</div>
       <div>
-        <ShoppingCart shoppingCart={shoppingCart} />
+        <ShoppingCart />
       </div>
     </header>
   )

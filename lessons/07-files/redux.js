@@ -27,10 +27,10 @@ function counter(state = 0, action) {
 }
 
 // Create a Redux store. Redux store has useful API.
-// subscribe(fn) -> fun will be called when state changes
+// subscribe(fn) -> fn will be called when state changes
 // dispatch(action) -> dispatches provided action
 // getState() -> return current Redux state
-let store = createStore(counter)
+const store = createStore(counter)
 
 // on each state change, log new state
 store.subscribe(() => console.log(store.getState()))
@@ -50,5 +50,5 @@ console.log('Will dispatch decrement')
 store.dispatch({ type: 'DECREMENT' })
 // 1
 
-// This is example of standalone Redux. We will further use `react-redux` library with bindings for React. 
+// This is example of standalone Redux. We will further use `react-redux` library with bindings for React.
 // Library will provide components (or hooks) for accessing state, dispatching, etc.

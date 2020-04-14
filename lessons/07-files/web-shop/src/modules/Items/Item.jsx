@@ -1,21 +1,20 @@
 import React, { useCallback } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import './item.css'
+import { addItemToCart, removeItemFromCart } from './actions'
 
-export function Item({
-  item: { id, name, price, image, description },
-  addToCart,
-  removeFromCart,
-  isInCart,
-  inUnavailable,
-}) {
+export function Item({ item: { id, name, price, image, description }, inUnavailable }) {
+  const isInCart = useSelector(state => state.shoppingCart.includes(id))
+  const dispatch = useDispatch()
+
   const handleAddToCart = useCallback(() => {
-    addToCart(id)
-  }, [id, addToCart])
+    dispatch(addItemToCart(id))
+  }, [id, dispatch])
 
   const handleRemoveFromCart = useCallback(() => {
-    removeFromCart(id)
-  }, [id, removeFromCart])
+    dispatch(removeItemFromCart(id))
+  }, [id, dispatch])
 
   return (
     <div className="item background-color">

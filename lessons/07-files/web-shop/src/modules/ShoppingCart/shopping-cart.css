@@ -1,9 +1,26 @@
 .shopping-cart-wrapper {
   display: flex;
   align-items: center;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+
+.shopping-cart-wrapper:active,
+.shopping-cart-wrapper:focus {
+  outline: none;
 }
 
 .shopping-cart-text {
   font-size: 20px;
   margin-left: 4px;
+}
+
+.shopping-cart-contents {
+  position: absolute;
+  right: 0;
+  top: 35px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  padding: 8px;
+  color: #404040;
 }

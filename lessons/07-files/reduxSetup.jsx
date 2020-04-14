@@ -1,34 +1,49 @@
 import React from 'react'
+import { createStore, applyMiddleware } from 'redux'
+import logger from 'redux-logger'
+import { Provider, useSelector, useDispatch, connect } from 'react-redux'
 
-// TODO: Add redux
-// TODO: Add logger
+// action type
+const SET_COUNTER = 'SET_COUNTER'
+// action creator
+const setCounter = value => ({ type: SET_COUNTER, value })
+
+function reducer(state = { counter: 0 }, action) {
+  if (action.type === SET_COUNTER) {
+    return { ...state, counter: action.value }
+  }
+
+  return state
+}
+
+const store = createStore(reducer, applyMiddleware(logger))
 
 export function CounterApp() {
-  const [counter, setCounter] = React.useState(0)
+  return (
+    <Provider store={store}>
+      <Counters />
+    </Provider>
+  )
+}
 
+function Counters() {
   return (
     <div>
-      <h3>Main count: {counter}</h3>
-      <Counters counter={counter} setCounter={setCounter} />
+      <CountByOne />
+      <CustomCount />
     </div>
   )
 }
 
-function Counters({ counter, setCounter }) {
-  return (
-    <div>
-      <CountByOne counter={counter} setCounter={setCounter} />
-      <CustomCount counter={counter} setCounter={setCounter} />
-    </div>
-  )
-}
+function CountByOne() {
+  const counter = useSelector(state => state.counter)
+  const dispatch = useDispatch()
 
-function CountByOne({ counter, setCounter }) {
   const handleCountChange = React.useCallback(
     newCount => () => {
-      setCounter(newCount)
+      dispatch(setCounter(newCount))
     },
-    [setCounter]
+    [dispatch]
   )
 
   return (
@@ -40,7 +55,7 @@ function CountByOne({ counter, setCounter }) {
   )
 }
 
-class CustomCount extends React.Component {
+class _CustomCount extends React.Component {
   constructor(props) {
     super(props)
 
@@ -76,3 +91,13 @@ class CustomCount extends React.Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return { counter: state.counter }
+}
+
+function mapDispatchToProps(dispatch) {
+  return { setCounter: newValue => dispatch(setCounter(newValue)) }
+}
+
+const CustomCount = connect(mapStateToProps, mapDispatchToProps)(_CustomCount)

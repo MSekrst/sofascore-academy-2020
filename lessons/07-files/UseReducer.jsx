@@ -14,7 +14,7 @@ const setPassword = password => ({ type: SET_PASSWORD, password })
 const fetchStarted = () => ({ type: FETCH_STARTED })
 const fetchSuccessful = user => ({ type: FETCH_SUCCESSFUL, user })
 const fetchFailed = error => ({ type: FETCH_FAILED, error })
-const validationFailed = error => ({ type: VALIDATION_FAILED, error })
+const validationFailed = () => ({ type: VALIDATION_FAILED })
 
 // reducer
 function loginReducer(state, action) {
@@ -96,7 +96,7 @@ export function Login() {
           body: JSON.stringify({ username, password }),
         })
 
-        if (response.status > 299) {
+        if (response.status > 399) {
           throw Error('Invalid response')
         }
 
