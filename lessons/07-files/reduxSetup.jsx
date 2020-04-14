@@ -5,7 +5,7 @@ export function CounterApp() {
 
   return (
     <div>
-      <h1>Count: {counter}</h1>
+      <h3>Main count: {counter}</h3>
       <Counters counter={counter} setCounter={setCounter} />
     </div>
   )
@@ -15,8 +15,7 @@ function Counters({ counter, setCounter }) {
   return (
     <div>
       <CountByOne counter={counter} setCounter={setCounter} />
-      <br />
-      <CustomCount setCounter={setCounter} />
+      <CustomCount counter={counter} setCounter={setCounter} />
     </div>
   )
 }
@@ -31,6 +30,7 @@ function CountByOne({ counter, setCounter }) {
 
   return (
     <div>
+      <h3>CountByOne: {counter}</h3>
       <button onClick={handleCountChange(counter + 1)}>+ INCREMENT</button>
       <button onClick={handleCountChange(counter - 1)}>- DECREMENT</button>
     </div>
@@ -62,6 +62,7 @@ class CustomCount extends React.Component {
 
     return (
       <div>
+        <h3>CustomCount: {this.props.counter}</h3>
         <label>
           Enter new count: <input type="number" value={isValidCount ? count : ''} onChange={this.handleInputChange} />
         </label>
