@@ -1,0 +1,10 @@
+.items-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: -8px;
+}
+
+.items-container > * {
+  margin: 8px;
+}

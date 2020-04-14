@@ -1,0 +1,9 @@
+.shopping-cart-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.shopping-cart-text {
+  font-size: 20px;
+  margin-left: 4px;
+}
