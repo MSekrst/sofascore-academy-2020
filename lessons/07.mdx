@@ -12,22 +12,164 @@ export const theme = { ...themes.highlight }
   <div className="tC m8">SofaScore Academy 2020.</div>
 </Header>
 <Footer>
-  <div className="tR m8">Lesson 7 - Redux</div>
+  <div className="tR m8">Lesson 7 - Redux.js</div>
 </Footer>
 
 <!-- Slides -->
 
 # Lesson 7
 
-## Redux
+## Redux.js
 
 ---
 
-# Reducers
+# Redux
 
-- definition
-- graph -> state - action - reducer - state
-- redux
+- "Predictable state container"
+- Software architecture pattern
+- Main ideas:
+  - Single source of truth
+  - Read only state
+  - Changes are made with pure functions
+
+<Notes>
+
+- Official definition: "Predictable state container" - Redux is container for global state, shared by various components in an application (user data, tokens, settings, theme, ...).
+  It is "Predictable" because all state changes must be triggered with **Actions** and not made directly.
+- Architecture pattern - Software pattern for application architecture. Common architecture patterns include: MVC, MVP, MVVM.
+- Main ideas - Those ideas are core of Redux pattern.
+  - Single source of truth - Global state is stored as plain JS object (**Store**), there is only one global state!
+  - Read only state - Global state cannot be mutated directly, it can only be read.
+  - Changes are made with pure functions - State can be only changed with pure functions called **Reducers**.
+
+</Notes>
+
+---
+
+# Redux Architecture Pattern
+
+- Store
+  - Holds global state
+- Action
+  - Signals state changes
+- Reducer
+  - Handles actions
+  - Changes state
+
+<Notes>
+
+Three main parts of Redux are: Store, Action and Reducer.
+
+- Store is central piece of Redux. Its main purpose is to store redux state object.
+  Store always has latest state object, store state is never outdated.
+  This is possible because reducers are pure functions (always synchronous). Applications have single store.
+- Actions - as name suggests Actions represent that some change or action occurred within the app. Actions have type and payload.
+  Type of action is used to determine which reducer should handle action. Payload is data that describes action.
+  Payload is usually value that has to be added to the state. Applications can have multiple actions.
+- Reducers - Pure functions that change the state. They receive action that occurred and current application state.
+  Reducers then calculate new state and return it. Note that current state should not be mutated, so reducers have to produce new state each time (use spread operator `...`).
+  Applications can have multiple reducers, each responsible for its own part of a state. Those reducers are connected into single reducer which combines them all.
+  That single reducer is called "Root reducer".
+
+</Notes>
+
+---
+
+import reduxFlow from './images/reduxFlow.png'
+
+# Redux data flow
+
+- Single directional data flow
+
+<img className="big-image" style={{ padding: '0 32px' }} src={reduxFlow} alt="Redux data flow" />
+
+<Notes>
+
+- Redux has single directional data flow. This means that data can flow in single, well known, direction, which makes understanding complex state changes easier.
+  Second benefit is ability to log and monitor data flow and third is ability to recreate bugs as
+
+- Lets imagine Counter app as example. UI (View) has counter value and increment and decrement buttons. Counter value is stored in redux state.
+
+- **Redux data flow**
+
+  - View - Application presentation (React) with some state data. View displays data (counter value) and provides interactivity for users (increment / decrement button).
+    Interactions are redux actions as they change redux state (counter value). When interactions occurred, actions should be dispatched.
+    Dispatching is process in which View creates action and publishes it to the redux (notifies redux action happened).
+  - Action - Plain JS object with type and payload. When action is dispatched, it will be handled by reducer. In counter example actions will have format similar to `{ type: 'INCREMENT', payload: { value: 8 } }`
+  - Reducer - Pure function that produces new state from action and current state. Returns new redux state. In counter example it will return value received from action (e.g. `action.payload.value`)
+  - Store - Stores state, sends new state to View. In counter example provides current count.
+
+</Notes>
+
+---
+
+<Invert>
+
+# Plain Redux - Example
+
+</Invert>
+
+---
+
+# React Redux
+
+- Provides Redux bindings for React
+  - Components & hooks for using Redux
+- `<Provider />` component provides store to React app
+- Multiple ways to consume store in components (state and dispatch)
+  - `connect` factory function
+    - `connect(mapStateToProps, mapDispatchToProps)(Component)`
+  - `useSelector` hook
+    - `const counter = useSelector(state => state.counter)`
+  - `useDispatch` hook
+    - `const dispatch = useDispatch()`
+
+<Notes>
+
+- Redux works with plain JS, but really shines with React. Install `redux` (redux source) and `react-redux` (components to use redux with react).
+- `react-redux` makes Redux usage with React simple. Implements React Context to share store with component, so develpers have to render Provider; components will be Consumers.
+- `Provider` component must wrap all consumers that will use redux state. It is usually rendered in the `App.jsx` and wraps whole application.
+- Component can consume redux store with hooks from `react-redux` package or when wrapped in `connect` factory function.
+
+</Notes>
+
+---
+
+# Redux setup
+
+- Install packages via `npm` or `yarn`
+  - `yarn add redux react-redux`
+- Write actions and reducers
+- Setup Redux store
+  - `const store = createStore(rootReducer)`
+- Connect components to Redux
+
+<Notes>
+
+- Actions and reducers are usually bound to code that dispatches actions. That is reason why actions and reducers are stored next to component files (in modules).
+- Store is central part of Redux implementation. Store keeps state and provides dispatching mechanism.
+- Conenct components to Redux (`connect`, `useSelector` , `useDispatch`)
+
+- [Setup plain Redux](https://redux.js.org/introduction/installation)
+- [Setup React Redux](https://redux.js.org/introduction/installation)
+
+</Notes>
+
+---
+
+import { CounterApp } from './07-files/reduxSetup'
+
+<Invert>
+
+# Example - Counter
+
+<CounterApp />
+
+</Invert>
+
+---
+
+# END
 
 ---
 
@@ -47,7 +189,3 @@ export const theme = { ...themes.highlight }
 - fetch example with loader and error
 
 </Invert>
-
----
-
-# REDUX

@@ -33,6 +33,6 @@
     "mdx-deck": "^4.1.0"
   },
   "dependencies": {
-    "styled-components": "^5.0.1"
+    "redux": "^4.0.5"
   }
 }
