@@ -100,7 +100,7 @@ function Login() {
       dispatch(loginUser(username, password))
     },
     // React guarantees that dispatch will not change, action creators also cannot change
-    [username, password]
+    [username, password, dispatch]
   )
 
   // login successful
