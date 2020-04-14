@@ -1,5 +1,8 @@
 import React from 'react'
 
+// TODO: Add redux
+// TODO: Add logger
+
 export function CounterApp() {
   const [counter, setCounter] = React.useState(0)
 

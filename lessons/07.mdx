@@ -25,8 +25,8 @@ export const theme = { ...themes.highlight }
 
 # Motivation
 
-- Applications are more complex then ever (especially Frontend part)
-- Handle various data (fetch responses, cached data, loaders, global data, ...)
+- Applications are more complex then ever
+- Data handling is hard (fetch responses, cached data, loaders, global data, ...)
 - Developers lose control over application state
 - Mix of two concepts:
   - Mutation
@@ -39,7 +39,7 @@ export const theme = { ...themes.highlight }
 - Applications must handle various data from different sources, such as fetch responses, user inputs, cached data, loaders.
 - As application grows developers lose control over application state, as they don't know why or when state changed.
 - Applications have become mix of two different concepts: Mutation and Asynchronicity. Popular example for them is Mentos and Coke.
-  They are great when separated but messy when combined. React is solves asynchronicity from view layer but state mutations are still preset.
+  They are great when separated but messy when combined. React solves asynchronicity from view layer but state mutations are still preset.
   Those mutations are eliminated by Redux.
 
 </Notes>
@@ -60,7 +60,7 @@ export const theme = { ...themes.highlight }
 - Official definition: "Predictable state container" - Redux is container for global state, shared by various components in an application (user data, tokens, settings, theme, ...).
   It is "Predictable" because all state changes must be triggered with **Actions** and not made directly.
 - Architecture pattern - Software pattern for application architecture. Common architecture patterns include: MVC, MVP, MVVM.
-- Main ideas - Those ideas are core of Redux pattern.
+- Main ideas
   - Single source of truth - Global state is stored as plain JS object (**Store**), there is only one global state!
   - Read only state - Global state cannot be mutated directly, it can only be read.
   - Changes are made with pure functions - State can be only changed with pure functions called **Reducers**.
@@ -80,6 +80,7 @@ export const theme = { ...themes.highlight }
 - Action
   - Signals state changes
 - Reducer
+  - `reducer(state, action) => newState`
   - Handles actions
   - Changes state
 
@@ -114,7 +115,7 @@ import reduxFlow from './images/reduxFlow.png'
 <Notes>
 
 - Redux has single directional data flow. This means that data can flow in single, well known, direction, which makes understanding complex state changes easier.
-  Second benefit is ability to log and monitor data flow and third is ability to recreate bugs as
+  Second benefit is ability to log and monitor data flow and third is ability to recreate bugs as all interactions can be described as plain action objects.
 
 - Lets imagine Counter app as example. UI (View) has counter value and increment and decrement buttons. Counter value is stored in Redux state.
 
@@ -226,10 +227,10 @@ import { CounterApp } from './07-files/reduxSetup'
 
 # `useReducer` hook
 
-- Plain React hook that tries to imitate Redux pattern
+- React hook that makes implementation of Redux pattern possible
 - Complex state manipulations
   - When single change triggers multiple state field changes (e.g. set data, reset loader, reset error)
-- `useReducer` replaces `useState` hook
+- `useReducer` can replace multiple `useState` hooks
 - `const [state, dispatch] = useReducer(reducer, initialState)`
 
 <Notes>
@@ -237,7 +238,6 @@ import { CounterApp } from './07-files/reduxSetup'
 - React provides Redux pattern, but sets state in component not on global level in store.
 - `useReducer` is used for complex state manipulations, when single change triggers changes multiple state parts.
   Second popular use case is to reduce number of props passed as callbacks (pass one `dispatch` prop instead od handlers).
-- `useReducer` can supstitute multiple `useState` hooks
 
 </Notes>
 
@@ -271,10 +271,42 @@ import { Login } from './07-files/UseReducer'
 
 ---
 
-# END
+<Invert>
+
+# Web Shop
+
+</Invert>
 
 ---
 
 # Advanced Redux
 
-- Asynchronous actions
+- Asynchronous operations (e.g. fetching)
+  - Two crucial moments (start and finish)
+- Async action creators (Thunks)
+  - Return `function(dispatch) { /* do async operations */ }`
+
+<Notes>
+
+- Common use case is handling asynchronous operations with Redux. Each async operation has two crucial moments: start and finish.
+  Those operations can be handled with at least 3 Redux actions.
+  In fetching example those actions would be request started, request finished successfully and request failed.
+- Async action creators (also know as Thunks) allow developers to dispatch actions in async manner.
+  Reducers must be pure so async operations must be performed inside async action creators.
+  Those action creators return function instead of object like ordinary action creators. Returned function will be called with `dispatch` as argument.
+  Calling is made possible with `redux-thunk` middleware which must be added to the redux store.
+  In that function async work can be done and progress can be published (start, success, failure) with ordinary actions (dispatch is available).
+
+</Notes>
+
+---
+
+import { LoginThunks } from './07-files/thunks'
+
+<Invert>
+
+# Thunks - Example
+
+<LoginThunks />
+
+</Invert>

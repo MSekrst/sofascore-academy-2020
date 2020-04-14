@@ -96,7 +96,7 @@ export function Login() {
           body: JSON.stringify({ username, password }),
         })
 
-        if (response.code > 299) {
+        if (response.status > 299) {
           throw Error('Invalid response')
         }
 
