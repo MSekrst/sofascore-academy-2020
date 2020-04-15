@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import './item.css'
-import { addItemToCart, removeItemFromCart } from './actions'
+import { addItemToCart, removeItemFromCart } from './redux/actions'
 
 export function Item({ item: { id, name, price, image, description }, inUnavailable }) {
   const isInCart = useSelector(state => state.shoppingCart.includes(id))

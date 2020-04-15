@@ -1,16 +1,27 @@
+import { createStore, applyMiddleware } from 'redux'
+import logger from 'redux-logger'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+
+import { rootReducer } from './reducer'
+
 /**
  * {
- *  items: []
- *  unavailable: []
- *  shoppingCart: []
+ *  items: [full items]
+ *  unavailable: [item ids]
+ *  shoppingCart: [item ids]
  * }
  */
 
-import { createStore, applyMiddleware } from 'redux'
+//  redux-persist will save Redux state to localStorage. When user visits page again it will use saved state
+const persistConfig = {
+  key: 'webShop',
+  storage,
+  whitelist: ['shoppingCart', 'unavailable'],
+}
 
-import { rootReducer } from './reducer'
-import logger from 'redux-logger'
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-const _store = createStore(rootReducer, applyMiddleware(logger))
+export const store = createStore(persistedReducer, applyMiddleware(logger))
 
-export const store = _store
+export const persistor = persistStore(store)
