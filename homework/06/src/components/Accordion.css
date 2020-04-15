@@ -1,0 +1,11 @@
+.accordion {
+}
+
+.accordion-header {
+  cursor: pointer;
+}
+
+.accordion-content {
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+}
