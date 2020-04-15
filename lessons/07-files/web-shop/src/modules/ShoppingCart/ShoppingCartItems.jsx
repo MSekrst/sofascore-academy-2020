@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import './shopping-cart.css'
+import './shopping-cart-items.css'
 import { removeItemFromCart } from '../Items'
 
 function stopPropagation(event) {

@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 
 /**
  * Custom hook for managing boolean states. Provides state value and useful setters.
- * 
+ *
  * @param {boolean} initialValue initial hook value
  */
 export function useBoolean(initialValue = false) {

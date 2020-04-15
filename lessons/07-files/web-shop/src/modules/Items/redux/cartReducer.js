@@ -1,4 +1,7 @@
 import { ADD_CART_ITEM, REMOVE_CART_ITEM } from './actions'
-import { listReducerFactory } from './arrayListReducer'
+import { numberListReducerFactory } from '../../../utils'
 
-export const cartReducer = listReducerFactory({ addActionType: ADD_CART_ITEM, removeActionType: REMOVE_CART_ITEM })
+export const cartReducer = numberListReducerFactory({
+  addActionType: ADD_CART_ITEM,
+  removeActionType: REMOVE_CART_ITEM,
+})

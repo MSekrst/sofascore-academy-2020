@@ -1,10 +1,10 @@
 /**
- * Generic list reducer factory. Returns reducer for handling number lists.
- * Returned reducer can handle insert and delete of single item from the list/
+ * Generic list reducer factory. Returns reducer for handling list of numbers.
+ * Returned reducer can handle insert and delete of single item from the list.
  *
  * @param {Object} config Configuration object for created reducer. Contains action types and initial state.
  */
-export function listReducerFactory({ initialState = [], addActionType, removeActionType }) {
+export function numberListReducerFactory({ initialState = [], addActionType, removeActionType }) {
   if (!addActionType || !removeActionType) {
     throw Error('ListReducerFactory config is invalid. Please check if `actionType` and `removeActionType` provided.')
   }
