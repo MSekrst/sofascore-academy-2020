@@ -1,0 +1,312 @@
+import { themes, Head, Footer, Header, Steps, Notes, Invert } from 'mdx-deck'
+import './styles.css'
+
+export const theme = { ...themes.highlight }
+
+<!-- general markup for all slides -->
+
+<Head>
+  <title>SofaScore Academy 7</title>
+</Head>
+<Header>
+  <div className="tC m8">SofaScore Academy 2020.</div>
+</Header>
+<Footer>
+  <div className="tR m8">Lesson 7 - Redux.js</div>
+</Footer>
+
+<!-- Slides -->
+
+# Lesson 7
+
+## Redux.js
+
+---
+
+# Motivation
+
+- Applications are more complex then ever
+- Data handling is hard (fetch responses, cached data, loaders, global data, ...)
+- Developers lose control over application state
+- Mix of two concepts:
+  - Mutation
+  - Asynchronicity
+
+<Notes>
+
+- Modern web applications have moved complexity to users devices (fat client), as users now posses devices capable for that complexity.
+  This approach also makes server infrastructure cheaper and easier to maintain.
+- Applications must handle various data from different sources, such as fetch responses, user inputs, cached data, loaders.
+- As application grows developers lose control over application state, as they don't know why or when state changed.
+- Applications have become mix of two different concepts: Mutation and Asynchronicity. Popular example for them is Mentos and Coke.
+  They are great when separated but messy when combined. React solves asynchronicity from view layer but state mutations are still preset.
+  Those mutations are eliminated by Redux.
+
+</Notes>
+
+---
+
+# Redux
+
+- "Predictable state container"
+- Software architecture pattern
+- Main ideas:
+  - Single source of truth
+  - Read only state
+  - Changes are made with pure functions
+
+<Notes>
+
+- Official definition: "Predictable state container" - Redux is container for global state, shared by various components in an application (user data, tokens, settings, theme, ...).
+  It is "Predictable" because all state changes must be triggered with **Actions** and not made directly.
+- Architecture pattern - Software pattern for application architecture. Common architecture patterns include: MVC, MVP, MVVM.
+- Main ideas
+  - Single source of truth - Global state is stored as plain JS object (**Store**), there is only one global state!
+  - Read only state - Global state cannot be mutated directly, it can only be read.
+  - Changes are made with pure functions - State can be only changed with pure functions called **Reducers**.
+- Redux forces developers to:
+  - Describe application state as plain objects and arrays
+  - Describe changes in the system as plain objects
+  - Describe the logic for handling changes as pure functions
+
+</Notes>
+
+---
+
+# Redux Architecture Pattern
+
+- Store
+  - Holds global state
+- Action
+  - Signals state changes
+- Reducer
+  - `reducer(state, action) => newState`
+  - Handles actions
+  - Changes state
+
+<Notes>
+
+Three main parts of Redux are: Store, Action and Reducer.
+
+- Store is central piece of Redux. Its main purpose is to store redux state object.
+  Store always has latest state object, store state is never outdated.
+  This is possible because reducers are pure functions (always synchronous). Applications have single store.
+- Actions - as name suggests Actions represent that some change or action occurred within the app. Actions have type and payload.
+  Type of action is used to determine which reducer should handle action. Payload is data that describes action.
+  Payload is usually value that has to be added to the state. Applications can have multiple actions.
+- Reducers - Pure functions that change the state. They receive action that occurred and current application state.
+  Reducers then calculate new state and return it. Note that current state should not be mutated, so reducers have to produce new state each time (use spread operator `...`).
+  All reducers will be called with every action, so reducers should return current state for each action they don't recognize, to avoid partial state losses.
+  Applications can have multiple reducers, each responsible for its own part of a state. Those reducers are connected into single reducer which combines them all.
+  That single reducer is called "Root reducer".
+
+</Notes>
+
+---
+
+import reduxFlow from './images/reduxFlow.png'
+
+# Redux data flow
+
+- Single directional data flow
+
+<img className="big-image" style={{ padding: '0 32px' }} src={reduxFlow} alt="Redux data flow" />
+
+<Notes>
+
+- Redux has single directional data flow. This means that data can flow in single, well known, direction, which makes understanding complex state changes easier.
+  Second benefit is ability to log and monitor data flow and third is ability to recreate bugs as all interactions can be described as plain action objects.
+
+- Lets imagine Counter app as example. UI (View) has counter value and increment and decrement buttons. Counter value is stored in Redux state.
+
+- **Redux data flow**
+
+  - View - Application presentation (React) with some state data. View displays data (counter value) and provides interactivity for users (increment / decrement button).
+    Interactions are Redux actions as they change Redux state (counter value). When interactions occurred, actions should be dispatched.
+    Dispatching is process in which View creates action and publishes it to the Redux (notifies Redux action happened).
+  - Action - Plain JS object with type and payload. When action is dispatched, it will be handled by reducer. In counter example actions will have format similar to `{ type: 'INCREMENT', payload: { value: 8 } }`
+  - Reducer - Pure function that produces new state from action and current state. Returns new Redux state. In counter example it will return value received from action (e.g. `action.payload.value`)
+  - Store - Stores state, sends new state to View. In counter example provides current count.
+
+</Notes>
+
+---
+
+<Invert>
+
+# Plain Redux - Example
+
+</Invert>
+
+---
+
+# React Redux
+
+- Provides Redux bindings for React
+  - Components & hooks for using Redux
+- `<Provider />` component provides store to React app
+- Multiple ways to consume store in components (state and dispatch)
+  - `connect` factory function
+    - `connect(mapStateToProps, mapDispatchToProps)(Component)`
+  - `useSelector` hook
+    - `const counter = useSelector(state => state.counter)`
+  - `useDispatch` hook
+    - `const dispatch = useDispatch()`
+
+<Notes>
+
+- Redux works with plain JS, but really shines with React. Install `redux` (Redux source) and `react-redux` (components to use redux with react).
+- `react-redux` makes Redux usage with React simple. Implements React Context to share store with component, so developers have to render Provider; components will be Consumers.
+- `Provider` component must wrap all consumers that will use Redux state. It is usually rendered in the `App.jsx` and wraps whole application.
+- Component can consume Redux store with hooks from `react-redux` package or when wrapped in `connect` factory function.
+
+</Notes>
+
+---
+
+# Redux setup
+
+- Install packages via `npm` or `yarn`
+  - `yarn add redux react-redux`
+- Write actions and reducers
+- Setup Redux store
+  - `const store = createStore(rootReducer)`
+- Connect components to Redux
+
+<Notes>
+
+- Actions and reducers are usually bound to code that dispatches actions. That is reason why actions and reducers are stored next to component files (in modules).
+- Store is central part of Redux implementation. Store keeps state and provides dispatching mechanism.
+- Connect components to Redux (`connect`, `useSelector`, `useDispatch`)
+
+- [Setup plain Redux](https://redux.js.org/introduction/installation)
+- [Setup React Redux](https://redux.js.org/introduction/installation)
+
+</Notes>
+
+---
+
+import { CounterApp } from './07-files/reduxSetup'
+
+<Invert>
+
+# Example - Counter
+
+<CounterApp />
+
+</Invert>
+
+---
+
+# When to use Redux
+
+- Reasonable amount of data changing over time
+- When single source of truth is needed
+- Redux enforces specific architecture
+
+"I would like to amend this: don't use Redux until you have problems with vanilla React." Dan Abramov
+
+"You'll know when you need Flux. If you aren't sure if you need it, you don't need it." Pete Hunt
+
+<Notes>
+
+- When data gets hard to track and developers start to feel they are losing control
+- When application can get in inconsistent state (multiple state variables are in conflict and developers can't tell which is correct).
+  This problem can then be mitigated with single state as source of truth (Redux store). This problem inspired Redux, as Facebook had unsolvable bug with
+- Redux enforces specific architecture, which may seam like boilerplate, but it is necessary for Redux to work.
+  Redux should be introduced when that boilerplate is worth the effort. If Redux is introduced too early then it will only make developers slower.
+
+- [Dan Abramov Blog post](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367).
+  Dan Abramov is creator of Redux, part of react core team and developer working in Facebook.
+  His blog posts about React and Redux often can be interpreted as unofficial documentation for those tools.
+- Pete Hunt is early React contributor Facebook, Instagram and Twitter developer.
+
+</Notes>
+
+---
+
+# `useReducer` hook
+
+- React hook that makes implementation of Redux pattern possible
+- Complex state manipulations
+  - When single change triggers multiple state field changes (e.g. set data, reset loader, reset error)
+- `useReducer` can replace multiple `useState` hooks
+- `const [state, dispatch] = useReducer(reducer, initialState)`
+
+<Notes>
+
+- React provides Redux pattern, but sets state in component not on global level in store.
+- `useReducer` is used for complex state manipulations, when single change triggers changes multiple state parts.
+  Second popular use case is to reduce number of props passed as callbacks (pass one `dispatch` prop instead od handlers).
+
+</Notes>
+
+---
+
+import { Login } from './07-files/UseReducer'
+
+<Invert>
+
+# `useReducer` - Example
+
+<Login />
+
+</Invert>
+
+---
+
+# React vs Redux
+
+- React provides tools that could substitute Redux entirely
+  - `useReducer` and Context
+- Redux still has edge in complex apps
+  - Provides middlewares and helpers (logger, state persist)
+
+<Notes>
+
+- Rule of the thumb is to use React until state changes get too difficult to follow.
+  In this moment developers could think about introducing Redux.
+
+</Notes>
+
+---
+
+<Invert>
+
+# Web Shop
+
+</Invert>
+
+---
+
+# Advanced Redux
+
+- Asynchronous operations (e.g. fetching)
+  - Two crucial moments (start and finish)
+- Async action creators (Thunks)
+  - Return `function(dispatch) { /* do async operations */ }`
+
+<Notes>
+
+- Common use case is handling asynchronous operations with Redux. Each async operation has two crucial moments: start and finish.
+  Those operations can be handled with at least 3 Redux actions.
+  In fetching example those actions would be request started, request finished successfully and request failed.
+- Async action creators (also know as Thunks) allow developers to dispatch actions in async manner.
+  Reducers must be pure so async operations must be performed inside async action creators.
+  Those action creators return function instead of object like ordinary action creators. Returned function will be called with `dispatch` as argument.
+  Calling is made possible with `redux-thunk` middleware which must be added to the redux store.
+  In that function async work can be done and progress can be published (start, success, failure) with ordinary actions (dispatch is available).
+
+</Notes>
+
+---
+
+import { LoginThunks } from './07-files/thunks'
+
+<Invert>
+
+# Thunks - Example
+
+<LoginThunks />
+
+</Invert>

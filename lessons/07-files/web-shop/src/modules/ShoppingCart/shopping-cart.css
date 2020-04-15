@@ -1,0 +1,29 @@
+.shopping-cart-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  padding: 16px;
+  border-radius: 4px;
+}
+
+.shopping-cart-wrapper.active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.shopping-cart-text {
+  font-size: 20px;
+  margin-left: 4px;
+}
+
+.shopping-cart-contents {
+  position: absolute;
+  right: 0;
+  top: 70px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  color: #404040;
+  width: 300px;
+  cursor: initial;
+}

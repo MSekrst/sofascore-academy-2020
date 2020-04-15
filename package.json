@@ -9,14 +9,16 @@
     "start:04": "mdx-deck lessons/04.mdx",
     "start:05": "mdx-deck lessons/05.mdx",
     "start:06": "mdx-deck lessons/06.mdx",
+    "start:07": "mdx-deck lessons/07.mdx",
     "build:01": "mdx-deck build lessons/01.mdx",
     "build:02": "mdx-deck build lessons/02.mdx",
     "build:03": "mdx-deck build lessons/03.mdx",
     "build:04": "mdx-deck build lessons/04.mdx",
     "build:05": "mdx-deck build lessons/05.mdx",
     "build:06": "mdx-deck build lessons/06.mdx",
-    "start": "npm run start:06",
-    "build": "npm run build:06"
+    "build:07": "mdx-deck build lessons/07.mdx",
+    "start": "npm run start",
+    "build": "npm run build"
   },
   "keywords": [
     "JavaScript",
@@ -31,6 +33,9 @@
     "mdx-deck": "^4.1.0"
   },
   "dependencies": {
-    "styled-components": "^5.0.1"
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   }
 }
