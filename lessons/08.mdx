@@ -170,10 +170,78 @@ HTML is then parsed and any needed resources are fetched (CSS, JS, images, fonts
 
 # React Router
 
+- Client side routing package for React
+- Provides components and hooks needed to add routing to an application
+- Encourages dynamic routing
+  - No need to specify all routes in single file
+
+<Notes>
+
+- Most popular routing package for React. Provides platform specific packages (`react-router-dom`, `react-router-native`)
+- Contains logic related to routing with utility components and hooks available to developers
+- In newer versions encourages dynamic routing. Dynamic routing is specific as there is no need to specify all routes at once.
+  Routes can be nested on in another, rendered where needed as it is only react component.
+
+</Notes>
+
 ---
 
-# Protected Route
+# React Router API
+
+- Routers -> Wraps whole application
+  - `<BrowserRouter>`, `<HashRouter>`
+- Route Matchers -> Render components on specific routes
+  - `<Route path="/url-for-component">{/* component to be rendered */}</Route>`
+  - `<Switch>` -> Searches for first children `Route` that matches URL and renders it
+- Route Changers -> Change current URL
+  - `<Link to="/link-url">`
+  - `<Redirect to="/redirect-url">`
+- Helpers
+  - Hooks: `useHistory`, `useLocation`, `useParams`
+  - HOC: `withRouter`
+
+<Notes>
+
+- There should be Router component around whole application for React Router to work.
+  This router is actually routing context provider and routing components are consumers.
+- Router Matchers decide which components should be rendered based on current URL.
+  - `Route` component renders received component on provided url (`path` prop)
+  - `Switch` component will render first children `Route` that matches URL, other possibly matching `Routes` will be ignored, so take care of `Route` ordering.
+    Switch can be also used to render 404 pages, as last `Route` in `Switch` can be wildcard (matches all) and `Switch` will render it only when there are no other routes that match current URL.
+- Route Changers are used to change current URL
+  - `Link` component is client side link. When user clicks on `Link` component, client side navigation will happen and new page will be rendered.
+  - `Redirect` redirects user to provided URL. Redirect will rewrite history, URL previous to redirect is removed.
+    Redirect doesn't need users' interaction, it will redirect immediately when rendered.
+- Helpers can be used to archive imperative routing (e.g. via JS), to access router context, etc.
+
+</Notes>
 
 ---
 
-# Server Side Rendering
+<Invert>
+
+# React Router - Example
+
+</Invert>
+
+---
+
+# Server Side Rendering (SSR)
+
+- React primary renders at client
+  - Server serves index.html and JS/CSS files
+  - React generates markup on client
+- Client side rendering
+  - Initial load is longer
+  - SEO can suffer (server returns almost empty HTML document)
+- Server side rendering
+  - Markup is generated on server
+  - Faster page load
+  - Slower server response time
+
+<Notes>
+
+- TODO: add notes
+- https://www.freecodecamp.org/news/what-exactly-is-client-side-rendering-and-hows-it-different-from-server-side-rendering-bd5c786b340d/
+
+</Notes>

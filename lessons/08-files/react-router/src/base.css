@@ -1,0 +1,51 @@
+html {
+  background-color: whitesmoke;
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+header {
+  background-color: tomato;
+  padding: 16px;
+}
+
+a {
+  text-transform: uppercase;
+  color: lime;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+a:not(:first-child) {
+  margin-left: 16px;
+}
+
+.active {
+  color: purple;
+}
+
+main {
+  text-align: center;
+}
+
+button {
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  background-color: tomato;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #ff7347;
+}
