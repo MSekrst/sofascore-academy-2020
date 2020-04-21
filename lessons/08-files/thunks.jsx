@@ -5,18 +5,18 @@ import logger from 'redux-logger'
 import { Provider, useSelector, useDispatch } from 'react-redux'
 
 // action types
-const FETCH_STARTED = 'FETCH_STARTED'
-const FETCH_SUCCESSFUL = 'FETCH_SUCCESSFUL'
-const FETCH_FAILED = 'FETCH_FAILED'
+const LOGIN_STARTED = 'LOGIN_STARTED'
+const LOGIN_SUCCESSFUL = 'LOGIN_SUCCESSFUL'
+const LOGIN_FAILED = 'FETCH_FAILED'
 
-const fetchStarted = () => ({ type: FETCH_STARTED })
-const fetchSuccessful = user => ({ type: FETCH_SUCCESSFUL, user })
-const fetchFailed = error => ({ type: FETCH_FAILED, error })
+const loginStarted = () => ({ type: LOGIN_STARTED })
+const loginSuccessful = user => ({ type: LOGIN_SUCCESSFUL, user })
+const loginFailed = error => ({ type: LOGIN_FAILED, error })
 
 // action creators
 function loginUser(username, password) {
   return async function (dispatch) {
-    dispatch(fetchStarted())
+    dispatch(loginStarted())
 
     try {
       const response = await fetch('https://private-leagues-api.herokuapp.com/api/login', {
@@ -31,9 +31,9 @@ function loginUser(username, password) {
 
       const userData = await response.json()
 
-      return dispatch(fetchSuccessful(userData))
+      return dispatch(loginSuccessful(userData))
     } catch (e) {
-      return dispatch(fetchFailed(e))
+      return dispatch(loginFailed(e))
     }
   }
 }
@@ -47,13 +47,13 @@ const initialReduxState = {
 // reducer
 function loginReducer(state = initialReduxState, action) {
   switch (action.type) {
-    case FETCH_STARTED:
+    case LOGIN_STARTED:
       return { ...state, isLoading: true, error: null }
 
-    case FETCH_SUCCESSFUL:
+    case LOGIN_SUCCESSFUL:
       return { ...state, isLoading: false, error: null, user: action.user }
 
-    case FETCH_FAILED:
+    case LOGIN_FAILED:
       return { ...state, isLoading: false, error: action.error, user: null }
 
     default:
@@ -61,7 +61,7 @@ function loginReducer(state = initialReduxState, action) {
   }
 }
 
-// create Redux store
+// create Redux store with thunk middleware added
 const store = createStore(loginReducer, applyMiddleware(thunk, logger))
 
 // Main app component

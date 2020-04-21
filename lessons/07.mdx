@@ -276,37 +276,3 @@ import { Login } from './07-files/UseReducer'
 # Web Shop
 
 </Invert>
-
----
-
-# Advanced Redux
-
-- Asynchronous operations (e.g. fetching)
-  - Two crucial moments (start and finish)
-- Async action creators (Thunks)
-  - Return `function(dispatch) { /* do async operations */ }`
-
-<Notes>
-
-- Common use case is handling asynchronous operations with Redux. Each async operation has two crucial moments: start and finish.
-  Those operations can be handled with at least 3 Redux actions.
-  In fetching example those actions would be request started, request finished successfully and request failed.
-- Async action creators (also know as Thunks) allow developers to dispatch actions in async manner.
-  Reducers must be pure so async operations must be performed inside async action creators.
-  Those action creators return function instead of object like ordinary action creators. Returned function will be called with `dispatch` as argument.
-  Calling is made possible with `redux-thunk` middleware which must be added to the redux store.
-  In that function async work can be done and progress can be published (start, success, failure) with ordinary actions (dispatch is available).
-
-</Notes>
-
----
-
-import { LoginThunks } from './07-files/thunks'
-
-<Invert>
-
-# Thunks - Example
-
-<LoginThunks />
-
-</Invert>

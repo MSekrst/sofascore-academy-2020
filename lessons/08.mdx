@@ -1,0 +1,284 @@
+import { themes, Head, Footer, Header, Steps, Notes, Invert } from 'mdx-deck'
+import './styles.css'
+
+export const theme = { ...themes.highlight }
+
+<!-- general markup for all slides -->
+
+<Head>
+  <title>SofaScore Academy 8</title>
+</Head>
+<Header>
+  <div className="tC m8">SofaScore Academy 2020.</div>
+</Header>
+<Footer>
+  <div className="tR m8">Lesson 8 - Async Redux.js & Routing</div>
+</Footer>
+
+<!-- Slides -->
+
+# Lesson 8
+
+## Async Redux.js & Routing
+
+---
+
+# Async Redux
+
+- Asynchronous operations (e.g. fetching)
+  - Two crucial moments (start and finish)
+- Async action creators
+  - Thunks -> Return `function(dispatch) { /* do async operations */ }`
+
+<Notes>
+
+- Handling asynchronous operations with Redux is common use case. Each async operation has two crucial moments: start and finish.
+  Those operations can be handled with at least 3 Redux actions. In fetching example those actions would be request started, request finished successfully and request failed.
+- Reducers must be pure so async operations must be performed inside async action creators.
+  Those action creators return function instead of object like ordinary action creators (also known as Thunks). Returned function will be called with `dispatch` as argument.
+  Calling is made possible with `redux-thunk` middleware which must be added to the redux store.
+  In that function async work can be done and progress can be published (start, success, failure) with ordinary actions (dispatch is available).
+  Thunks allow developers to separate more complex async logic and trigger it with single action creator call.
+
+</Notes>
+
+---
+
+import { LoginThunks } from './08-files/thunks'
+
+<Invert>
+
+# Thunks - Example
+
+<LoginThunks />
+
+</Invert>
+
+---
+
+# Routing
+
+- URL addresses specific resource on the Internet (page, response, ...)
+- Makes user navigation easier (refresh, browser back)
+
+<Notes>
+  
+- Routing can be defined as mapping of URL to resource (website)
+- Route (URL) is identifier of resource on Internet. Resource can be website, API response, method, ...
+- Routing makes users experience more satisfying, as users can refresh page and end up on the same page, 
+they can navigate through browser history (forward or back browser buttons), etc.
+- Routing ensures that the same URL will always point to the same page (or other resource).
+
+</Notes>
+
+---
+
+# Search Engine Optimization (SEO)
+
+- Process of making a website more visible in search results
+- Search engines crawl web, index content from pages, points to relevant pages in search results
+- Ranking algorithm is secret, known only by search engine companies.
+
+<Notes>
+  
+- Search engines (e.g. Google, Bing) crawl the web, following links between pages and indexing page content. 
+This index is then used when user search for informations, as search engine can point to relevant page which is most likely to 
+provide information to the user.
+- Each search engine has its own secret ranking algorithm. but some parts overlap between them.
+- SEO is important as it is directly connected with bigger traffic and revenue.
+
+</Notes>
+
+---
+
+import seoMeme from './images/seo.gif'
+
+# SEO
+
+- More traffic -> 💰
+
+<img alt="SEO Meme" src={seoMeme} className="big-image" />
+
+---
+
+# Server side routing
+
+- Route transition is handled on server
+  - When URL changes, new HTML document is retrieved from the server
+- Browser has to communicate with the server
+- Good:
+  - Minimal data for each page
+  - Search engine friendly
+- Bad:
+  - Slower interaction between pages
+  - Full refresh of a page -> Context is lost
+
+<Notes>
+  
+- Classic route transition strategy. When URL changes, browser will request new HTML document for the new URL. 
+HTML is then parsed and any needed resources are fetched (CSS, JS, images, fonts, ...).
+- Good:
+  - Each page is separate HTML document, so each page can contain minimal data needed for that page.
+  - SEO benefits: Search engine crawlers are made to understand HTML markup, so they can better index each page, as it has its own HTML.
+- Bad:
+  - Slower interaction as browser has to wait for server response before switching pages.
+  - Each route transition can be seen as full refresh. 
+  Previous page context (local variables, DOM) is lost and replaced with new page context. 
+  There is also a repetitive content on multiple pages (e.g. header is the same on two pages, but it has to be downloaded with each page and rendered again)
+
+</Notes>
+
+---
+
+<Invert>
+
+# Server side routing - Example
+
+</Invert>
+
+---
+
+# Client side routing
+
+- Route transition is handled on client
+  - When URL changes, new HTML is not needed
+- Good:
+  - Faster page transitions
+  - Preserves context
+  - Page transitions can be animated
+- Bad:
+  - Larger first load
+  - Possible extra data
+  - Not so friendly to search engines
+
+<Notes>
+
+- Route transitions are handled via JavaScript. This means that JS knows what to show for each URL, so there is no need to download new HTML document.
+- Good:
+  - Faster page changes as there is no HTML document download included.
+  - Preserves context as there is no full page refresh (variables are preserved, DOM can be preserved, ...).
+  - Page transitions happen client side, within the same document, so transitions can be animated to create smooth user experience.
+- Bad:
+  - First page load is larger as whole app navigation has to be shipped on a client. Also there is some extra code to handle routing which makes load slower.
+  - Possibly more then needed data could be sent, as all pages are sent at once.
+    If user quits app without navigation to other pages, all those pages were downloaded without the real need.
+  - SEO problems: search engines have to parse JS and create markup. They can do that but they can parse the page wrong.
+
+</Notes>
+
+---
+
+<Invert>
+
+# Client side routing - Example
+
+</Invert>
+
+---
+
+# React Router
+
+- Client side routing package for React
+  - Interacts with Browser History API
+- Provides components and hooks needed to add routing to an application
+- Encourages dynamic routing
+  - No need to specify all routes in single file
+
+<Notes>
+
+- Most popular routing package for React. Provides platform specific packages (`react-router-dom`, `react-router-native`)
+- Contains logic related to routing with utility components and hooks available to developers
+- In newer versions encourages dynamic routing. Dynamic routing is specific as there is no need to specify all routes at once.
+  Routes can be nested on in another, rendered where needed as it is only react component.
+
+</Notes>
+
+---
+
+# React Router API
+
+- Routers -> Wraps whole application
+  - `<BrowserRouter>`
+- Route Matchers -> Render components on specific routes
+  - `<Route path="/url-for-component">{/* children to be rendered */}</Route>`
+  - `<Switch>` -> Searches for first children `Route` that matches URL and renders it
+- Route Changers -> Change current URL
+  - `<Link to="/link-url">`
+  - `<Redirect to="/redirect-url">`
+- Helpers
+  - Hooks: `useHistory`, `useLocation`, `useParams`
+  - HOC: `withRouter`
+
+<Notes>
+
+- There should be Router component around whole application for React Router to work.
+  This router is actually routing context provider and routing components are consumers.
+- Router Matchers decide which components should be rendered based on current URL.
+  - `Route` component renders received component on provided url (`path` prop)
+  - `Switch` component will render first children `Route` that matches URL, other possibly matching `Routes` will be ignored, so take care of `Route` ordering.
+    Switch can be also used to render 404 pages, as last `Route` in `Switch` can be wildcard (matches all) and `Switch` will render it only when there are no other routes that match current URL.
+- Route Changers are used to change current URL
+  - `Link` component is client side link. When user clicks on `Link` component, client side navigation will happen and new page will be rendered.
+  - `Redirect` redirects user to provided URL. Redirect will rewrite history, URL previous to redirect is removed.
+    Redirect doesn't need users' interaction, it will redirect immediately when rendered.
+- Helpers can be used to archive imperative routing (e.g. via JS), to access router context, etc.
+
+</Notes>
+
+---
+
+<Invert>
+
+# React Router - Example
+
+</Invert>
+
+---
+
+# Server Side Rendering (SSR)
+
+- React primary renders on client
+  - Server serves index.html and JS/CSS files
+  - React generates markup on client
+- Client side rendering
+  - Initial load is longer
+  - SEO can suffer (server returns almost empty HTML document)
+- Server side rendering
+  - Markup is generated on server
+  - Faster page load
+  - Slower server response time
+
+<Notes>
+
+- React is primary designed to be rendered on client. However `ReactDOM` package has methods which can render React components as string or stream, which can be used on server.
+- When Client side rendering is used, browser needs to download HTML document (almost empty) and all resources specified there (CSS and JS files).
+  JS bundle is then parsed and markup will be generated and added to the DOM on client. This can take longer then parsing full page HTML document created with SSR.
+  Second downside are SEO problems, as crawlers get empty HTML and they have to run JS and generate actual markup to index page content.
+- When Server side rendering is used, server will render whole application and create Virtual DOM. Next step is where differences with client side rendering start.
+  In SSR ,Virtual DOM would be written in HTML document which will be returned to the user. Server environments don't have DOM (it's part of the browser), so there is no need to create real DOM.
+  That HTML generation can take longer then returning simple HTML file as with Client side rendering. Once page HTML is created, load from client is faster as browser only needs to parse HTML and then page is ready.
+  From SEO perspective, SSR is also better because crawlers will get HTML for each page and will not need to run any JS. When page is rendered on server react has starting markup, it only needs to attach event listeners, etc.
+  This process is called `hydration` and developer has to call `ReactDOM.hydrate` instead of `ReactDOM.render`.
+
+</Notes>
+
+---
+
+# SSR Implementation
+
+- `Next.js`
+  - Framework for React which does SSR out of the box
+- Custom
+  - More control
+  - Significantly more coding (SSR server, data fetching, caching)
+  - ReactDOM library (`react-dom/server`)
+    - `renderToString`
+    - `renderToNodeStream`
+
+<Notes>
+
+- [`Next.js`](https://nextjs.org/) is framework for SSR. It provides custom server and boilerplate,
+  but project has to be tweaked as `Next.js` is opinionated (routing is composed from file system organization)
+- SSR can be custom made but that would include significant amount of code (render react components, fetch data from server and add it to the components, caching, ...)
+
+</Notes>
