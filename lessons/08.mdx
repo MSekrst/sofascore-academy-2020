@@ -228,7 +228,7 @@ HTML is then parsed and any needed resources are fetched (CSS, JS, images, fonts
 
 # Server Side Rendering (SSR)
 
-- React primary renders at client
+- React primary renders on client
   - Server serves index.html and JS/CSS files
   - React generates markup on client
 - Client side rendering
@@ -241,7 +241,35 @@ HTML is then parsed and any needed resources are fetched (CSS, JS, images, fonts
 
 <Notes>
 
-- TODO: add notes
-- https://www.freecodecamp.org/news/what-exactly-is-client-side-rendering-and-hows-it-different-from-server-side-rendering-bd5c786b340d/
+- React is primary designed to be rendered on client. However `ReactDOM` package has methods which can render React components as string or stream, which can be used on server.
+- When Client side rendering is used, browser needs to download HTML document (almost empty) and all resources specified there (CSS and JS files).
+  JS bundle is then parsed and markup will be generated and added to the DOM on client. This can take longer then parsing full page HTML document created with SSR.
+  Second downside are SEO problems, as crawlers get empty HTML and they have to run JS and generate actual markup to index page content.
+- When Server side rendering is used, server will render whole application and create Virtual DOM. Next step is where differences with client side rendering start.
+  In SSR ,Virtual DOM would be written in HTML document which will be returned to the user. Server environments don't have DOM (it's part of the browser), so there is no need to create real DOM.
+  That HTML generation can take longer then returning simple HTML file as with Client side rendering. Once page HTML is created, load from client is faster as browser only needs to parse HTML and then page is ready.
+  From SEO perspective, SSR is also better because crawlers will get HTML for each page and will not need to run any JS. When page is rendered on server react has starting markup, it only needs to attach event listeners, etc.
+  This process is called `hydration` and developer has to call `ReactDOM.hydrate` instead of `ReactDOM.render`.
+
+</Notes>
+
+---
+
+# SSR Implementation
+
+- `Next.js`
+  - Framework for React which does SSR out of the box
+- Custom
+  - More control
+  - Significantly more coding (SSR server, data fetching, caching)
+  - ReactDOM library (`react-dom/server`)
+    - `renderToString`
+    - `renderToNodeStream`
+
+<Notes>
+
+- [`Next.js`](https://nextjs.org/) is framework for SSR. It provides custom server and boilerplate,
+  but project has to be tweaked as `Next.js` is opinionated (routing is composed from file system organization)
+- SSR can be custom made but that would include significant amount of code (render react components, fetch data from server and add it to the components, caching, ...)
 
 </Notes>
