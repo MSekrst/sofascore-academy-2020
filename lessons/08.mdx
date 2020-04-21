@@ -34,7 +34,7 @@ export const theme = { ...themes.highlight }
 
 - Handling asynchronous operations with Redux is common use case. Each async operation has two crucial moments: start and finish.
   Those operations can be handled with at least 3 Redux actions. In fetching example those actions would be request started, request finished successfully and request failed.
-- Async action creators allow developers to dispatch actions in async manner. Reducers must be pure so async operations must be performed inside async action creators.
+- Reducers must be pure so async operations must be performed inside async action creators.
   Those action creators return function instead of object like ordinary action creators (also known as Thunks). Returned function will be called with `dispatch` as argument.
   Calling is made possible with `redux-thunk` middleware which must be added to the redux store.
   In that function async work can be done and progress can be published (start, success, failure) with ordinary actions (dispatch is available).
@@ -58,13 +58,12 @@ import { LoginThunks } from './08-files/thunks'
 
 # Routing
 
-- Proces of Internet navigation
-- URL marks specific resource on the Internet (page, response, ...)
+- URL addresses specific resource on the Internet (page, response, ...)
 - Makes user navigation easier (refresh, browser back)
 
 <Notes>
   
-- Routing is process of navigating the Internet. Routing can be defined as mapping of URL to resource (website)
+- Routing can be defined as mapping of URL to resource (website)
 - Route (URL) is identifier of resource on Internet. Resource can be website, API response, method, ...
 - Routing makes users experience more satisfying, as users can refresh page and end up on the same page, 
 they can navigate through browser history (forward or back browser buttons), etc.
@@ -79,7 +78,6 @@ they can navigate through browser history (forward or back browser buttons), etc
 - Process of making a website more visible in search results
 - Search engines crawl web, index content from pages, points to relevant pages in search results
 - Ranking algorithm is secret, known only by search engine companies.
-- More traffic -> more revenue
 
 <Notes>
   
@@ -90,6 +88,16 @@ provide information to the user.
 - SEO is important as it is directly connected with bigger traffic and revenue.
 
 </Notes>
+
+---
+
+import seoMeme from './images/seo.gif'
+
+# SEO
+
+- More traffic -> 💰
+
+<img alt="SEO Meme" src={seoMeme} className="big-image" />
 
 ---
 
@@ -171,6 +179,7 @@ HTML is then parsed and any needed resources are fetched (CSS, JS, images, fonts
 # React Router
 
 - Client side routing package for React
+  - Interacts with Browser History API
 - Provides components and hooks needed to add routing to an application
 - Encourages dynamic routing
   - No need to specify all routes in single file
@@ -189,9 +198,9 @@ HTML is then parsed and any needed resources are fetched (CSS, JS, images, fonts
 # React Router API
 
 - Routers -> Wraps whole application
-  - `<BrowserRouter>`, `<HashRouter>`
+  - `<BrowserRouter>`
 - Route Matchers -> Render components on specific routes
-  - `<Route path="/url-for-component">{/* component to be rendered */}</Route>`
+  - `<Route path="/url-for-component">{/* children to be rendered */}</Route>`
   - `<Switch>` -> Searches for first children `Route` that matches URL and renders it
 - Route Changers -> Change current URL
   - `<Link to="/link-url">`

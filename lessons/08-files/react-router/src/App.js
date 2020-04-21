@@ -54,7 +54,7 @@ function ProtectedRoute({ children, isLoggedIn, ...routeProps }) {
   // in real app isLoggedIn would come from provider or from the redux state
 
   // in real app redirect would be to the login page
-  return <Route {...routeProps}>{isLoggedIn ? children : <Redirect to="/" />}</Route>
+  return isLoggedIn ? <Route {...routeProps}>{children}</Route> : <Redirect to="/" />
 }
 
 export default App
