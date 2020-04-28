@@ -3,6 +3,8 @@ import { render, waitForElementToBeRemoved } from '@testing-library/react'
 
 import { FruitContainer } from './FruitContainer'
 
+jest.mock('../../api/repository')
+
 describe('FruitContainer', () => {
   it('shows loading message while fetching', async () => {
     const { getByText } = render(<FruitContainer />)
@@ -12,5 +14,11 @@ describe('FruitContainer', () => {
     await waitForElementToBeRemoved(() => getByText(/Loading/i))
   })
 
-  it('renders fetched fruit', async () => {})
+  it('renders fetched fruit', async () => {
+    const { getByText } = render(<FruitContainer />)
+
+    await waitForElementToBeRemoved(() => getByText(/Loading/i))
+
+    expect(getByText(/pineapple/i)).toBeInTheDocument()
+  })
 })

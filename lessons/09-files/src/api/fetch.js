@@ -12,8 +12,6 @@ function fakeFetch(url) {
   return new Promise(resolve => {
     const timeout = Math.random() * 500 + 50 // random timeout between 50 and 550ms
 
-    console.log('Fetching', url)
-
     setTimeout(() => {
       resolve({ statusCode: 200, json: () => Promise.resolve(fruit) })
     }, timeout)
