@@ -1,4 +1,4 @@
-import { themes, Head, Footer, Header, Steps, Notes, Invert } from 'mdx-deck'
+import { themes, Head, Footer, Header, Steps, Notes, Invert, Split } from 'mdx-deck'
 import './styles.css'
 
 export const theme = { ...themes.highlight }
@@ -17,24 +17,267 @@ export const theme = { ...themes.highlight }
 
 <!-- Slides -->
 
-# Lesson 9
+# Testing
 
-## Testing
+## Lesson 9
+
+<Notes>
+
+- This lesson is greatly influenced by Kent C. Dodds blog, videos and workshops.
+
+[Blog](https://kentcdodds.com/blog)
+[Workshops](https://testingjavascript.com/)
+
+</Notes>
+
+---
+
+# Motivations
+
+- **Confidence** that application will work when used
+  - Easier to introduce changes and refactor code, code is more understandable
+- Prevent some bugs
+  - Avoid financial losses, user annoyance, ...
+  - Code will be tested by the user if not by developers
+- Saves time
+- Enhance developer workflow (e.g. Test Driven Development - TDD)
+
+<Notes>
+
+- Test provide confidence that code will work in use cases covered with tests.
+  That confidence can make changing or refactoring code easier, because developers can make sure that tested use cases will work after changes.
+  Tests also provide basic use cases for the code, so code can be easily understood.
+- Tests prevent some of the bugs in the application.
+  Those bugs can will always cause only harm:
+  - Financial - e.g. malformed payment code, server costs, downtime
+  - Annoy users - users lose trust and avoid application with bugs
+  - Annoy developers - code is harder to understand and change
+- Writing test will save time in the long run because it takes some extra time to write tests, but then developers will experience only test gains.
+  Every change can be tested in milliseconds, bugs will be caught earlier, debugging is easier and faster.
+- Testing can be used to boost developers workflows (e.g. Test Driven Development - TDD).
+  TDD enforces developers to write only necessary tests first and then implement features which are only covered by tests.
+
+</Notes>
+
+---
+
+# Test types
+
+- Three main test types:
+  - **Unit tests**
+    - Single unit (function, component) in isolation
+  - **Integration tests**
+    - Integration on multiple units
+  - End to end (E2E) tests
+    - Whole system test
+- Other test types:
+  - Snapshot tests
+    - Compare snapshots (DOM, variables, ...)
+  - Regression tests
+    - Tests which expose bugs and prevent their return
+  - Static tests
+    - Tests done with statically typed (TypeScript, Flow) or code analysis tools (ESLint)
+
+<Notes>
+
+- Three main test types are:
+  - Unit tests - Test single unit (function, component), provide some input and check if unit produces expected output.
+    Should test all relevant code paths (happy path (ideal path), error paths and edge case paths).
+    Units are often tested as part of integration tests so some unit tests could be redundant.
+  - Integration tests - Test integration of multiple units. Can be broken down into multiple unit tests,
+    but integration tests give greater confidence as they test each unit as well as their integration (this integration is exact as it would be in production)
+    - Integration on multiple units
+  - End to end (E2E) tests - Test whole application system (e.g. in Web apps test frontend and backend code). E2E tests all parts of an application as they simulate real users.
+    They mimic user's behaviour by interacting with an app (clinking, entering data, ...).
+    Auth E2E test would look like this:
+    - User comes to login screen
+    - User navigates to registration screen
+    - User enters desired username and password
+    - User submits registration from
+    - User returns to login screen
+    - User enters newly created user info
+    - User submits login from
+    - User logged in successfully and is redirected to user profile screen
+- Other test types
+  - Snapshot tests - Take snapshot of some functionality or variable (in React, DOM snapshots are usually taken).
+    Correct snapshot is saved by developers and then new snapshots are compared to saved one. If they differ snapshot test fails.
+    Snapshot test are easy to implement but often don't bring any confidence to developers (e.g. if developers snapshot React component, test will fail if `div` is switched with `main`, if new class is added, etc.)
+  - Regression tests - Tests which expose bugs and prevent their return. Regression tests are often added when debugging to trace the bug and to prevent the same bug from returning, as buggy case is covered with a test.
+  - Static tests - Tests done with statically typed (Typescript, Flow) or code analysis tools (ESLint)
+
+</Notes>
+
+---
+
+# Test hierarchy
+
+- Each test type can be assessed with three parameters
+  - Time - Implementation and execution time
+  - Resources - Execution and maintenance resources
+  - Confidence - Confidence test brings to developers
+- Testing pyramid
+  - Most common test hierarchy
+  - Applicable to any programming language
+- Testing trophy
+  - Specific hierarcy applicable for JS environment
+
+<Notes>
+
+- Parameters of each test type should be carefully weighted, as developers should tend to find sweet spot between time and resource needed based on their prefered confidence level.
+- Testing pyramid
+  - More generic hierarchy popularized by Martin Fowler
+- Testing trophy
+  - Specific hierarcy applicable for JS environment popularized by Kent C. Dodds
+
+</Notes>
+
+---
+
+import tests from './images/tests.png'
+
+# Test hierarchies
+
+<img className="big-image" src={tests} alt="Testing pyramid" />
+
+<Notes>
+
+- Testing pyramid - Unit tests are the base of pyramid. On top of them are integration tests and E2E tests are on the top.
+  Most of the time is spent on unit testing as they need fewer resources and time then other types. Their confidence is not that high, so there is other hierarchy: Testing trophy.
+- Testing trophy - Base are static tests which can be fixed automatically with linter. Unit test are higher up but there isn't significant number of them.
+  Integration tests are the core of the trophy and they are most common. finally E2E test are on the top of the trophy, similar to testing pyramid.
+  Main difference between two hierarchies is in preferred test type. Pyramid favours unit tests and trophy favours integration tests.
+- Trophy hierarchy can take more time, but in return it will provide much more confidence to developers working on an application.
+
+</Notes>
+
+---
+
+# Jest Testing Framework
+
+- Test runner
+- Assertion library
+- Easy configuration
+- Performant
+- Bundeled with CRA
+
+<Notes>
+
+- [Jest](https://jestjs.io/)
+- Jest finds and runs tests. It also provide test utils for writing tests ('it', `test`) and making assertions (`expect`).
+- Jest can run any JS (it can event transpile with simple configuration).
+
+</Notes>
+
+---
+
+# React Testing Library
+
+- Library for testing React apps the right way
+- Updates component when state or props change
+- Provides utilities to fire DOM events (e.g. click, change)
+- Contains matchers (e.g. `getByText`, `getByRole`, ...)
+- Bundeled in CRA
+
+<Notes>
+
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
+- Works with Jest
+
+</Notes>
+
+---
+
+# Testing practices
+
+- Good tests come from the good testing practices
+  - If writing good tests is hard, that indicates bad code architecture
+- Testing is hard on conceptual level not on syntax level
+- Avoid false positives and false negatives
+- Guillermo Rauch: "Write tests. Not too many. Mostly integration."
+- Good practices:
+  - Tests are as similar to the real usage as possible
+  - Tests cover most use cases for the application
+  - Tests rarely change
+  - Arrange - Act - Assert (AAA) principle
+
+<Notes>
+
+- Developers should strive to good test practices, not only because they will gain more confident,
+  but because enforcing good testing practices can enforce good code architecture patterns. Good tests should be easy to write.
+- Testing complexity comes from knowledge what to test, how to test it and from experience in recognizing edge cases and bugs.
+  Minor part of that complexity is related to setup and testing syntax.
+- Test should never be false positive (pass when they shouldn't) or false negative (fail when they shouldn't)
+- Good practices:
+  - Kent C. Dodds : "The more your tests resemble the way your software is used, the more confidence they can give you."
+    Each functionality has users' perspective which is always tested. React components are reusable so they have one extra perspective - developers'.
+    React components should also test how component interacts with props, because other developers use props to modify component behaviour.
+  - Common test coverage metric is line coverage (which percentage of lines in the function is covered with tests) because it can be calculated by computer.
+    Real and better metric is use case coverage (which percentage of use cases are covered with tests)
+  - Tests should be written once and then modified only if use cases change.
+    If tests fail just because tested function had refactor (and input/output is the same) that indicates that tests are bad as they test implementation not the behaviour.
+  - Each test has 3 distinctive parts:
+    - Arrange part defines variables used in test and setups tests
+    - In Act part test is executed
+    - In Assert part test is "graded", was it successfull or should it fail.
+      This is the part where developers check if test produced expected output.
+
+</Notes>
+
+---
+
+# Bad testing practices
+
+- False positive/negative tests
+- Testing implementation
+- "Test user"
+- Widespread mocking
+
+<Notes>
+
+- Test should never report false positive or false negative results as then they lose purpose.
+- As mentioned on previous slide, tests should test behaviour not the implementation of that behaviour.
+  Tests should never need to know internals of the tested code (e.g. variable names, variable types, etc.)
+- Test User is when test behave differently then normal app users. Tests like this bring little confidence as they test non existing or relevant use cases.
+- Widespread mocking - Mocking is good tool for some testing problems (e.g. fetching, animations), but can be sign of bad code architecture.
+  If some code can be tested only with mocks, test will not bring confidence as mocks eliminate connection with the real world environment where functionality will be used.
+
+</Notes>
 
 ---
 
 <Invert>
 
-# Example
+# Bad tests - Example
 
 </Invert>
 
 ---
 
-# Title
+# Mocking
+
+- Faking implementation of some functionality while testing
+- Tradeof between faster, cheaper tests and real integrated tests
+  - Lose some confidence, but save money or time
+- Common mocking use cases:
+  - Fetching
+  - Animations
+  - 3rd party services
 
 <Notes>
 
-- Note
+- Mocking is all about tradeof betwenn confidence and other parameters (time, money).
+- Mocking is useful in some cases:
+  - Fetching - Makes tests faster by avoiding real fetches. Fetches are modeled as functions which return promise that resolves with API response.
+  - Animations - Makes tests faster by avoiding animations. There is no need to run animations in tests not realated to animation code (e.g. don't wait 1s for fade animation before finishing test)
+  - 3rd party services - Avoid unnecessary interactions with 3rd party services (e.g. payed services, limited services, ...).
+    If developer want to test payment process in the app, payment service would be mocked to avoid paying transaction fees which are payed for each transaction.
 
 </Notes>
+
+---
+
+<Invert>
+
+# Tested App - Example
+
+</Invert>
