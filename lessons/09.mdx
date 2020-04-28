@@ -34,10 +34,9 @@ export const theme = { ...themes.highlight }
 
 # Motivations
 
-- **Confidence** that application will work when used
-  - Easier to introduce changes and refactor code, code is more understandable
+- **Confidence** that application will work as expected when used
+  - Easier to introduce changes and refactor code
 - Prevent some bugs
-  - Avoid financial losses, user annoyance, ...
   - Code will be tested by the user if not by developers
 - Saves time
 - Enhance developer workflow (e.g. Test Driven Development - TDD)
@@ -67,7 +66,7 @@ export const theme = { ...themes.highlight }
   - **Unit tests**
     - Single unit (function, component) in isolation
   - **Integration tests**
-    - Integration on multiple units
+    - Integration of multiple units
   - End to end (E2E) tests
     - Whole system test
 - Other test types:
@@ -103,7 +102,6 @@ export const theme = { ...themes.highlight }
     Correct snapshot is saved by developers and then new snapshots are compared to saved one. If they differ snapshot test fails.
     Snapshot test are easy to implement but often don't bring any confidence to developers (e.g. if developers snapshot React component, test will fail if `div` is switched with `main`, if new class is added, etc.)
   - Regression tests - Tests which expose bugs and prevent their return. Regression tests are often added when debugging to trace the bug and to prevent the same bug from returning, as buggy case is covered with a test.
-  - Static tests - Tests done with statically typed (Typescript, Flow) or code analysis tools (ESLint)
 
 </Notes>
 
@@ -144,7 +142,7 @@ import tests from './images/tests.png'
 - Testing pyramid - Unit tests are the base of pyramid. On top of them are integration tests and E2E tests are on the top.
   Most of the time is spent on unit testing as they need fewer resources and time then other types. Their confidence is not that high, so there is other hierarchy: Testing trophy.
 - Testing trophy - Base are static tests which can be fixed automatically with linter. Unit test are higher up but there isn't significant number of them.
-  Integration tests are the core of the trophy and they are most common. finally E2E test are on the top of the trophy, similar to testing pyramid.
+  Integration tests are the core of the trophy and they are most common. Finally E2E test are on the top of the trophy, similar to testing pyramid.
   Main difference between two hierarchies is in preferred test type. Pyramid favours unit tests and trophy favours integration tests.
 - Trophy hierarchy can take more time, but in return it will provide much more confidence to developers working on an application.
 
@@ -158,7 +156,7 @@ import tests from './images/tests.png'
 - Assertion library
 - Easy configuration
 - Performant
-- Bundeled with CRA
+- Bundled with CRA
 
 <Notes>
 
@@ -176,7 +174,7 @@ import tests from './images/tests.png'
 - Updates component when state or props change
 - Provides utilities to fire DOM events (e.g. click, change)
 - Contains matchers (e.g. `getByText`, `getByRole`, ...)
-- Bundeled in CRA
+- Bundled in CRA
 
 <Notes>
 
@@ -190,7 +188,7 @@ import tests from './images/tests.png'
 # Testing practices
 
 - Good tests come from the good testing practices
-  - If writing good tests is hard, that indicates bad code architecture
+  - **If writing good tests is easy, that indicates good code architecture**
 - Testing is hard on conceptual level not on syntax level
 - Avoid false positives and false negatives
 - Guillermo Rauch: "Write tests. Not too many. Mostly integration."
@@ -202,7 +200,7 @@ import tests from './images/tests.png'
 
 <Notes>
 
-- Developers should strive to good test practices, not only because they will gain more confident,
+- Developers should implement good testing practices, not only because they will become more confident,
   but because enforcing good testing practices can enforce good code architecture patterns. Good tests should be easy to write.
 - Testing complexity comes from knowledge what to test, how to test it and from experience in recognizing edge cases and bugs.
   Minor part of that complexity is related to setup and testing syntax.
@@ -245,18 +243,10 @@ import tests from './images/tests.png'
 
 ---
 
-<Invert>
-
-# Bad tests - Example
-
-</Invert>
-
----
-
 # Mocking
 
 - Faking implementation of some functionality while testing
-- Tradeof between faster, cheaper tests and real integrated tests
+- Tradeoff between faster, cheaper tests and real integrated tests
   - Lose some confidence, but save money or time
 - Common mocking use cases:
   - Fetching
@@ -265,12 +255,12 @@ import tests from './images/tests.png'
 
 <Notes>
 
-- Mocking is all about tradeof betwenn confidence and other parameters (time, money).
+- Mocking is all about tradeoff between confidence and other parameters (time, money).
 - Mocking is useful in some cases:
   - Fetching - Makes tests faster by avoiding real fetches. Fetches are modeled as functions which return promise that resolves with API response.
-  - Animations - Makes tests faster by avoiding animations. There is no need to run animations in tests not realated to animation code (e.g. don't wait 1s for fade animation before finishing test)
-  - 3rd party services - Avoid unnecessary interactions with 3rd party services (e.g. payed services, limited services, ...).
-    If developer want to test payment process in the app, payment service would be mocked to avoid paying transaction fees which are payed for each transaction.
+  - Animations - Makes tests faster by avoiding animations. There is no need to run animations in tests not related to animation code (e.g. don't wait 1s for fade animation before finishing test)
+  - 3rd party services - Avoid unnecessary interactions with 3rd party services (e.g. paid services, limited services...).
+    If developer want to test payment process in the app, payment service would be mocked to avoid paying transaction fees which are paid for each transaction.
 
 </Notes>
 
