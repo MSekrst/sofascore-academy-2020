@@ -8,6 +8,7 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Lato', sans-serif;
     background: whitesmoke;
     color: #404040;
+    user-select: none;
   }
 `
 

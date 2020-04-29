@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 
 import { FruitFilter } from '../FruitFilter/FruitFilter'
-import { Fruit } from '../Fruit/Fruit'
 
 const FilterListWrapper = styled.div`
   width: 300px;
@@ -21,18 +20,10 @@ const FilterListWrapper = styled.div`
   }
 `
 
-const Message = styled.div`
+const ErrorMessage = styled.div`
   text-align: center;
   font-size: 18px;
   font-weight: 500;
-
-  ${props =>
-    props.error &&
-    `
-      color: tomato;
-      font-size: 24px;
-      font-weight: 700;
-  `}
 `
 
 const FavoritesList = styled.div`
@@ -67,7 +58,7 @@ export function FruitList({ fruit }) {
   )
 
   if (!fruit.length) {
-    return <Message error>No fruit for fruit list</Message>
+    return <ErrorMessage>No fruit for fruit list</ErrorMessage>
   }
 
   const nonFavoriteOptions = fruit.reduce((aggregator, candidateFruit) => {
