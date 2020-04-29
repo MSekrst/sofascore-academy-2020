@@ -2,6 +2,7 @@ import React from 'react'
 import { render, waitForElementToBeRemoved } from '@testing-library/react'
 
 import { FruitContainer } from './FruitContainer'
+import { mockedFruit } from '../../api/__mocks__/repository'
 
 jest.mock('../../api/repository')
 
@@ -19,6 +20,8 @@ describe('FruitContainer', () => {
 
     await waitForElementToBeRemoved(() => getByText(/Loading/i))
 
-    expect(getByText(/pineapple/i)).toBeInTheDocument()
+    expect(getByText(mockedFruit[0])).toBeInTheDocument()
+    expect(getByText(mockedFruit[1])).toBeInTheDocument()
+    expect(getByText(mockedFruit[2])).toBeInTheDocument()
   })
 })

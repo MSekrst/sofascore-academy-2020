@@ -5,6 +5,7 @@ import noImage from './images/noImage.png'
 
 function getFruitImage(fruitName) {
   try {
+    // import won't work when nested
     return require(`./images/${fruitName.toLowerCase()}.png`)
   } catch (e) {
     return noImage
@@ -42,8 +43,6 @@ const FruitName = styled.div`
   flex: 1 1 120px;
 `
 
-const ActionsWrapper = styled.div``
-
 export function Fruit({ name, onClick, actions }) {
   const image = getFruitImage(name)
 
@@ -51,7 +50,7 @@ export function Fruit({ name, onClick, actions }) {
     <FruitItem onClick={() => onClick(name)} role="button">
       <img src={image} alt={name} />
       <FruitName aria-label={name}>{name}</FruitName>
-      {actions && <ActionsWrapper>{actions}</ActionsWrapper>}
+      {actions && <div aria-label="Fruit actions">{actions}</div>}
     </FruitItem>
   )
 }
