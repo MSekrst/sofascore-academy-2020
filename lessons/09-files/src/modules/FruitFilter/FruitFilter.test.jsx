@@ -22,7 +22,7 @@ describe('FruitFilter', () => {
       <FruitFilter label={label} options={options} onSubmit={() => {}} />
     )
 
-    fireEvent.change(getByPlaceholderText(/Enter filter term/i), { target: { value: 'Item' } })
+    fireEvent.change(getByPlaceholderText(/filter term/i), { target: { value: 'Item' } })
 
     expect(getByText(options[0])).toBeInTheDocument()
     expect(getByText(options[1])).toBeInTheDocument()
