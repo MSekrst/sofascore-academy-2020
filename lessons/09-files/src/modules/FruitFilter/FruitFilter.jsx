@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from 'react'
 
 import { getMatchingOptions } from './helpers'
+import { Fruit } from '../Fruit/Fruit'
 
-export function FilterInput({ label, options, onSubmit }) {
+export function FruitFilter({ label, options, onSubmit }) {
   const [input, setInput] = useState('')
 
   const handleInputChange = useCallback(e => {
@@ -28,14 +29,19 @@ export function FilterInput({ label, options, onSubmit }) {
         type="text"
         onChange={handleInputChange}
       />
-      {matchingSuggestions.length > 0 && (
+      {matchingSuggestions.length > 0 ? (
         <div>
-          {matchingSuggestions.map(o => (
-            <div key={o.id} onClick={() => handleOnSubmit(o.label)}>
-              {o.label}
-            </div>
+          {matchingSuggestions.map(fruitName => (
+            <Fruit
+              key={fruitName}
+              name={fruitName}
+              onClick={() => handleOnSubmit(fruitName)}
+              actions={<span className="material-icons">add</span>}
+            />
           ))}
         </div>
+      ) : (
+        <p>No suggestions</p>
       )}
     </div>
   )

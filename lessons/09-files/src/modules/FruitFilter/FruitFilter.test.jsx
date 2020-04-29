@@ -1,47 +1,43 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 
-import { FilterInput } from './FilterInput'
+import { FruitFilter } from './FruitFilter'
 import { getMatchingOptions } from './helpers'
 
 const label = 'Test label'
-const options = [
-  { id: 1, label: 'Item A' },
-  { id: 2, label: 'Item B' },
-  { id: 3, label: 'Thing C' },
-]
+const options = ['Item A', 'Item B', 'Thing C']
 
-describe('FilterInput', () => {
+describe('FruitFilter', () => {
   it('renders provided props', () => {
-    const { getByText } = render(<FilterInput label={label} options={options} onSubmit={() => {}} />)
+    const { getByText } = render(<FruitFilter label={label} options={options} onSubmit={() => {}} />)
 
     expect(getByText(label)).toBeInTheDocument()
-    expect(getByText(options[0].label)).toBeInTheDocument()
-    expect(getByText(options[1].label)).toBeInTheDocument()
-    expect(getByText(options[2].label)).toBeInTheDocument()
+    expect(getByText(options[0])).toBeInTheDocument()
+    expect(getByText(options[1])).toBeInTheDocument()
+    expect(getByText(options[2])).toBeInTheDocument()
   })
 
   it('filters options', () => {
     const { getByText, queryByText, getByPlaceholderText } = render(
-      <FilterInput label={label} options={options} onSubmit={() => {}} />
+      <FruitFilter label={label} options={options} onSubmit={() => {}} />
     )
 
     fireEvent.change(getByPlaceholderText(/Enter filter term/i), { target: { value: 'Item' } })
 
-    expect(getByText(options[0].label)).toBeInTheDocument()
-    expect(getByText(options[1].label)).toBeInTheDocument()
-    expect(queryByText(options[2].label)).not.toBeInTheDocument()
+    expect(getByText(options[0])).toBeInTheDocument()
+    expect(getByText(options[1])).toBeInTheDocument()
+    expect(queryByText(options[2])).not.toBeInTheDocument()
   })
 
   it('calls onSubmit on suggestion click', () => {
     const onSubmit = jest.fn()
 
-    const { getByText } = render(<FilterInput label={label} options={options} onSubmit={onSubmit} />)
+    const { getByText } = render(<FruitFilter label={label} options={options} onSubmit={onSubmit} />)
 
-    fireEvent.click(getByText(options[2].label))
+    fireEvent.click(getByText(options[2]))
 
     expect(onSubmit).toHaveBeenCalledTimes(1)
-    expect(onSubmit).toHaveBeenCalledWith(options[2].label)
+    expect(onSubmit).toHaveBeenCalledWith(options[2])
   })
 })
 

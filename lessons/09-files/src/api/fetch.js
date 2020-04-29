@@ -1,14 +1,6 @@
-const fruit = [
-  { id: 1, name: 'Apple' },
-  { id: 2, name: 'Orange' },
-  { id: 3, name: 'Pear' },
-  { id: 4, name: 'Strawberry' },
-  { id: 5, name: 'Pineapple' },
-  { id: 6, name: 'Blueberry' },
-  { id: 7, name: 'Banana' },
-]
+const fruit = ['Apple', 'Orange', 'Pear', 'Strawberry', 'Pineapple', 'Blueberry', 'Banana']
 
-function fakeFetch(url) {
+function fakeFetch() {
   return new Promise(resolve => {
     const timeout = Math.random() * 500 + 50 // random timeout between 50 and 550ms
 

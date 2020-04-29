@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
 import { getFruit } from '../../api/repository'
-import { FruitPicker } from '../FruitPicker/FruitPicker'
+import { FruitList } from '../FruitList/FruitList'
 
 export function FruitContainer() {
-  const [fruit, setFruit] = useState(null)
-  const [error, setError] = useState(null)
+  const [fruit, setFruit] = useState()
+  const [error, setError] = useState()
 
   useEffect(() => {
     const fetchFruit = async () => {
@@ -29,9 +29,5 @@ export function FruitContainer() {
     return <p>Error occurred!</p>
   }
 
-  return (
-    <div>
-      <FruitPicker fruit={fruit} />
-    </div>
-  )
+  return <FruitList fruit={fruit} />
 }
