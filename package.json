@@ -11,6 +11,7 @@
     "start:06": "mdx-deck lessons/06.mdx",
     "start:07": "mdx-deck lessons/07.mdx",
     "start:08": "mdx-deck lessons/08.mdx",
+    "start:09": "mdx-deck lessons/09.mdx",
     "build:01": "mdx-deck build lessons/01.mdx",
     "build:02": "mdx-deck build lessons/02.mdx",
     "build:03": "mdx-deck build lessons/03.mdx",
@@ -19,8 +20,9 @@
     "build:06": "mdx-deck build lessons/06.mdx",
     "build:07": "mdx-deck build lessons/07.mdx",
     "build:08": "mdx-deck build lessons/08.mdx",
-    "start": "npm run start:08",
-    "build": "npm run build:08"
+    "build:09": "mdx-deck build lessons/09.mdx",
+    "start": "npm run start:09",
+    "build": "npm run build:09"
   },
   "keywords": [
     "JavaScript",
