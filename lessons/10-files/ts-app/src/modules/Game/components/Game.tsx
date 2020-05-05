@@ -3,7 +3,7 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom'
 
 import { Intro } from './Intro'
 import { Guess } from './Guess'
-import { End } from './End'
+import { End } from '../End'
 
 export function Game() {
   const match = useRouteMatch()

@@ -1,12 +1,25 @@
 import React from 'react'
+import { Provider } from 'react-redux'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import { Header, Home } from './layout'
 import { HallOfFame, Game } from './modules'
+import { store, persistor } from './state/store'
+
+function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <BrowserRouter>{children}</BrowserRouter>
+      </PersistGate>
+    </Provider>
+  )
+}
 
 function App() {
   return (
-    <BrowserRouter>
+    <Providers>
       <Header />
       <main>
         <Switch>
@@ -27,7 +40,7 @@ function App() {
           </Route>
         </Switch>
       </main>
-    </BrowserRouter>
+    </Providers>
   )
 }
 

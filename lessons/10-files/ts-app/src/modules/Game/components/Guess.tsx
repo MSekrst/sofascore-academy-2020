@@ -1,7 +1,10 @@
 import React, { useRef, useEffect, useCallback } from 'react'
 import { useState } from 'react'
-import { Input, Button } from '../../components'
 import { Redirect } from 'react-router-dom'
+
+import { Input, Button } from '../../../components'
+import { useDispatch } from 'react-redux'
+import { addResult } from '../redux/actions'
 
 enum GameStatus {
   Booting = 'booting',
@@ -13,7 +16,7 @@ enum GameStatus {
 
 function Status({ status, tries }: { tries: number; status: GameStatus }) {
   if (status === GameStatus.Start) {
-    return null
+    return <p>Good Luck</p>
   }
 
   if (status === GameStatus.Correct) {
@@ -21,22 +24,23 @@ function Status({ status, tries }: { tries: number; status: GameStatus }) {
   }
 
   return (
-    <p>
+    <div>
       Your guess is too{' '}
       <b>
         {status === GameStatus.High && 'HIGH'}
         {status === GameStatus.Low && 'LOW'}
       </b>
-    </p>
+      <p>Tries: {tries}</p>
+    </div>
   )
 }
 
 export function Guess() {
   const numberRef = useRef<number>()
 
-  const [status, setGameStatus] = useState<GameStatus>(GameStatus.Booting)
+  const [status, setGameStatus] = useState(GameStatus.Booting)
   const [guess, setGuess] = useState<number>()
-  const [tries, setTries] = useState<number>(0)
+  const [tries, setTries] = useState(0)
 
   useEffect(() => {
     numberRef.current = Math.round(Math.random() * 100)
@@ -44,15 +48,19 @@ export function Guess() {
     setGameStatus(GameStatus.Start)
   }, [])
 
+  const dispatch = useDispatch()
+
   const submitGuess = useCallback(() => {
     // this ! operator is from TS - it tells compiler that variable is defined (not undefined or null)
     const targetNumber = numberRef.current!
     const currentGuess = guess!
 
-    console.log({ targetNumber, currentGuess })
+    console.log({ targetNumber })
 
     if (currentGuess === targetNumber) {
       setGameStatus(GameStatus.Correct)
+
+      dispatch(addResult('test', tries + 1))
     }
 
     if (currentGuess > targetNumber) {
@@ -64,7 +72,7 @@ export function Guess() {
     }
 
     setTries(tries => tries + 1)
-  }, [guess])
+  }, [guess, dispatch, tries])
 
   if (!numberRef || typeof numberRef.current === 'undefined') {
     return <p>Computer is thinking of a number</p>
@@ -72,6 +80,7 @@ export function Guess() {
 
   return (
     <div>
+      {/* TODO: Enter to submit */}
       <Input value={guess} placeholder="Your guess" onChange={setGuess} />
       <Button onClick={submitGuess}>Guess</Button>
 
