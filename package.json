@@ -12,6 +12,7 @@
     "start:07": "mdx-deck lessons/07.mdx",
     "start:08": "mdx-deck lessons/08.mdx",
     "start:09": "mdx-deck lessons/09.mdx",
+    "start:10": "mdx-deck lessons/10.mdx",
     "build:01": "mdx-deck build lessons/01.mdx",
     "build:02": "mdx-deck build lessons/02.mdx",
     "build:03": "mdx-deck build lessons/03.mdx",
@@ -21,8 +22,9 @@
     "build:07": "mdx-deck build lessons/07.mdx",
     "build:08": "mdx-deck build lessons/08.mdx",
     "build:09": "mdx-deck build lessons/09.mdx",
-    "start": "npm run start:09",
-    "build": "npm run build:09"
+    "build:10": "mdx-deck build lessons/10.mdx",
+    "start": "npm run start:10",
+    "build": "npm run build:10"
   },
   "keywords": [
     "JavaScript",
@@ -34,9 +36,12 @@
   "license": "MIT",
   "devDependencies": {
     "gatsby-source-filesystem": "^2.1.48",
-    "mdx-deck": "^4.1.0"
+    "mdx-deck": "^4.1.0",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
+    "prop-types": "^15.7.2",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",

@@ -1,0 +1,274 @@
+import { themes, Head, Footer, Header, Steps, Notes, Invert, Split } from 'mdx-deck'
+import './styles.css'
+
+export const theme = { ...themes.highlight }
+
+<!-- general markup for all slides -->
+
+<Head>
+  <title>SofaScore Academy 10</title>
+</Head>
+<Header>
+  <div className="tC m8">SofaScore Academy 2020.</div>
+</Header>
+<Footer>
+  <div className="tR m8">Lesson 10 - Type Checking</div>
+</Footer>
+
+<!-- Slides -->
+
+# Type Checking
+
+## Lesson 10
+
+---
+
+# Motivation
+
+- More robust application
+  - Static testing
+- Better IDE support
+
+<Notes>
+
+- Apps that include some form of type checking are usually more robust as they catch some type related bugs before deployment.
+  Type checking is part of static testing and as any test in provides developers with bigger confidence in their code.
+- Better IDE support. Types are used by IDEs to get better context and type, so IDE can make better suggestions to developers because it can recognize types.
+
+</Notes>
+
+---
+
+import { Motivation } from './10-files/Motivation'
+
+<Invert>
+
+# Motivation - Example
+
+<Motivation />
+
+</Invert>
+
+---
+
+# Statically typed vs Dynamically typed
+
+- **Statically** typed languages
+  - Type checking is done at **compile time**
+  - Errors are reported on compilation
+  - Java, C, TypeScript
+- **Dynamically** typed languages
+  - Type checking is done at **runtime**
+  - Errors are reported at runtime
+  - PHP, Python, JavaScript
+
+<Notes>
+
+- Statically typed languages check types as part of their compile step, so any type related errors will be caught at compile time.
+  This ensures that type related bugs will be caught before deployment to the production.
+  Downside is need to specify type for each used variable and data structure. Note that TypeScript is statically typed.
+- Dynamically typed languages check types at runtime (type is associated with variable value not with variable type).
+  Runtime checking means that type errors can only be caught on runtime, often in production by users, which is not good.
+  Upside of dynamically typed languages is simpler code as types are inferred from values not from the definitions.
+
+</Notes>
+
+---
+
+# PropTypes
+
+- React specific type checker
+- Provides validators for type checking props of React component
+- Checking is done in runtime
+  - Error in console if React is in dev mode
+- Used before as there weren't many alternatives like today
+
+<Notes>
+
+- PropTypes package works only with React apps.
+  Previously package was part of `react` package but it was moved to separate package to make `react` package smaller.
+- Package provides type definitions which can be used to define component props
+  (e.g. name prop is optional, but must be string if provided, value prop is required and must be number)
+- Potential errors will be reported in the runtime and written in console if React is in dev mode (it is when start script used).
+- [Full list of validators](https://reactjs.org/docs/typechecking-with-proptypes.html#proptypes)
+
+</Notes>
+
+---
+
+import { PropTypesApp } from './10-files/PropTypes'
+
+<Invert>
+
+# PropTypes - Example
+
+<PropTypesApp />
+
+</Invert>
+
+---
+
+# Flow
+
+- Static type checker for JavaScript
+- Compiler checks types and removes flow to produce valid JavaScript
+- Can infer types from the usage
+
+<Notes>
+
+- Flow can be integrated in any JS project, it is not React specific. Developers first have to install flow compiler (transpiler) and setup flow (`.flowconfig`).
+  Flow will check only files with `// @flow` comment. Compiler will then check types and report errors (static).
+  Compiler should also remove flow annotations, because flow isn't valid JavaScript.
+- Flow can generate types from usage (e.g. for variable `n` defined as `const n = 3`, flow will automatically add number type).
+  This feature makes adding types easier, as many variables can be type checked without any extra work.
+
+</Notes>
+
+---
+
+<Invert>
+
+# Flow - Example
+
+</Invert>
+
+---
+
+# TypeScript
+
+- Typed superset of JavaScript that compiles to plain JavaScript
+- Includes compiler `tsc`
+- Infers types from the usage
+- `*.ts` or `*.tsx` extensions.
+  - React will not work in `.ts` files
+
+<Notes>
+
+- Typescript is programming language, superset of JavaScript that compiles to JavaScript.
+  TypeScript can understand any valid JavaScript file, so it can be adopted gradually (`allowJs` compiler flag).
+- TypeScript package includes compiler which can be ran with default settings or specific settings can be provided in `tsconfig.json` file in project root
+  (Compiler will use it automatically if file exists). Compiler can be modified with settings. [List of all compiler settings](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+- Similar to Flow, TypeScript can infer types from usage and developers should avoid explicit type definitions where compiler can deduce correct type
+  (code will be minimal, type checking will be better, refactors will be easier).
+- Typescript files have `.ts` extension if they don't use JSX. If JSX is used (e.g. with React),
+  file should have `.tsx` extension because TypeScript will report `<` and `>` as errors in ordinary TypeScript files.
+
+</Notes>
+
+---
+
+# TS - Basics
+
+- Base types:
+  - `number`, `boolean`, `string`, `null`, `undefined`, `Object`, `Array`, `void`, `any`
+  - Functions are defined with arguments and return type
+- Interface
+  - Provide shape of some values
+  - Used to name complex object shapes
+  - Can extend other interfaces
+- Type
+  - Create new TS type
+  - Can name primitives
+- Enum
+  - Set of named constants
+  - String or number values
+
+<Notes>
+
+- Base types include:
+  - `number`, `boolean`, `string`, `null`, `undefined`, `Object`, `Array`, `void`, `any` and `never`.
+    Most of types are straight forward. `void` is used as return value for functions that don't return.
+    `any` is used for variables without type definitions and marks any possible type (avoid whenever possible).
+    `never` is rarely used explicitly but can appear implicitly. It marks return type of a function that never returns
+    (e.g. throws error before return, runs infinite loop in function body, etc.)
+- Interface
+  - Name object shape (e.g. React component props). Interfaces can extend other interfaces or be implemented by classes.
+  - Interface value (shape) will always be aliased with it's name (e.g. editor will show that some function takes interface by name, it will not tell the shape of the interface)
+- Type
+  - Defines new TS type. Similar to interface, but can be used to define primitive or union types (interface can't). Cannot be extended.
+  - Type value will not be aliased so editor will show that some function takes exact properties and types, not the type name.
+- Enum
+  - Set of named constants. TS can define number and string enums. Number enums are default, incrementation starts from 0, so values can sometimes be omitted.
+
+</Notes>
+
+---
+
+<Invert>
+
+# Basic TypeScript - Example
+
+</Invert>
+
+---
+
+# TS - Dependency types
+
+- Some 3rd party libraries provide types for the API with the library
+- Other libraries provide types as separate package
+  - Those types are published as DefinitelyTyped packages
+  - Name is `@types/nameOfPackage`
+- Declaration files (`*.d.ts`)
+  - Provide type declarations and definitions for libraries without types
+  - TS will treat libraries without types as errors, so they should be at least declared.
+
+<Notes>
+
+- Some 3rd party libraries provide types for the API with the library.
+  Those libraries can be seamlesly integrated and TS will use their type definitions when compiling.
+- Other libraries provide types as separate package. Those types are published as [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped) packages.
+  Packages are named with `@types/*` prefix.
+- If some library doesn't provide types, types should be defined via `*.d.ts` files. Those files server as decalaration files with types.
+  Developers can choose to not define any API-s (everything will be `any`) or to write more specific styles. Only rule is that there has to be declaration.
+  Declaration files can be written for external libraries, when exposing own library to others or for specific modules (rarely).
+
+</Notes>
+
+---
+
+# TS - Utilities
+
+- TypeScript provides some utilities to solve common problems
+- Generics - Provide more reusability
+  - `function usePlusOperator<T = number>(a: T, b: T) => a + b`
+- Record - Define generalized objects (maps)
+  - `Record<string, number>` - object where all keys are `string` and values `number`
+- Pick - Type from parts of some interface
+  - `Pick<Props, 'value' | 'label'>` - only definitions for `value` and `label` from `Props`
+- Omit - Type from all definitions of an interface except those specified
+  - `Omit<Props, 'value' | 'label'>` - all definitions from `Props` except `value` and `label`
+- Partial - Make whole interface optional
+  - `Partial<Props>` - all definitions in `Props` are optional
+- Casting - Change type (make more specific)
+  - `const a: string | number; const b = a as string`
+- Ignoring - Ignore next line while compiling
+  `// @ts-ignore` - use sparingly
+
+<Notes>
+
+- This slide is more informative, some of these utilities will be helpful some will be rarely used.
+
+</Notes>
+
+---
+
+# TS - React
+
+- React included types and expose commonly used interfaces
+- `React.ReactNode` - Interface defining any valid React child (e.g. type definition for `children` prop)
+- `React.Component<Props, State>` - Generic for defining props and state types for component
+- `create-react-app my-app-name --template typescript` - Generates CRA with TypeScript included
+
+<Notes>
+
+- [CRA with TS](https://create-react-app.dev/docs/adding-typescript/).
+
+</Notes>
+
+---
+
+<Invert>
+
+# TypeScript App - Example
+
+</Invert>
