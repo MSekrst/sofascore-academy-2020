@@ -11,13 +11,13 @@ enum GameStatus {
   High = 'too-high',
 }
 
-function Status({ status }: { tries: number; status: GameStatus }) {
+function Status({ status, tries }: { tries: number; status: GameStatus }) {
   if (status === GameStatus.Start) {
     return null
   }
 
   if (status === GameStatus.Correct) {
-    return <Redirect to="/game/end" />
+    return <Redirect to={`/game/end/${tries}`} />
   }
 
   return (
@@ -49,9 +49,10 @@ export function Guess() {
     const targetNumber = numberRef.current!
     const currentGuess = guess!
 
+    console.log({ targetNumber, currentGuess })
+
     if (currentGuess === targetNumber) {
       setGameStatus(GameStatus.Correct)
-      return
     }
 
     if (currentGuess > targetNumber) {
