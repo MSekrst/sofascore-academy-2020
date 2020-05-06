@@ -1,10 +1,11 @@
-import React, { useRef, useEffect, useCallback } from 'react'
-import { useState } from 'react'
-import { Redirect } from 'react-router-dom'
+import React, { useState, useRef, useEffect, useCallback, useContext } from 'react'
+import { useDispatch } from 'react-redux'
+import { Redirect, useRouteMatch } from 'react-router-dom'
 
 import { Input, Button } from '../../../components'
-import { useDispatch } from 'react-redux'
 import { addResult } from '../redux/actions'
+import { GameContext } from '../context/GameContext'
+import { Text } from '../../../components/Text/Text'
 
 enum GameStatus {
   Booting = 'booting',
@@ -14,13 +15,15 @@ enum GameStatus {
   High = 'too-high',
 }
 
-function Status({ status, tries }: { tries: number; status: GameStatus }) {
+function Status({ status }: { status: GameStatus }) {
+  const match = useRouteMatch()
+
   if (status === GameStatus.Start) {
     return <p>Good Luck</p>
   }
 
   if (status === GameStatus.Correct) {
-    return <Redirect to={`/game/end/${tries}`} />
+    return <Redirect to={`${match.path}/end`} />
   }
 
   return (
@@ -30,7 +33,6 @@ function Status({ status, tries }: { tries: number; status: GameStatus }) {
         {status === GameStatus.High && 'HIGH'}
         {status === GameStatus.Low && 'LOW'}
       </b>
-      <p>Tries: {tries}</p>
     </div>
   )
 }
@@ -40,7 +42,7 @@ export function Guess() {
 
   const [status, setGameStatus] = useState(GameStatus.Booting)
   const [guess, setGuess] = useState<number>()
-  const [tries, setTries] = useState(0)
+  const { tries, setTries, username } = useContext(GameContext)
 
   useEffect(() => {
     numberRef.current = Math.round(Math.random() * 100)
@@ -50,17 +52,18 @@ export function Guess() {
 
   const dispatch = useDispatch()
 
+  console.log('Target = ', numberRef.current)
+
   const submitGuess = useCallback(() => {
     // this ! operator is from TS - it tells compiler that variable is defined (not undefined or null)
     const targetNumber = numberRef.current!
     const currentGuess = guess!
-
-    console.log({ targetNumber })
+    const triesCounter = tries + 1
 
     if (currentGuess === targetNumber) {
       setGameStatus(GameStatus.Correct)
 
-      dispatch(addResult('test', tries + 1))
+      dispatch(addResult(username, triesCounter))
     }
 
     if (currentGuess > targetNumber) {
@@ -71,20 +74,31 @@ export function Guess() {
       setGameStatus(GameStatus.Low)
     }
 
-    setTries(tries => tries + 1)
-  }, [guess, dispatch, tries])
+    setTries(triesCounter)
+  }, [guess, dispatch, tries, setTries, username])
+
+  if (!username) {
+    return <Redirect to="/game" />
+  }
 
   if (!numberRef || typeof numberRef.current === 'undefined') {
-    return <p>Computer is thinking of a number</p>
+    return <Text>Computer is thinking</Text>
   }
 
   return (
     <div>
       {/* TODO: Enter to submit */}
-      <Input value={guess} placeholder="Your guess" onChange={setGuess} />
+      <Input
+        value={guess}
+        placeholder="Number from 0..100"
+        min={0}
+        max={100}
+        label="Your guess"
+        onChange={value => setGuess(Number(value))}
+      />
       <Button onClick={submitGuess}>Guess</Button>
 
-      <Status status={status} tries={tries} />
+      <Status status={status} />
     </div>
   )
 }

@@ -1,35 +1,36 @@
 import React, { useCallback, ChangeEvent } from 'react'
 
-interface InputProps {
-  value?: number
+import { Stylable } from '../../utils'
+
+interface InputProps extends Stylable {
+  value?: string | number
   label?: string
+  type?: 'text' | 'number'
   placeholder: string
-  onChange: (value: number) => void
+  onChange: (value: string) => void
+  min?: number
+  max?: number
 }
 
-export function Input({ label, value, placeholder, onChange }: InputProps) {
+export function Input({ label, type, value, placeholder, onChange, min, max, ...styles }: InputProps) {
   const inputLabel = label || placeholder
+  const inputType = type || typeof value === 'string' ? 'text' : 'number'
 
   const handleInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      const newValue = Number(e.currentTarget.value)
+      const newValue = e.currentTarget.value
 
       onChange(newValue)
     },
     [onChange]
   )
 
+  const inputAttributes = { type: inputType, value: value || '', placeholder, onChange: handleInputChange, min, max }
+
   return (
-    <label>
+    <label {...styles}>
       {inputLabel}
-      <input
-        type="number"
-        min={0}
-        max={100}
-        value={value || ''}
-        placeholder={placeholder}
-        onChange={handleInputChange}
-      />
+      <input {...inputAttributes} />
     </label>
   )
 }
