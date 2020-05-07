@@ -5,6 +5,7 @@ import { Children, Stylable, PRIMARY_COLOR, textColor, PRIMARY_COLOR_DARK } from
 
 interface ButtonProps extends Children, Stylable {
   onClick?: () => void
+  disabled?: boolean
 }
 
 const StyledButton = styled.button`
@@ -13,7 +14,7 @@ const StyledButton = styled.button`
   font-weight: bold;
   text-transform: uppercase;
   background-color: ${PRIMARY_COLOR};
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   ${textColor}
   border: none;
   border-radius: 4px;
@@ -26,11 +27,17 @@ const StyledButton = styled.button`
   > a {
     margin: -8px -16px;
   }
+
+  &:disabled {
+    background-color: transparent;
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `
 
-export function Button({ children, onClick = () => {}, ...styles }: ButtonProps) {
+export function Button({ children, onClick = () => {}, ...rest }: ButtonProps) {
   return (
-    <StyledButton {...styles} onClick={onClick}>
+    <StyledButton {...rest} onClick={onClick}>
       {children}
     </StyledButton>
   )

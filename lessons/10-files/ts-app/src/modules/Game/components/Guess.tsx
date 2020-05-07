@@ -8,7 +8,6 @@ import { addResult } from '../redux/actions'
 import { GameContext } from '../context/GameContext'
 
 enum GameStatus {
-  Booting = 'booting',
   Start = 'start',
   Correct = 'correct',
   Low = 'too-low',
@@ -19,7 +18,7 @@ function Status({ status }: { status: GameStatus }) {
   const match = useRouteMatch()
 
   if (status === GameStatus.Start) {
-    return <p>Good Luck</p>
+    return <Text>Good Luck</Text>
   }
 
   if (status === GameStatus.Correct) {
@@ -27,36 +26,30 @@ function Status({ status }: { status: GameStatus }) {
   }
 
   return (
-    <div>
+    <Text>
       Your guess is too{' '}
       <b>
         {status === GameStatus.High && 'HIGH'}
         {status === GameStatus.Low && 'LOW'}
       </b>
-    </div>
+    </Text>
   )
 }
 
 export function Guess() {
-  const numberRef = useRef<number>()
+  const numberRef = useRef<number>(Math.round(Math.random() * 100))
 
-  const [status, setGameStatus] = useState(GameStatus.Booting)
+  const [status, setGameStatus] = useState(GameStatus.Start)
   const [guess, setGuess] = useState<number>()
   const { tries, setTries, username } = useContext(GameContext)
-
-  useEffect(() => {
-    numberRef.current = Math.round(Math.random() * 100)
-
-    setGameStatus(GameStatus.Start)
-  }, [])
 
   const dispatch = useDispatch()
 
   console.log('Target = ', numberRef.current)
 
   const submitGuess = useCallback(() => {
+    const targetNumber = numberRef.current
     // this ! operator is from TS - it tells compiler that variable is defined (not undefined or null)
-    const targetNumber = numberRef.current!
     const currentGuess = guess!
     const triesCounter = tries + 1
 
@@ -86,12 +79,17 @@ export function Guess() {
   }
 
   return (
-    <div>
-      {/* TODO: Enter to submit */}
-      <Input value={guess} min={0} max={100} label="Guess" onChange={value => setGuess(Number(value))} />
-      <Button onClick={submitGuess}>Guess</Button>
+    <>
+      <Text>
+        <Input value={guess} min={0} max={100} label="Guess" onChange={value => setGuess(Number(value))} />
+      </Text>
+      <Text>
+        <Button disabled={typeof guess !== 'number'} onClick={submitGuess}>
+          Guess
+        </Button>
+      </Text>
 
       <Status status={status} />
-    </div>
+    </>
   )
 }

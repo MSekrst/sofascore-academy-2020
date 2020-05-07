@@ -8,9 +8,7 @@ export function Home() {
     <>
       <Text title>Welcome to Guesser</Text>
 
-      <Text>
-        Game is simple - Guess computer's number Computer will imagine random number and your task is to guess it.
-      </Text>
+      <Text>Game is simple - Guess computer's number.</Text>
       <Text>Take as few guesses as possible.</Text>
 
       <Text>

@@ -16,12 +16,14 @@ export function End() {
 
   return (
     <>
-      <Text>Congratulation</Text>
-      <Text>
-        you won the game in {numberOfTries} {numberOfTries > 1 ? 'tries' : 'try'}
+      <Text title>
+        <span style={{ fontWeight: 400 }}>You won in </span>
+        {numberOfTries} {numberOfTries > 1 ? 'tries' : 'try'}
       </Text>
 
-      <Link to="/hall-of-fame">Check Hall of Fame</Link>
+      <Text>
+        <Link to="/hall-of-fame">Hall of Fame</Link>
+      </Text>
     </>
   )
 }

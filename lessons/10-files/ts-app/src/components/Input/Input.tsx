@@ -43,6 +43,7 @@ const InputWrapper = styled.div<Placeholder>`
 const StyledInput = styled.input`
   background-color: transparent;
   ${textColor};
+  min-width: 100px;
   border: none;
   border-bottom: 1px solid;
   padding: 8px 4px;
@@ -66,13 +67,17 @@ export function Input({ label, type, value, onChange, min, max, ...styles }: Inp
     [onChange]
   )
 
-  const inputAttributes = { type: inputType, value: value || '', onChange: handleInputChange, min, max }
+  const inputAttributes = {
+    type: inputType,
+    value: value || '',
+    onChange: handleInputChange,
+    min,
+    max,
+  }
 
   return (
-    <InputWrapper isPlaceholder={typeof value === 'undefined' || value === ''}>
-      <label htmlFor={id} {...styles}>
-        {label}
-      </label>
+    <InputWrapper isPlaceholder={typeof value === 'undefined' || value === ''} {...styles}>
+      <label htmlFor={id}>{label}</label>
       <StyledInput id={id} {...inputAttributes} />
     </InputWrapper>
   )

@@ -13,8 +13,9 @@ export function Intro() {
     <>
       <Text title>Game Intro</Text>
       <Text>Computer will imagine number between 0 and 100.</Text>
+      <Text>Guess that number.</Text>
       <Text>
-        Guess that number. Computer will respond with <b>LOW</b> or <b>HIGH</b>.
+        Computer will respond with <b>LOW</b> or <b>HIGH</b>.
       </Text>
 
       <Text>
