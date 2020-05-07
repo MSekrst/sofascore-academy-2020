@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { ReduxState } from '../../state'
-import { Text } from '../../components/Text/Text'
+import { Text } from '../../components'
 
 export function HallOfFame() {
   const results = useSelector((state: ReduxState) => state.results)
@@ -22,7 +22,7 @@ export function HallOfFame() {
 
   return (
     <>
-      <h1>HallOfFame</h1>
+      <Text>HallOfFame</Text>
       <div>
         {sortedResults.map(({ username, tries, timestamp }) => (
           <div key={`${username}-${timestamp}`}>

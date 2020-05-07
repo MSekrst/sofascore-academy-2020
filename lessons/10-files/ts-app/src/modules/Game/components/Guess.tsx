@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect, useCallback, useContext } from 'rea
 import { useDispatch } from 'react-redux'
 import { Redirect, useRouteMatch } from 'react-router-dom'
 
-import { Input, Button } from '../../../components'
+import { Input, Button, Text } from '../../../components'
+
 import { addResult } from '../redux/actions'
 import { GameContext } from '../context/GameContext'
-import { Text } from '../../../components/Text/Text'
 
 enum GameStatus {
   Booting = 'booting',
@@ -88,14 +88,7 @@ export function Guess() {
   return (
     <div>
       {/* TODO: Enter to submit */}
-      <Input
-        value={guess}
-        placeholder="Number from 0..100"
-        min={0}
-        max={100}
-        label="Your guess"
-        onChange={value => setGuess(Number(value))}
-      />
+      <Input value={guess} min={0} max={100} label="Guess" onChange={value => setGuess(Number(value))} />
       <Button onClick={submitGuess}>Guess</Button>
 
       <Status status={status} />

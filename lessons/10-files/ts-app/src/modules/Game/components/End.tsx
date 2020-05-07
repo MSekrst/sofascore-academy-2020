@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
 import { Link, Redirect } from 'react-router-dom'
+
+import { Text } from '../../../components'
+
 import { GameContext } from '../context/GameContext'
-import { Text } from '../../../components/Text/Text'
 
 export function End() {
   const { tries } = useContext(GameContext)

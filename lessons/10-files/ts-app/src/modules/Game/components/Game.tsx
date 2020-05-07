@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Switch, Route, useRouteMatch } from 'react-router-dom'
 
+import { GameContext } from '../context/GameContext'
 import { Intro } from './Intro'
 import { Guess } from './Guess'
 import { End } from './End'
-import { GameContext } from '../context/GameContext'
 
 export function Game() {
   const [tries, setTries] = useState(0)

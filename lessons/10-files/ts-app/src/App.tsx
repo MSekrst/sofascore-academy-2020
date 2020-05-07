@@ -5,15 +5,19 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import { Header, Home } from './layout'
 import { HallOfFame, Game } from './modules'
-import { store, persistor } from './state/store'
+import { store, persistor } from './state'
+import { GlobalStyles } from './utils'
 
 function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <BrowserRouter>{children}</BrowserRouter>
-      </PersistGate>
-    </Provider>
+    <>
+      <GlobalStyles />
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <BrowserRouter>{children}</BrowserRouter>
+        </PersistGate>
+      </Provider>
+    </>
   )
 }
 
