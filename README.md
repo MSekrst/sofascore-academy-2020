@@ -11,6 +11,12 @@ Slides are also available online:
 2. [JavaScript - Principles](https://sofascore-academy-2020-git-lesson-02.msekrst.now.sh/#0)
 3. [JavaScript - Advanced](https://sofascore-academy-2020-git-lesson-03.msekrst.now.sh/#0)
 4. [React.js](https://sofascore-academy-2020-git-lesson-04.msekrst.now.sh/#0)
+5. [React.js - Hooks](https://sofascore-academy-2020-git-lesson-05.msekrst.now.sh/#0)
+6. [React.js - Advanced Concepts](https://sofascore-academy-2020-git-lesson-06.msekrst.now.sh/#0)
+7. [Redux.js](https://sofascore-academy-2020-git-lesson-07.msekrst.now.sh/#0)
+8. [Async Redux.js & Routing](https://sofascore-academy-2020-git-lesson-08.msekrst.now.sh/#0)
+9. [Testing](https://sofascore-academy-2020-git-lesson-09.msekrst.now.sh/#0)
+10. [Type Checking](https://sofascore-academy-2020-git-lesson-10.msekrst.now.sh/#0)
 
 ## Getting Started
 
